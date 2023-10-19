@@ -89,11 +89,7 @@ export default async function Home() {
 	);
 }
 
-export function Card({
-	submission,
-}: {
-	submission: Submission & { user: User };
-}) {
+function Card({ submission }: { submission: Submission & { user: User } }) {
 	return (
 		<Link
 			href={`/submission/${submission.id}`}

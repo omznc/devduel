@@ -21,19 +21,16 @@ export default function Page() {
 			<div className='fit-text text-6xl text-center'>
 				{`Hello there ${user.name?.split(' ')[0]}, let's duel!`}
 			</div>
-			<div
-				className='inline-flex gap-2'
-			>
+			<div className='inline-flex gap-2'>
 				<span
 					className={
 						'cursor-pointer text-2xl transition-all opacity-80 hover:opacity-100'
 					}
 					onClick={async () => {
 						await signOut();
-
 					}}
 				>
-				{'[log out]'}
+					{'[log out]'}
 				</span>
 
 				<Link

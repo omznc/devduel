@@ -3,54 +3,55 @@
 @tailwind utilities;
 
 @keyframes rocketAnimation {
-    0% {
-        left: -100px; /* Move the rocket off-screen to the left */
-        display: block !important;
-        opacity: 0;
-    }
-    50% {
-        opacity: 1;
-    }
-    100% {
-        display: none !important; /* Move the rocket off-screen to the right */
-        transform: translateX(99vw);
-        position: absolute;
-        opacity: 0;
-    }
+	0% {
+		left: -100px; /* Move the rocket off-screen to the left */
+		display: block !important;
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		display: none !important; /* Move the rocket off-screen to the right */
+		transform: translateX(99vw);
+		position: absolute;
+		opacity: 0;
+	}
 }
 
 .animate-rocket {
-    animation: rocketAnimation 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+	animation: rocketAnimation 1s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+		forwards;
 }
 
 /* Font that resizes to fully fit any parent width*/
 .fit-text {
-    font-size: clamp(1rem, 8vw, 5em);
+	font-size: clamp(1rem, 8vw, 5em);
 }
 
 /* change path color to red*/
 .animate-path path {
-    stroke-opacity: 1;
-    fill: white;
-    fill-opacity: 0.1;
-    stroke-width: 0.7;
-    stroke-dasharray: 10;
-    animation: dash 10s linear forwards infinite alternate;
-    mix-blend-mode: difference;
-    transition: all 0.3s ease-in-out;
+	stroke-opacity: 1;
+	fill: white;
+	fill-opacity: 0.1;
+	stroke-width: 0.7;
+	stroke-dasharray: 10;
+	animation: dash 10s linear forwards infinite alternate;
+	mix-blend-mode: difference;
+	transition: all 0.3s ease-in-out;
 }
 
 .animate-path path:hover {
-    fill: black;
-    stroke-width: 0.7;
-    animation: dash 3s linear forwards infinite alternate;
+	fill: black;
+	stroke-width: 0.7;
+	animation: dash 3s linear forwards infinite alternate;
 }
 
 @keyframes dash {
-    from {
-        stroke-dashoffset: 50;
-    }
-    to {
-        stroke-dashoffset: 0;
-    }
+	from {
+		stroke-dashoffset: 50;
+	}
+	to {
+		stroke-dashoffset: 0;
+	}
 }

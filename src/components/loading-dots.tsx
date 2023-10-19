@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function LoadingDots() {
-// 	[...] but the dots are animated
+	// 	[...] but the dots are animated
 	// like [] > [.] > [..] > [...]
 
 	const [dots, setDots] = useState(0);
@@ -12,7 +12,5 @@ export default function LoadingDots() {
 		setDots((dots + 1) % 6);
 	}, 500);
 
-	return (
-		<>{'.'.repeat(dots)}</>
-	);
+	return <>{'.'.repeat(dots)}</>;
 }
