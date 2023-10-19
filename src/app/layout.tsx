@@ -4,8 +4,6 @@ import { Inter, JetBrains_Mono } from 'next/font/google';
 import { ReactNode } from 'react';
 import Providers from '@components/providers';
 import { cn } from '@/src/lib/utils.ts';
-import BackgroundWhite from '@public/background-white.webp';
-import Image from 'next/image';
 import Header from '@components/header.tsx';
 import Footer from '@components/footer.tsx';
 

@@ -1,9 +1,8 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { FaAt } from 'react-icons/fa';
-import { useEffect, useRef, useState, useTransition } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
 	checkUsername,
 	getUsernameSuggestion,

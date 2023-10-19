@@ -1,7 +1,5 @@
 import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
