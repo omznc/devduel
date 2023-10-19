@@ -6,6 +6,7 @@ import Providers from '@components/providers';
 import { cn } from '@/src/lib/utils.ts';
 import Header from '@components/header.tsx';
 import Footer from '@components/footer.tsx';
+import BackgroundHoverEffect from '@components/background-hover-effect.tsx';
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'] });
 const inter = Inter({ subsets: ['latin'] });
@@ -26,19 +27,22 @@ export default async function RootLayout({
 				className={cn(
 					jetbrainsMono.className,
 					inter.className,
-					'relative w-full h-full flex flex-col items-center justify-center',
-					'selection:bg-black dark:selection:bg-white selection:text-white dark:selection:text-black',
+					'relative flex h-full w-full flex-col items-center justify-center',
+					'selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black',
 					'bg-white dark:bg-black'
 				)}
 			>
-				<Providers>
+			<BackgroundHoverEffect />
+
+			<Providers>
 					<Header />
 					<div
 						className={cn(
-							'w-screen h-[100%] -z-10 absolute top-0 pattern-dots  pattern-neutral-500 pattern-bg-transparent pattern-opacity-10 pattern-size-6'
+							'pattern-dots absolute top-0 -z-10 h-[100%] w-screen pattern-bg-transparent pattern-neutral-500 pattern-opacity-20 dark:pattern-opacity-10 pattern-size-6'
 						)}
 					/>
-					<div className='transition-all font-mono min-h-screen w-full max-w-[1920px] h-full px-4'>
+
+					<div className='h-full min-h-screen w-full max-w-[1920px] px-4 font-mono transition-all'>
 						{children}
 					</div>
 					<Footer />

@@ -39,11 +39,11 @@ export default function Header() {
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className='fixed group font-mono z-10 left-0 top-0 w-full gap-24 h-24 items-center flex justify-center'
+			className='group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-24 font-mono'
 		>
 			<div
 				className={cn(
-					'flex p-1.5 md:p-2 transition-all gap-1 border border-black dark:border-white dark:border-opacity-25 border-opacity-25 rounded-full backdrop-blur-md dark:bg-opacity-25 bg-opacity-25 bg-white dark:bg-black',
+					'flex gap-1 rounded-full border-normal bg-white bg-opacity-25 p-1.5 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:p-2',
 					{
 						'-translate-y-24 opacity-0': !isScrollingUp,
 						'translate-y-0 opacity-100': isScrollingUp || hovering,
@@ -59,9 +59,9 @@ export default function Header() {
 							href={item.href}
 							key={item.name}
 							className={cn(
-								'text-md md:text-lg rounded-full transition-all px-1.5 md:px-4 py-1 md:py-2 hover:bg-black hover:dark:bg-white hover:bg-opacity-10 dark:hover:bg-opacity-10',
+								'text-md rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg',
 								{
-									'bg-black dark:bg-white text-white dark:text-black dark:hover:bg-opacity-100 hover:bg-opacity-100':
+									'bg-black text-white hover:bg-opacity-100 dark:bg-white dark:text-black dark:hover:bg-opacity-100':
 										(path.includes(item.href ?? '') &&
 											item.href !== '/') ||
 										path === item.href,
@@ -117,7 +117,7 @@ const items = [
 	},
 	{
 		name: 'profile',
-		href: '/profile',
+		href: '/u/me',
 		protected: false,
 	},
 ];

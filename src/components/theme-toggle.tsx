@@ -10,12 +10,12 @@ export default function ThemeToggle() {
 	useEffect(() => setMounted(true), []);
 
 	return (
-		<div className='flex z-10 backdrop-blur-lg transition-all items-center gap-2 rounded-full border border-black dark:border-white border-opacity-25 dark:border-opacity-25 p-2'>
+		<div className='z-10 flex items-center gap-2 rounded-full p-2 backdrop-blur-lg transition-all border-normal'>
 			<span
 				className={cn(
-					'text-2xl cursor-pointer transition-all p-1 w-10 h-10 rounded-full flex justify-center items-center',
+					'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full p-1 text-2xl transition-all opacity-80 hover:opacity-100',
 					{
-						'bg-black text-white dark:bg-white dark:text-black':
+						'bg-black text-white dark:bg-white dark:text-black opacity-100':
 							mounted && theme === 'light',
 					}
 				)}
@@ -25,9 +25,9 @@ export default function ThemeToggle() {
 			</span>
 			<span
 				className={cn(
-					'text-2xl cursor-pointer transition-all p-1 w-10 h-10 rounded-full flex justify-center items-center',
+					'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full p-1 text-2xl transition-all opacity-80 hover:opacity-100',
 					{
-						'bg-black text-white dark:bg-white dark:text-black':
+						'bg-black text-white dark:bg-white dark:text-black opacity-100':
 							mounted ? theme == 'system' : true,
 					}
 				)}
@@ -37,9 +37,9 @@ export default function ThemeToggle() {
 			</span>
 			<span
 				className={cn(
-					'text-2xl cursor-pointer transition-all p-1 w-10 h-10 rounded-full flex justify-center items-center',
+					'flex h-10 w-10 cursor-pointer items-center justify-center rounded-full p-1 text-2xl transition-all opacity-80 hover:opacity-100',
 					{
-						'bg-black text-white dark:bg-white dark:text-black':
+						'bg-black text-white dark:bg-white dark:text-black opacity-100':
 							mounted && theme === 'dark',
 					}
 				)}

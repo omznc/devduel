@@ -5,6 +5,7 @@ import Countdown from '@components/countdown.tsx';
 import prisma from '@/src/lib/prisma.ts';
 import { Submission, User } from '@prisma/client';
 import Link from 'next/link';
+import { cn } from '@/src/lib/utils.ts';
 
 export default async function Home() {
 	const latestSubmissions = await prisma.submission.findMany({
@@ -18,23 +19,23 @@ export default async function Home() {
 	});
 
 	return (
-		<div className='w-full h-full min-h-screen items-center flex flex-col justify-center'>
-			<div className='relative h-screen w-full flex flex-col justify-center items-center'>
-				<div className='absolute h-screen w-full flex flex-col justify-center items-center'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
+			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
+				<div className='absolute flex h-screen w-full flex-col items-center justify-center'>
 					<BackgroundDevDuel
-						className='animate-path opacity-50 w-full p-4 h-auto transition-all filter dark:invert'
+						className='animate-path h-auto w-full p-2 md:p-24 opacity-50 filter transition-all dark:invert'
 						viewBox='0 0 1352 714'
 					/>
 				</div>
-				<div className='absolute pointer-events-none transition-all font-bold w-fit h-full flex flex-col justify-center items-center'>
-					<span className='md:text-4xl text-lg transition-all text-center w-full'>
+				<div className='pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all'>
+					<span className='pointer-events-auto w-fit text-center text-lg transition-all md:text-4xl'>
 						{"This week's task"}
 					</span>
-					<span className='fit-text text-6xl transition-all text-center w-full'>
+					<span className='pointer-events-auto  fit-text w-fit text-center text-6xl transition-all'>
 						{'Create a landing page'}
 					</span>
 					<span
-						className='md:text-4xl text-lg gap-2 transition-all mt-4 text-center w-full'
+						className='pointer-events-auto  mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl'
 						suppressHydrationWarning
 					>
 						<Countdown
@@ -43,9 +44,9 @@ export default async function Home() {
 					</span>
 				</div>
 			</div>
-			<div className='relative h-screen w-full flex flex-col justify-center items-center'>
-				<h2 className='fit-text text-center'>{'What is DevDuel?'}</h2>
-				<div className='flex flex-col gap-4 w-full max-w-4xl'>
+			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
+				<h2 className={'fit-text text-center bg-colored after:opacity-60 after:bg-blue-500'}>{'What is DevDuel?'}</h2>
+				<div className='flex w-full max-w-4xl flex-col gap-4'>
 					<p className='text-center md:text-left'>
 						{'DevDuel is a weekly coding challenge where you compete with other' +
 							' developers to create the best project that fits the task.' +
@@ -70,18 +71,18 @@ export default async function Home() {
 				</div>
 			</div>
 			{latestSubmissions.length > 0 && (
-				<div className='relative overflow-hidden min-h-[50dvh] h-fit gap-2 w-full flex flex-col justify-center items-center'>
-					<h1 className='block md:hidden text-4xl font-bold text-white'>
+				<div className='relative flex h-fit min-h-[50dvh] w-full flex-col items-center justify-center gap-2 overflow-hidden'>
+					<h1 className='block text-4xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
-					<div className='flex mt-20 items-start z-10 justify-center gap-4 flex-wrap w-fit'>
+					<div className='z-10 mt-20 flex w-fit flex-wrap items-start justify-center gap-4'>
 						{latestSubmissions.map(submission => (
 							<Card submission={submission} key={submission.id} />
 						))}
 					</div>
 					<BackgroundLatest
 						viewBox='0 0 1351 1112'
-						className='animate-path opacity-70 w-full absolute h-auto top-8 filter dark:invert'
+						className='animate-path absolute top-8 h-auto w-full opacity-70 filter dark:invert'
 					/>
 				</div>
 			)}
@@ -93,23 +94,23 @@ function Card({ submission }: { submission: Submission & { user: User } }) {
 	return (
 		<Link
 			href={`/submission/${submission.id}`}
-			className='cursor-pointer overflow-hidden group transition-all w-full md:w-fit flex-shrink h-fit flex flex-col justify-center items-center rounded-xl'
+			className='group flex h-fit w-full flex-shrink cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl transition-all md:w-fit'
 		>
-			<div className='relative w-full object-cover md:w-fit h-fit aspect-video flex flex-col justify-center items-center'>
+			<div className='relative flex aspect-video h-fit w-full flex-col items-center justify-center object-cover md:w-fit'>
 				{submission.image && (
 					<Image
 						src={submission.image}
 						alt='Background'
-						className='relative rounded-xl object-cover transition-all animate-fade-in w-full h-full hover:blur-sm filter group-hover:brightness-75 hover:scale-105'
+						className='relative h-full w-full animate-fade-in rounded-xl object-cover filter transition-all hover:scale-105 hover:blur-sm group-hover:brightness-75'
 						width={500}
 						height={300}
 					/>
 				)}
 				{!submission.image && (
-					<div className='relative rounded-xl object-cover transition-all animate-fade-in w-full h-full hover:blur-sm filter group-hover:brightness-75 hover:scale-105 bg-gray-800' />
+					<div className='relative h-full w-full animate-fade-in rounded-xl bg-gray-800 object-cover filter transition-all hover:scale-105 hover:blur-sm group-hover:brightness-75' />
 				)}
 			</div>
-			<div className='flex flex-col w-full gap-1 pointer-events-none text-center absolute opacity-0 group-hover:opacity-100 transition-all text-lg font-bold text-white'>
+			<div className='pointer-events-none absolute flex w-full flex-col gap-1 text-center text-lg font-bold text-white opacity-0 transition-all group-hover:opacity-100'>
 				<span className='w-full text-2xl'>{submission.title}</span>
 				<span>@{submission.user.username}</span>
 			</div>

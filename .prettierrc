@@ -10,5 +10,6 @@
 	"arrowParens": "avoid",
 	"bracketSameLine": false,
 	"jsxSingleQuote": true,
-	"tabWidth": 4
+	"tabWidth": 4,
+	"plugins": ["prettier-plugin-tailwindcss", "prettier-plugin-prisma"]
 }

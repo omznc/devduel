@@ -1,6 +1,6 @@
 export default function Page() {
 	return (
-		<div className='w-full h-full min-h-screen items-center flex flex-col justify-center'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
 			nothing here yet
 		</div>
 	);

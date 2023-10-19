@@ -5,8 +5,8 @@ import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 export async function isAuthorized() {
 	// @ts-ignore
 	const session = await getServerSession(authOptions);
-	if (session?.user) {
-		return session;
+	if (session) {
+		return session?.user;
 	}
 	return null;
 }

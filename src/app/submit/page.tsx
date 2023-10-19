@@ -12,16 +12,16 @@ export default function Page() {
 	}
 
 	return (
-		<div className='w-full h-full min-h-screen items-center flex flex-col justify-center'>
-			<div className='transition-all font-bold w-fit h-full flex flex-col justify-start items-center'>
-				<span className='md:text-4xl text-lg transition-all text-center w-full'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
+			<div className='flex h-full w-fit flex-col items-center justify-start font-bold transition-all'>
+				<span className='w-full text-center text-lg transition-all md:text-4xl'>
 					{"This week's task"}
 				</span>
-				<span className='fit-text text-6xl transition-all text-center w-full'>
+				<span className='fit-text w-full text-center text-6xl transition-all'>
 					{'Create a landing page'}
 				</span>
 				<span
-					className='md:text-4xl text-lg gap-2 transition-all mt-4 text-center w-full'
+					className='mt-4 w-full gap-2 text-center text-lg transition-all md:text-4xl'
 					suppressHydrationWarning
 				>
 					{"but you can't submit yet"}

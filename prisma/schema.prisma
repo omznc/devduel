@@ -44,8 +44,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  Submission    Submission[]
-  Vote          Vote[]
+  submissions   Submission[]
+  votes         Vote[]
 }
 
 model Task {
@@ -54,7 +54,7 @@ model Task {
   expiresAt   DateTime
   title       String
   description String?
-  Submission  Submission[]
+  submissions Submission[]
 }
 
 model Submission {
@@ -70,7 +70,7 @@ model Submission {
   winner      Boolean  @default(false)
   task        Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
   user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  Vote        Vote[]
+  votes       Vote[]
 }
 
 model Vote {

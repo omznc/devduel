@@ -1,13 +1,13 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { redirect, useRouter } from 'next/navigation';
+import { redirect, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import {
 	checkUsername,
 	getUsernameSuggestion,
 	setUsername as setRemoteUsername,
-} from '@app/profile/username/actions.tsx';
+} from './actions.tsx';
 import { useDebounce } from '@/src/lib/hooks.ts';
 import LoadingDots from '@components/loading-dots.tsx';
 
@@ -15,7 +15,13 @@ type UsernameStatus = {
 	ok: boolean;
 	message: string;
 };
-export default function Page() {
+export default function Page({
+	params
+                             }: {
+	params: {
+		username: string;
+	}
+}) {
 	const [usernameStatus, setUsernameStatus] = useState<
 		UsernameStatus | undefined
 	>();
@@ -73,17 +79,17 @@ export default function Page() {
 	}
 
 	return (
-		<div className='w-full h-full gap-4 min-h-screen items-center flex flex-col justify-center'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
 			<div
 				className={
-					'w-fit max-w-full items-center text-center flex flex-col gap-8'
+					'flex w-fit max-w-full flex-col items-center gap-8 text-center'
 				}
 			>
-				<h2 className='fit-text text-6xl'>
+				<h2 className='fit-text bg-colored after:opacity-60 after:bg-blue-500'>
 					{"let's set your username"}
 				</h2>
 
-				<div className='inline-flex w-fit dark:text-black text-white max-w-full gap-1 px-4 items-center transition-all text-2xl md:text-4xl rounded-md justify-center bg-black dark:bg-white selection:bg-white dark:selection:bg-black selection:text-black dark:selection:text-white'>
+				<div className='inline-flex w-fit transition-all duration-300 max-w-full opacity-80 dark:opacity-80 hover:opacity-100 dark:hover:opacity-100 items-center justify-center gap-1 rounded-md bg-black dark:bg-white px-4 text-2xl text-white dark:text-black transition-all md:text-4xl'>
 					<span>{'>'}</span>
 					<input
 						type='text'
@@ -99,26 +105,26 @@ export default function Page() {
 							);
 							setUsername(e.target.value);
 						}}
-						className='bg-transparent min-w-[50px] px-2 py-2 focus:outline-none'
+						className='min-w-[50px] bg-transparent  px-2 py-2 focus:outline-none text-white dark:text-black selection:bg-white selection:text-black dark:selection:bg-black dark:selection:text-white placeholder-white dark:placeholder-black placeholder:opacity-50'
 					/>
 				</div>
 			</div>
 			<h3
 				className={
-					'w-fit text-2xl flex-col md:flex-row inline-flex gap-2 text-center'
+					'inline-flex w-fit flex-col gap-2 text-center text-2xl md:flex-row'
 				}
 			>
 				{isPending && (
 					<span
 						className={
-							'cursor-pointer transition-all opacity-80 hover:opacity-100'
+							'cursor-pointer transition-all'
 						}
 					>
 						[<LoadingDots />]
 					</span>
 				)}
 				{!isPending && (
-					<span className='opacity-80'>
+					<span>
 						{usernameStatus?.message}
 					</span>
 				)}
@@ -126,12 +132,12 @@ export default function Page() {
 					<span
 						ref={enterRef}
 						className={
-							'cursor-pointer transition-all opacity-80 hover:opacity-100'
+							'cursor-pointer transition-all'
 						}
 						onClick={async () => {
 							await setRemoteUsername(username);
 							await update();
-							router.push('/profile');
+							router.push('/u/me');
 						}}
 					>
 						{'[use]'}
@@ -139,10 +145,10 @@ export default function Page() {
 				)}
 				<span
 					className={
-						'cursor-pointer transition-all opacity-80 hover:opacity-100'
+						'cursor-pointer transition-all'
 					}
 					onClick={async () => {
-						router.push('/profile');
+						router.push('/u/me');
 					}}
 				>
 					{'[profile]'}

@@ -1,9 +1,9 @@
 /** @type {import("tailwindcss").Config} */
 module.exports = {
 	content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
+	//  add custom border preset border border-black border-opacity-25 dark:border-white dark:border-opacity-25
 	theme: {
 		extend: {},
-		border: {},
 		keyframes: {
 			'fade-in': {
 				'0%': {
@@ -18,6 +18,7 @@ module.exports = {
 			'fade-in': 'fade-in 0.5s ease-out forwards',
 		},
 	},
+
 	darkMode: 'class',
 	plugins: [require('tailwindcss-bg-patterns')],
 };

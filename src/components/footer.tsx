@@ -23,12 +23,13 @@ export default function Footer() {
 		}
 	}, [isAnimating]);
 	return (
-		<div className='w-full text-white group  items-center flex justify-center'>
-			<div className='w-full overflow-hidden text-black dark:text-white lg:flex-row flex-col transition-all px-8 max-w-[1920px] lg:gap-24 gap-8 py-4 h-fit  items-center flex justify-between'>
+		<div className='group flex w-full  items-center justify-center text-white'>
+			<div
+				className='flex h-fit w-full max-w-[1920px] flex-col items-center justify-between gap-8 overflow-hidden px-8 py-4 text-black transition-all  dark:text-white lg:flex-row lg:gap-24'>
 				<h1
 					className={cn(
-						'text-7xl select-none cursor-pointer transition-all font-bold hover:font-black',
-						inter.className
+						'cursor-pointer select-none text-7xl font-bold transition-all hover:font-black',
+						inter.className,
 					)}
 					onClick={() => {
 						setIsAnimating(true);
@@ -37,7 +38,7 @@ export default function Footer() {
 					DevDuel
 				</h1>
 				<ThemeToggle />
-				<div className='flex font-mono text-2xl gap-4'>
+				<div className='flex gap-4 font-mono text-2xl'>
 					<Link href={'#'} className='hover:underline'>
 						Twitter
 					</Link>
@@ -48,8 +49,8 @@ export default function Footer() {
 						GitHub
 					</Link>
 				</div>
-				<div ref={rocketRef} className='z-0 absolute -left-20'>
-					<BsRocketTakeoffFill className='rotate-45 w-16 h-16' />
+				<div ref={rocketRef} className='absolute -left-20 z-0'>
+					<BsRocketTakeoffFill className='h-16 w-16 rotate-45' />
 				</div>
 			</div>
 		</div>
