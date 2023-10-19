@@ -14,7 +14,7 @@
 		"noEmit": true,
 		"allowImportingTsExtensions": true,
 		"moduleDetection": "force",
-		"types": ["bun-types", "@types/web"],
+		"types": ["bun-types"],
 		"module": "esnext",
 		"target": "esnext",
 		"plugins": [
