@@ -1,14 +1,7 @@
 import { useTheme } from 'next-themes';
-import { FaSun, FaMoon, FaTv } from 'react-icons/fa6';
 import { cn } from '@/src/lib/utils.ts';
 import { useEffect, useState } from 'react';
-import {
-	PiComputerTowerDuotone,
-	PiHouseDuotone,
-	PiMoonDuotone,
-	PiSunDuotone,
-} from 'react-icons/pi';
-import React from 'preact/compat';
+import { PiHouseDuotone, PiMoonDuotone, PiSunDuotone } from 'react-icons/pi';
 
 export default function ThemeToggle() {
 	const { setTheme, theme } = useTheme();
