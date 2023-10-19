@@ -10,15 +10,13 @@ import { cn } from '@/src/lib/utils.ts';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Footer() {
-	const rocketRef = useRef<HTMLDivElement>();
+	const rocketRef = useRef<HTMLDivElement>(null);
 	const [isAnimating, setIsAnimating] = useState(false);
 
 	useEffect(() => {
 		if (isAnimating) {
-			// @ts-ignore
 			rocketRef.current?.classList.add('animate-rocket');
 			setTimeout(() => {
-				// @ts-ignore
 				rocketRef.current?.classList.remove('animate-rocket');
 				setIsAnimating(false);
 			}, 1000);

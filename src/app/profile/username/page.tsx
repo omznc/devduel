@@ -27,7 +27,7 @@ export default function Page() {
 	const debouncedUsername = useDebounce(username, 500);
 	const [isPending, setIsPending] = useState(false);
 
-	const enterRef = useRef<HTMLSpanElement>();
+	const enterRef = useRef<HTMLSpanElement>(null);
 
 	const router = useRouter();
 
@@ -125,7 +125,6 @@ export default function Page() {
 				)}
 				{usernameStatus?.ok && !isPending && (
 					<span
-						// @ts-ignore
 						ref={enterRef}
 						className={
 							'cursor-pointer transition-all opacity-80 hover:opacity-100'
