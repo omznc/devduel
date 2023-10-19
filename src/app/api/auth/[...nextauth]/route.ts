@@ -5,6 +5,7 @@ import prisma from '@/src/lib/prisma';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 
 export const authOptions: AuthOptions = {
+	// @ts-ignore
 	adapter: PrismaAdapter(prisma),
 	providers: [
 		GithubProvider({
