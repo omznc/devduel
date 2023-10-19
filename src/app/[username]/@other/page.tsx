@@ -23,7 +23,7 @@ export default async function Profile({ params }: {params: {username: string}}) 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
 			<div className='fit-text text-center bg-colored after:bg-yellow-500'>
-				this is @{params.username}
+				this is @{user.username}
 			</div>
 			<div className='flex flex-col gap-4'>
 				<h2 className='text-3xl text-center'>
