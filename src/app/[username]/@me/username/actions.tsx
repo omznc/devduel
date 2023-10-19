@@ -23,7 +23,7 @@ export async function checkUsername(username: string) {
 
 export async function setUsername(username: string) {
 	const authorized = await isAuthorized();
-	if (!authorized?.user) throw new Error('Not authorized');
+	if (!authorized || !authorized?.user) throw new Error('Not authorized');
 	if (!isValidUsername(username)) throw new Error('Invalid username format');
 	await prisma.user.update({
 		where: {
@@ -34,18 +34,19 @@ export async function setUsername(username: string) {
 		},
 	});
 
-	revalidatePath('/profile/username');
-	revalidatePath(`/u/${username}`);
+	revalidatePath('/@username');
+	revalidatePath(`/@me`);
 }
 
 export async function getUsernameSuggestion() {
 	const authorized = await isAuthorized();
-	if (!authorized?.user) throw new Error('Not authorized');
+	if (!authorized || !authorized?.user) throw new Error('Not authorized');
 
 	const suggestions = [
 		authorized.user.name?.split(' ')[0]?.toLowerCase(),
 		authorized.user.name?.split(' ').join('-').toLowerCase(),
 	];
+
 	const exists = await prisma.user.findMany({
 		where: {
 			OR: [

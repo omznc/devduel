@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import { redirect, usePathname, useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import {
 	checkUsername,
@@ -15,13 +15,7 @@ type UsernameStatus = {
 	ok: boolean;
 	message: string;
 };
-export default function Page({
-	params
-                             }: {
-	params: {
-		username: string;
-	}
-}) {
+export default function Page() {
 	const [usernameStatus, setUsernameStatus] = useState<
 		UsernameStatus | undefined
 	>();
@@ -32,6 +26,7 @@ export default function Page({
 	const debouncedUsername = useDebounce(username, 500);
 	const [isPending, setIsPending] = useState(false);
 
+	// @ts-ignore
 	const enterRef = useRef<HTMLSpanElement>(null);
 
 	const router = useRouter();
@@ -136,8 +131,10 @@ export default function Page({
 						}
 						onClick={async () => {
 							await setRemoteUsername(username);
-							await update();
-							router.push('/u/me');
+							await update().then(()=>{
+								router.push('/@me');
+							})
+
 						}}
 					>
 						{'[use]'}
@@ -150,7 +147,7 @@ export default function Page({
 								'cursor-pointer transition-all'
 							}
 							onClick={async () => {
-								router.push('/u/me');
+								router.push('/@me');
 							}}
 						>
 						{'[profile]'}

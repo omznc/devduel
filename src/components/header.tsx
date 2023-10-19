@@ -117,7 +117,7 @@ const items = [
 	},
 	{
 		name: 'profile',
-		href: '/u/me',
+		href: '/@me',
 		protected: false,
 	},
 ];

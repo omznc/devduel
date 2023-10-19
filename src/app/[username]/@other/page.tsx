@@ -5,19 +5,20 @@ import { Submission } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function Profile({ params}: {params: {username: string}}) {
+export default async function Profile({ params }: {params: {username: string}}) {
+	const username = params.username?.replace("%40", "")
+
+	if (!username) return redirect('/')
 	const user = await prisma.user.findUnique({
 		where: {
-			username: params.username
+			username: username
 		},
 		include: {
 			submissions: true
 		}
 	});
+	if (!user) return redirect('/');
 
-	if (!user) {
-		return redirect('/');
-	}
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
