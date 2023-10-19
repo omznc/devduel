@@ -13,6 +13,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'DevDuel',
+
 	description: 'A place to duel your friends',
 };
 
@@ -32,13 +33,12 @@ export default async function RootLayout({
 					'bg-white dark:bg-black'
 				)}
 			>
-			<BackgroundHoverEffect />
-
-			<Providers>
+				<BackgroundHoverEffect />
+				<Providers>
 					<Header />
 					<div
 						className={cn(
-							'pattern-dots absolute top-0 -z-10 h-[100%] w-screen pattern-bg-transparent pattern-neutral-500 pattern-opacity-20 dark:pattern-opacity-10 pattern-size-6'
+							'pattern-dots absolute top-0 -z-10 h-[100%] w-screen pattern-bg-transparent pattern-neutral-500 pattern-opacity-20 pattern-size-6 dark:pattern-opacity-10'
 						)}
 					/>
 

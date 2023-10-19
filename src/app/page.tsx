@@ -1,11 +1,11 @@
 import BackgroundDevDuel from '@public/background-devduel.svg';
+import BackgroundDevDuelMobile from '@public/background-devduel-mobile.svg';
 import BackgroundLatest from '@public/background-latest.svg';
 import Image from 'next/image';
 import Countdown from '@components/countdown.tsx';
 import prisma from '@/src/lib/prisma.ts';
 import { Submission, User } from '@prisma/client';
 import Link from 'next/link';
-import { cn } from '@/src/lib/utils.ts';
 
 export default async function Home() {
 	const latestSubmissions = await prisma.submission.findMany({
@@ -23,15 +23,19 @@ export default async function Home() {
 			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
 				<div className='absolute flex h-screen w-full flex-col items-center justify-center'>
 					<BackgroundDevDuel
-						className='animate-path h-auto w-full p-2 md:p-24 opacity-50 filter transition-all dark:invert'
+						className='animate-path hidden h-auto w-full p-2 opacity-50 filter transition-all dark:invert md:block md:p-24'
 						viewBox='0 0 1352 714'
+					/>
+					<BackgroundDevDuelMobile
+						className='animate-path h-auto w-full p-2 opacity-20 filter transition-all dark:invert md:hidden'
+						viewBox='0 0 126 377'
 					/>
 				</div>
 				<div className='pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all'>
 					<span className='pointer-events-auto w-fit text-center text-lg transition-all md:text-4xl'>
 						{"This week's task"}
 					</span>
-					<span className='pointer-events-auto  fit-text w-fit text-center text-6xl transition-all'>
+					<span className='fit-text  pointer-events-auto w-fit text-center text-6xl transition-all'>
 						{'Create a landing page'}
 					</span>
 					<span
@@ -45,7 +49,13 @@ export default async function Home() {
 				</div>
 			</div>
 			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
-				<h2 className={'fit-text text-center bg-colored after:opacity-60 after:bg-blue-500'}>{'What is DevDuel?'}</h2>
+				<h2
+					className={
+						'fit-text bg-colored text-center after:bg-blue-500 after:opacity-60'
+					}
+				>
+					{'What is DevDuel?'}
+				</h2>
 				<div className='flex w-full max-w-4xl flex-col gap-4'>
 					<p className='text-center md:text-left'>
 						{'DevDuel is a weekly coding challenge where you compete with other' +
@@ -82,7 +92,7 @@ export default async function Home() {
 					</div>
 					<BackgroundLatest
 						viewBox='0 0 1351 1112'
-						className='animate-path absolute top-8 h-auto w-full opacity-70 filter dark:invert'
+						className='animate-path absolute top-8 hidden h-auto w-full opacity-70 filter dark:invert md:block'
 					/>
 				</div>
 			)}

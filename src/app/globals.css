@@ -58,23 +58,7 @@
 }
 
 .reveal-color {
-	--x: 0;
-	--y: 0;
-	z-index: 50;
-	position: absolute;
-}
-
-/*circle on where mouse is*/
-.reveal-color::after {
-	content: '';
-	position: absolute;
-	top: calc(var(--y, 0) * 1px - 200px);
-	left: calc(var(--x, 0) * 1px - 200px);
-	width: 400px;
-	height: 400px;
-	opacity: 0;
-	transition: opacity 0.2s;
-	z-index: 100;
+	animation: breathe 15s infinite alternate-reverse cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 /* A text shadow that does mix-blend-color*/
@@ -97,7 +81,7 @@
 @keyframes breathe {
 	0% {
 		transform: scaleX(0.3) scaleY(0.2);
-		filter: blur(50px);
+		filter: blur(200px);
 	}
 	50% {
 		transform: scaleX(1.1) scaleY(1.3);
@@ -105,6 +89,18 @@
 	}
 	100% {
 		transform: scaleX(0.3) scaleY(0.2);
+		filter: blur(200px);
+	}
+}
+
+@keyframes breathe-bluronly {
+	0% {
+		filter: blur(50px);
+	}
+	50% {
+		filter: blur(100px);
+	}
+	100% {
 		filter: blur(50px);
 	}
 }
