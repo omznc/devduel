@@ -12,7 +12,7 @@ export default async function Profile() {
 		return redirect('/');
 	}
 
-	if (!session.user.username){
+	if (!session?.user?.username){
 		return redirect('/@me/username');
 	}
 

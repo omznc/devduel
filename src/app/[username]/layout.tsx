@@ -14,7 +14,7 @@ export default async function Layout({ me, other, params }: {
 	// @ts-ignore
 	const session = await getServerSession(authOptions);
 	const username = params.username?.replace("%40","")
-	if (session && !session.user.username) return me;
+	if (session && !session?.user?.username) return me;
 	if (session && [session.user.username, 'me'].includes(username)) return me;
 	return other
 }
