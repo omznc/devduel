@@ -23,7 +23,7 @@ export async function checkUsername(username: string) {
 
 export async function setUsername(username: string) {
 	const authorized = await isAuthorized();
-	if (!authorized) throw new Error('Not authorized');
+	if (!authorized?.user) throw new Error('Not authorized');
 	if (!isValidUsername(username)) throw new Error('Invalid username format');
 	await prisma.user.update({
 		where: {
@@ -40,7 +40,7 @@ export async function setUsername(username: string) {
 
 export async function getUsernameSuggestion() {
 	const authorized = await isAuthorized();
-	if (!authorized) throw new Error('Not authorized');
+	if (!authorized?.user) throw new Error('Not authorized');
 
 	const suggestions = [
 		authorized.user.name?.split(' ')[0]?.toLowerCase(),
@@ -66,18 +66,22 @@ export async function getUsernameSuggestion() {
 	if (exists.length === 0) {
 		return suggestions[0];
 	}
-	const valid = suggestions.find((suggestion) => !exists.find((user) => user.username === suggestion));
+	const valid = suggestions.find(
+		suggestion => !exists.find(user => user.username === suggestion)
+	);
 	if (valid) {
 		return valid;
 	}
 
-	while (true) {
-		const suggestion = `${authorized.user.name?.split(' ').join('-').toLowerCase()}-${
-			Math.floor(Math.random() * 1000)
-		}`;
-		if (!exists.find((user) => user.username === suggestion)) {
+	let found = false;
+	while (!found) {
+		const suggestion = `${authorized.user.name
+			?.split(' ')
+			.join('-')
+			.toLowerCase()}-${Math.floor(Math.random() * 1000)}`;
+		if (!exists.find(user => user.username === suggestion)) {
+			found = true;
 			return suggestion;
 		}
 	}
-
 }
