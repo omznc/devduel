@@ -1,6 +1,10 @@
 {
   "compilerOptions": {
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "DOM",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -14,7 +18,10 @@
     "noEmit": true,
     "allowImportingTsExtensions": true,
     "moduleDetection": "force",
-    "types": ["bun-types"],
+    "types": [
+      "bun-types",
+      "@types/web"
+    ],
     "module": "esnext",
     "target": "esnext",
     "plugins": [
@@ -23,16 +30,39 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["./src/components/*"],
-      "@app/*": ["./src/app/*"],
-      "@interfaces/*": ["./src/interfaces/*"],
-      "@public/*": ["./public/*"],
-      "@helpers/*": ["./src/helpers/*"],
-      "@stores/*": ["./src/stores/*"],
-      "@env": ["./src/env.ts"]
+      "@/*": [
+        "./*"
+      ],
+      "@components/*": [
+        "./src/components/*"
+      ],
+      "@app/*": [
+        "./src/app/*"
+      ],
+      "@interfaces/*": [
+        "./src/interfaces/*"
+      ],
+      "@public/*": [
+        "./public/*"
+      ],
+      "@helpers/*": [
+        "./src/helpers/*"
+      ],
+      "@stores/*": [
+        "./src/stores/*"
+      ],
+      "@env": [
+        "./src/env.ts"
+      ]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

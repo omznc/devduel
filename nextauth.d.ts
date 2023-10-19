@@ -1,18 +1,20 @@
 import { DefaultUser } from 'next-auth';
-import { User as PrismaUser } from '@prisma/client';
+import { Account, User as PrismaUser } from '@prisma/client';
 
-interface IUser extends DefaultUser, PrismaUser {}
+interface IUser extends DefaultUser, PrismaUser {
+}
 
 declare module 'next-auth' {
-    interface User extends IUser {}
+	interface User extends IUser {
+	}
 
-    interface Session {
-        user?: User;
-    }
+	interface Session {
+		user: User | null | undefined;
+		account: Account | null | undefined;
+	}
 
-    // 	extend profile to include email_verified
-    interface Profile {
-        email_verified?: boolean;
-        email?: string;
-    }
+	interface Profile {
+		email_verified?: boolean;
+		email?: string;
+	}
 }
