@@ -143,16 +143,20 @@ export default function Page({
 						{'[use]'}
 					</span>
 				)}
-				<span
-					className={
-						'cursor-pointer transition-all'
-					}
-					onClick={async () => {
-						router.push('/u/me');
-					}}
-				>
-					{'[profile]'}
-				</span>
+				{
+					user.username && (
+						<span
+							className={
+								'cursor-pointer transition-all'
+							}
+							onClick={async () => {
+								router.push('/u/me');
+							}}
+						>
+						{'[profile]'}
+					</span>
+					)
+				}
 			</h3>
 		</div>
 	);
