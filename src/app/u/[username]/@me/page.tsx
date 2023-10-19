@@ -8,6 +8,10 @@ export default async function Profile() {
 	// @ts-ignore
 	const session = await getServerSession(authOptions)
 
+	if (!session) {
+		return redirect('/');
+	}
+
 	const user = await prisma.user.findUnique({
 		where: {
 			username: session?.user.username
