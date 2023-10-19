@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { cn } from '@/src/lib/utils.ts';
 import { usePathname } from 'next/navigation';
+import { useIsMobile } from '@/src/lib/hooks.ts';
 
 const colors = [
 	'bg-red-500',
@@ -20,6 +21,7 @@ export default function BackgroundHoverEffect() {
 	const [randomCoordinates, setRandomCoordinates] = useState({ x: 0, y: 0 });
 	const [color, setColor] = useState(colors[0]);
 	const path = usePathname();
+	const isMobile = useIsMobile();
 
 	const handleMouseMove = (e: MouseEvent) => {
 		setCoordinates({ x: e.x, y: e.y });
@@ -58,7 +60,7 @@ export default function BackgroundHoverEffect() {
 				}}
 				suppressHydrationWarning={true}
 			/>
-			{path === '/' && (
+			{path === '/' && !isMobile && (
 				<>
 					<div
 						className={cn(

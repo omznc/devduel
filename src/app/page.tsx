@@ -26,10 +26,6 @@ export default async function Home() {
 						className='animate-path hidden h-auto w-full p-2 opacity-50 filter transition-all dark:invert md:block md:p-24'
 						viewBox='0 0 1352 714'
 					/>
-					<BackgroundDevDuelMobile
-						className='animate-path h-auto w-full p-2 opacity-20 filter transition-all dark:invert md:hidden'
-						viewBox='0 0 150 293'
-					/>
 				</div>
 				<div className='pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all'>
 					<span className='pointer-events-auto w-fit text-center text-lg transition-all md:text-4xl'>
