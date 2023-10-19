@@ -18,7 +18,7 @@ export default async function Profile() {
 
 	const user = await prisma.user.findUnique({
 		where: {
-			username: session.user.username
+			username: session?.user?.username
 		},
 		include: {
 			submissions: true
