@@ -13,7 +13,7 @@
     "lint": "next lint",
     "prettier": "prettier --write .",
     "prepare": "husky install",
-    "postinstall": "bunx prisma db push"
+    "postinstall": "prisma db push"
   },
   "dependencies": {
     "@auth/core": "^0.17.0",
