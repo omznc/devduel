@@ -28,7 +28,7 @@ export default async function Home() {
 					/>
 					<BackgroundDevDuelMobile
 						className='animate-path h-auto w-full p-2 opacity-20 filter transition-all dark:invert md:hidden'
-						viewBox='0 0 126 377'
+						viewBox='0 0 150 293'
 					/>
 				</div>
 				<div className='pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all'>
