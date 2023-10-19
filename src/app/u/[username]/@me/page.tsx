@@ -12,9 +12,13 @@ export default async function Profile() {
 		return redirect('/');
 	}
 
+	if (!session.user?.username) {
+		return redirect('/u/me/username');
+	}
+
 	const user = await prisma.user.findUnique({
 		where: {
-			username: session?.user.username
+			username: session.user.username
 		},
 		include: {
 			submissions: true
