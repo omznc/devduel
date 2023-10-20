@@ -39,7 +39,6 @@
 	transition: all 0.3s ease-in-out;
 	animation: dash cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards infinite;
 	animation-duration: 10s;
-
 }
 
 .animate-path path:hover {
@@ -58,7 +57,8 @@
 }
 
 .reveal-color {
-	animation: breathe 15s infinite alternate-reverse cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	animation: breathe 15s infinite alternate-reverse
+		cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 /* A text shadow that does mix-blend-color*/
@@ -75,7 +75,8 @@
 	left: 0;
 	filter: blur(100px);
 	mix-blend-mode: color-dodge;
-	animation: breathe 5s infinite alternate-reverse cubic-bezier(0.455, 0.03, 0.515, 0.955);
+	animation: breathe 5s infinite alternate-reverse
+		cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 @keyframes breathe {
@@ -109,3 +110,15 @@
 	@apply border border-black border-opacity-25 dark:border-white dark:border-opacity-25;
 }
 
+@keyframes fly-in {
+	0% {
+		transform: translateY(-100%);
+	}
+	100% {
+		transform: translateY(0%);
+	}
+}
+
+.fly-in {
+	animation: fly-in 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+}

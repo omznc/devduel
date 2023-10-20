@@ -8,12 +8,9 @@ import { Inter } from 'next/font/google';
 import { cn } from '@/src/lib/utils.ts';
 import { useIsMobile } from '@/src/lib/hooks.ts';
 import {
-	PiArrowSquareInDuotone,
-	PiArrowSquareOutDuotone,
 	PiArrowUpRightDuotone,
 	PiDiscordLogoDuotone,
 	PiGithubLogoDuotone,
-	PiTriangleDuotone,
 	PiTwitterLogoDuotone,
 } from 'react-icons/pi';
 import { IoLogoVercel } from 'react-icons/io5';

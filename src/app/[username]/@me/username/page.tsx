@@ -26,7 +26,6 @@ export default function Page() {
 	const debouncedUsername = useDebounce(username, 500);
 	const [isPending, setIsPending] = useState(false);
 
-	// @ts-ignore
 	const enterRef = useRef<HTMLSpanElement>(null);
 
 	const router = useRouter();
@@ -46,14 +45,16 @@ export default function Page() {
 			setUsernameStatus(exists);
 			setIsPending(false);
 		});
-	}, [debouncedUsername]);
+	}, [debouncedUsername, user?.username]);
 
 	useEffect(() => {
-		document.addEventListener('keydown', e => {
+		const handleEnter = (e: KeyboardEvent) => {
 			if (e.key === 'Enter') {
 				enterRef.current?.click();
 			}
-		});
+		};
+
+		document.addEventListener('keydown', handleEnter);
 
 		if (user?.username) return;
 		getUsernameSuggestion()
@@ -61,13 +62,9 @@ export default function Page() {
 			.catch(() => setUsername(''));
 
 		return () => {
-			document.removeEventListener('keydown', e => {
-				if (e.key === 'Enter') {
-					enterRef.current?.click();
-				}
-			});
+			document.removeEventListener('keydown', handleEnter);
 		};
-	}, []);
+	}, [user?.username]);
 
 	if (!user) {
 		return redirect('/');
@@ -80,11 +77,11 @@ export default function Page() {
 					'flex w-fit max-w-full flex-col items-center gap-8 text-center'
 				}
 			>
-				<h2 className='fit-text bg-colored after:opacity-60 after:bg-blue-500'>
+				<h2 className='fit-text bg-colored after:bg-blue-500 after:opacity-60'>
 					{"let's set your username"}
 				</h2>
 
-				<div className='inline-flex w-fit transition-all duration-300 max-w-full opacity-80 dark:opacity-80 hover:opacity-100 dark:hover:opacity-100 items-center justify-center gap-1 rounded-md bg-black dark:bg-white px-4 text-2xl text-white dark:text-black transition-all md:text-4xl'>
+				<div className='inline-flex w-fit max-w-full items-center justify-center gap-1 rounded-md bg-black px-4 text-2xl text-white opacity-80 transition-all transition-all duration-300 hover:opacity-100 dark:bg-white dark:text-black dark:opacity-80 dark:hover:opacity-100 md:text-4xl'>
 					<span>{'>'}</span>
 					<input
 						type='text'
@@ -100,7 +97,7 @@ export default function Page() {
 							);
 							setUsername(e.target.value);
 						}}
-						className='min-w-[50px] bg-transparent  px-2 py-2 focus:outline-none text-white dark:text-black selection:bg-white selection:text-black dark:selection:bg-black dark:selection:text-white placeholder-white dark:placeholder-black placeholder:opacity-50'
+						className='min-w-[50px] bg-transparent  px-2 py-2 text-white placeholder-white selection:bg-white selection:text-black placeholder:opacity-50 focus:outline-none dark:text-black dark:placeholder-black dark:selection:bg-black dark:selection:text-white'
 					/>
 				</div>
 			</div>
@@ -110,50 +107,35 @@ export default function Page() {
 				}
 			>
 				{isPending && (
-					<span
-						className={
-							'cursor-pointer transition-all'
-						}
-					>
+					<span className={'cursor-pointer transition-all'}>
 						[<LoadingDots />]
 					</span>
 				)}
-				{!isPending && (
-					<span>
-						{usernameStatus?.message}
-					</span>
-				)}
+				{!isPending && <span>{usernameStatus?.message}</span>}
 				{usernameStatus?.ok && !isPending && (
 					<span
 						ref={enterRef}
-						className={
-							'cursor-pointer transition-all'
-						}
+						className={'cursor-pointer transition-all'}
 						onClick={async () => {
 							await setRemoteUsername(username);
-							await update().then(()=>{
+							await update().then(() => {
 								router.push('/@me');
-							})
-
+							});
 						}}
 					>
 						{'[use]'}
 					</span>
 				)}
-				{
-					user.username && (
-						<span
-							className={
-								'cursor-pointer transition-all'
-							}
-							onClick={async () => {
-								router.push('/@me');
-							}}
-						>
+				{user.username && (
+					<span
+						className={'cursor-pointer transition-all'}
+						onClick={async () => {
+							router.push('/@me');
+						}}
+					>
 						{'[profile]'}
 					</span>
-					)
-				}
+				)}
 			</h3>
 		</div>
 	);

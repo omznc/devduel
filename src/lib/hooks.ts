@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export function useDebounce<T>(value: T, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
@@ -10,9 +10,9 @@ export function useDebounce<T>(value: T, delay: number) {
 }
 
 export function useIsMobile() {
-	const [isMobile, setIsMobile] = useState(false);
+	const [isMobile, setIsMobile] = useState<boolean | null>(null);
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		setIsMobile(window.innerWidth < 768);
 		const updateSize = (): void => {
 			setIsMobile(window.innerWidth < 768);

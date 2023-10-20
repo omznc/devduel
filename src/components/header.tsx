@@ -6,10 +6,10 @@ import { cn } from '@/src/lib/utils.ts';
 import { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import {
-	PiTrophyDuotone,
-	PiHouseDuotone,
 	PiEyeDuotone,
 	PiFolderSimplePlusDuotone,
+	PiHouseDuotone,
+	PiTrophyDuotone,
 	PiUserDuotone,
 } from 'react-icons/pi';
 import { useIsMobile } from '@/src/lib/hooks.ts';
@@ -39,11 +39,13 @@ export default function Header() {
 		};
 	}, [isMobile, prevScrollY]);
 
+	if (isMobile === null) return null;
+
 	return (
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className='group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-24 font-mono'
+			className='fly-in group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-24 font-mono'
 		>
 			<div
 				className={cn(

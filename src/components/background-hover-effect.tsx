@@ -44,6 +44,8 @@ export default function BackgroundHoverEffect() {
 		};
 	}, []);
 
+	if (isMobile === null) return null;
+
 	return (
 		<>
 			<div
@@ -58,7 +60,7 @@ export default function BackgroundHoverEffect() {
 					filter: 'blur(100px)',
 					animation: '',
 				}}
-				suppressHydrationWarning={true}
+				suppressHydrationWarning
 			/>
 			{path === '/' && !isMobile && (
 				<>
@@ -71,6 +73,7 @@ export default function BackgroundHoverEffect() {
 							right: (randomCoordinates.x - 250) * Math.random(),
 							filter: 'blur(100px)',
 						}}
+						suppressHydrationWarning
 					/>
 					<div
 						className={cn(
@@ -81,6 +84,7 @@ export default function BackgroundHoverEffect() {
 							left: (randomCoordinates.x - 250) * Math.random(),
 							filter: 'blur(100px)',
 						}}
+						suppressHydrationWarning
 					/>
 					<div
 						className={cn(
@@ -91,6 +95,7 @@ export default function BackgroundHoverEffect() {
 							right: (randomCoordinates.x - 250) * Math.random(),
 							filter: 'blur(100px)',
 						}}
+						suppressHydrationWarning
 					/>
 					<div
 						className={cn(
@@ -101,6 +106,7 @@ export default function BackgroundHoverEffect() {
 							left: (randomCoordinates.x - 250) * Math.random(),
 							filter: 'blur(100px)',
 						}}
+						suppressHydrationWarning
 					/>
 				</>
 			)}

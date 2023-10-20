@@ -1,5 +1,4 @@
 import BackgroundDevDuel from '@public/background-devduel.svg';
-import BackgroundDevDuelMobile from '@public/background-devduel-mobile.svg';
 import BackgroundLatest from '@public/background-latest.svg';
 import Image from 'next/image';
 import Countdown from '@components/countdown.tsx';
