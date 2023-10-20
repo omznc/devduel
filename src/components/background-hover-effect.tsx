@@ -48,7 +48,7 @@ export default function BackgroundHoverEffect() {
 		<>
 			<div
 				className={cn(
-					`reveal-color  pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-opacity-30 mix-blend-color-dodge`,
+					`reveal-color pointer-events-none fixed z-20 h-[500px] w-[500px] rounded-full bg-opacity-30 mix-blend-color-dodge`,
 					color
 				)}
 				style={{

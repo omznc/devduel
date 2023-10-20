@@ -31,7 +31,7 @@ export default async function Home() {
 					<span className='pointer-events-auto w-fit text-center text-lg transition-all md:text-4xl'>
 						{"This week's task"}
 					</span>
-					<span className='fit-text  pointer-events-auto w-fit text-center text-6xl transition-all'>
+					<span className='fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500'>
 						{'Create a landing page'}
 					</span>
 					<span
