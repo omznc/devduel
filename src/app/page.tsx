@@ -3,8 +3,9 @@ import BackgroundLatest from '@public/background-latest.svg';
 import Image from 'next/image';
 import Countdown from '@components/countdown.tsx';
 import prisma from '@/src/lib/prisma.ts';
-import { Submission, User } from '@prisma/client';
+import { Submission, Task, User } from '@prisma/client';
 import Link from 'next/link';
+import { kebabCase } from '@/src/lib/utils.ts';
 
 export default async function Home() {
 	const latestSubmissions = await prisma.submission.findMany({
@@ -14,6 +15,7 @@ export default async function Home() {
 		},
 		include: {
 			user: true,
+			task: true,
 		},
 	});
 
@@ -80,7 +82,7 @@ export default async function Home() {
 					<h1 className='block text-4xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
-					<div className='z-10 mt-20 flex w-fit flex-wrap items-start justify-center gap-4'>
+					<div className='z-10 mt-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row'>
 						{latestSubmissions.map(submission => (
 							<Card submission={submission} key={submission.id} />
 						))}
@@ -95,13 +97,17 @@ export default async function Home() {
 	);
 }
 
-function Card({ submission }: { submission: Submission & { user: User } }) {
+type CardProps = {
+	submission: Submission & { user: User; task: Task };
+};
+
+function Card({ submission }: CardProps) {
 	return (
 		<Link
-			href={`/submission/${submission.id}`}
-			className='group flex h-fit w-full flex-shrink cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl transition-all md:w-fit'
+			href={`/${submission.task.id}/${submission.id}`}
+			className='group flex aspect-video w-full flex-shrink cursor-pointer flex-col items-center justify-center overflow-hidden overflow-hidden rounded-xl transition-all md:w-[300px]'
 		>
-			<div className='relative flex aspect-video h-fit w-full flex-col items-center justify-center object-cover md:w-fit'>
+			<div className='relative flex aspect-video h-fit w-full flex-col items-center justify-center object-cover'>
 				{submission.image && (
 					<Image
 						src={submission.image}

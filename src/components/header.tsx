@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/src/lib/utils.ts';
 import { useEffect, useState } from 'react';
 import { signIn, useSession } from 'next-auth/react';
 import {
+	PiArrowLeftDuotone,
 	PiEyeDuotone,
 	PiFolderSimplePlusDuotone,
 	PiHouseDuotone,
@@ -20,6 +21,7 @@ export default function Header() {
 	const [isScrollingUp, setIsScrollingUp] = useState(true);
 	const [prevScrollY, setPrevScrollY] = useState(0);
 	const isMobile = useIsMobile();
+	const router = useRouter();
 	const { data: session } = useSession();
 
 	useEffect(() => {
@@ -45,8 +47,27 @@ export default function Header() {
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className='fly-in group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-24 font-mono'
+			className='fly-in group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all'
 		>
+			<div
+				className={cn(
+					'border-normal flex items-center gap-1 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2',
+					{
+						'-translate-y-24 opacity-0': !isScrollingUp,
+						'translate-y-0 opacity-100': isScrollingUp || hovering,
+						'-translate-y-24': path === '/',
+					}
+				)}
+			>
+				<button
+					className={cn(
+						'text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg'
+					)}
+					onClick={() => router.back()}
+				>
+					<PiArrowLeftDuotone />
+				</button>
+			</div>
 			<div
 				className={cn(
 					'border-normal flex gap-1 rounded-full bg-white bg-opacity-25 p-1.5 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2',
@@ -122,8 +143,8 @@ const items = [
 		protected: false,
 	},
 	{
-		name: 'leaderboard',
-		href: '/leaderboard',
+		name: 'winners',
+		href: '/winners',
 		icon: <PiTrophyDuotone className='h-6 w-auto' />,
 		protected: false,
 	},

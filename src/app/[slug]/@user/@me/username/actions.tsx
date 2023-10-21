@@ -34,8 +34,8 @@ export async function setUsername(username: string) {
 		},
 	});
 
-	revalidatePath('/@username');
-	revalidatePath(`/@me`);
+	revalidatePath(`/@${username}`);
+	revalidatePath(`/@${authorized.user?.username}`);
 }
 
 export async function getUsernameSuggestion() {

@@ -10,6 +10,7 @@ import {
 } from './actions.tsx';
 import { useDebounce } from '@/src/lib/hooks.ts';
 import LoadingDots from '@components/loading-dots.tsx';
+import { toast } from 'react-hot-toast';
 
 type UsernameStatus = {
 	ok: boolean;
@@ -26,10 +27,7 @@ export default function Page() {
 	const debouncedUsername = useDebounce(username, 500);
 	const [isPending, setIsPending] = useState(false);
 
-	const enterRef = useRef<HTMLSpanElement>(null);
-
 	const router = useRouter();
-
 	useEffect(() => {
 		if (
 			debouncedUsername.length < 3 ||
@@ -48,22 +46,10 @@ export default function Page() {
 	}, [debouncedUsername, user?.username]);
 
 	useEffect(() => {
-		const handleEnter = (e: KeyboardEvent) => {
-			if (e.key === 'Enter') {
-				enterRef.current?.click();
-			}
-		};
-
-		document.addEventListener('keydown', handleEnter);
-
 		if (user?.username) return;
 		getUsernameSuggestion()
 			.then(u => setUsername(u ?? ''))
 			.catch(() => setUsername(''));
-
-		return () => {
-			document.removeEventListener('keydown', handleEnter);
-		};
 	}, [user?.username]);
 
 	if (!user) {
@@ -114,12 +100,17 @@ export default function Page() {
 				{!isPending && <span>{usernameStatus?.message}</span>}
 				{usernameStatus?.ok && !isPending && (
 					<span
-						ref={enterRef}
 						className={'cursor-pointer transition-all'}
 						onClick={async () => {
-							await setRemoteUsername(username);
-							await update().then(() => {
-								router.push('/@me');
+							await toast.promise(setRemoteUsername(username), {
+								loading: 'Just a moment...',
+								success: () => {
+									update().then(() => {
+										router.push('/@me');
+									});
+									return `You are now ${username}!`;
+								},
+								error: 'Something went wrong.',
 							});
 						}}
 					>

@@ -7,6 +7,7 @@ import { cn } from '@/src/lib/utils.ts';
 import Header from '@components/header.tsx';
 import Footer from '@components/footer.tsx';
 import BackgroundHoverEffect from '@components/background-hover-effect.tsx';
+import Toast from '@components/toast.tsx';
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'] });
 const inter = Inter({ subsets: ['latin'] });
@@ -34,6 +35,7 @@ export default async function RootLayout({
 				)}
 			>
 				<BackgroundHoverEffect />
+				<Toast />
 				<Providers>
 					<Header />
 					<div

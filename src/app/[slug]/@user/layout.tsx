@@ -11,12 +11,12 @@ export default async function Layout({
 	me: ReactNode;
 	other: ReactNode;
 	params: {
-		username: string; //@username or @me
+		slug: string; //@username or @me
 	};
 }) {
 	// @ts-ignore
 	const session = await getServerSession(authOptions);
-	const username = params.username?.replace('%40', '');
+	const username = params.slug?.replace('%40', '');
 	if (session && !session?.user?.username) return me;
 	if (session && [session?.user?.username, 'me'].includes(username))
 		return me;
