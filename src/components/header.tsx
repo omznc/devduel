@@ -64,6 +64,7 @@ export default function Header() {
 						'text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg'
 					)}
 					onClick={() => router.back()}
+					aria-label='Go back'
 				>
 					<PiArrowLeftDuotone />
 				</button>
@@ -91,6 +92,7 @@ export default function Header() {
 							<Link
 								href={item.href}
 								key={item.name}
+								aria-label={item.name}
 								className={cn(
 									'text-md inline-flex items-center justify-center gap-2 rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg',
 									{
