@@ -55,7 +55,7 @@ export default function Header() {
 					{
 						'-translate-y-24 opacity-0': !isScrollingUp,
 						'translate-y-0 opacity-100': isScrollingUp || hovering,
-						'-translate-y-24': path === '/',
+						'translate-x-10 opacity-0': path === '/',
 					}
 				)}
 			>
@@ -74,6 +74,7 @@ export default function Header() {
 					{
 						'-translate-y-24 opacity-0': !isScrollingUp,
 						'translate-y-0 opacity-100': isScrollingUp || hovering,
+						'-ml-16': path === '/',
 					}
 				)}
 			>
