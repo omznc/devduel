@@ -1,4 +1,4 @@
-import prisma from '@/src/lib/prisma.ts';
+import prisma from '@lib/prisma.ts';
 import Client from './client.tsx';
 import { redirect } from 'next/navigation';
 import { SubmissionEntry } from '@components/submission/submission-list.tsx';

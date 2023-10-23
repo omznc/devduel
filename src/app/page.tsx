@@ -2,22 +2,14 @@ import BackgroundDevDuel from '@public/background-devduel.svg';
 import BackgroundLatest from '@public/background-latest.svg';
 import Image from 'next/image';
 import Countdown from '@components/countdown.tsx';
-import prisma from '@/src/lib/prisma.ts';
+import prisma from '@lib/prisma.ts';
 import { Submission, Task, User } from '@prisma/client';
 import Link from 'next/link';
 import { kebabCase } from '@/src/lib/utils.ts';
+import { getCurrentTask } from '@lib/server-utils.ts';
 
 export default async function Home() {
-	const latestSubmissions = await prisma.submission.findMany({
-		take: 10,
-		orderBy: {
-			createdAt: 'desc',
-		},
-		include: {
-			user: true,
-			task: true,
-		},
-	});
+	const task = await getCurrentTask(20);
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
@@ -33,15 +25,13 @@ export default async function Home() {
 						{"This week's task"}
 					</span>
 					<span className='fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500'>
-						{'Create a landing page'}
+						{task?.title ?? 'Coming soon'}
 					</span>
 					<span
 						className='pointer-events-auto  mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl'
 						suppressHydrationWarning
 					>
-						<Countdown
-							expires={new Date('2023-12-10T00:00:00.000Z')}
-						/>
+						{task && <Countdown expires={task.expiresAt} />}
 					</span>
 				</div>
 			</div>
@@ -77,15 +67,20 @@ export default async function Home() {
 					</p>
 				</div>
 			</div>
-			{latestSubmissions.length > 0 && (
+			{task?.submissions && (
 				<div className='relative flex h-fit min-h-[50dvh] w-full flex-col items-center justify-center gap-2 overflow-hidden'>
 					<h1 className='block text-4xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
 					<div className='z-10 mt-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row'>
-						{latestSubmissions.map(submission => (
-							<Card submission={submission} key={submission.id} />
-						))}
+						{task.submissions.map(submission => {
+							return (
+								<Card
+									submission={{ ...submission, task: task }}
+									key={submission.id}
+								/>
+							);
+						})}
 					</div>
 					<BackgroundLatest
 						viewBox='0 0 1351 1112'

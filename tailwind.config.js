@@ -13,9 +13,18 @@ module.exports = {
 					opacity: 'initial',
 				},
 			},
+			spin: {
+				'0%': {
+					transform: 'rotate(0deg)',
+				},
+				'100%': {
+					transform: 'rotate(360deg)',
+				},
+			},
 		},
 		animation: {
 			'fade-in': 'fade-in 0.5s ease-out forwards',
+			spin: 'spin 1s cubic-bezier(0.5, 0, 0.5, 1) infinite',
 		},
 	},
 

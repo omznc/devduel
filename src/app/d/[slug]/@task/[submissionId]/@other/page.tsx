@@ -1,7 +1,5 @@
-import { redirect } from 'next/navigation';
-import { getSubmission } from '@app/[slug]/@task/[submissionId]/cache.ts';
+import { getSubmissionCached } from '@app/d/[slug]/@task/cache.ts';
 import { RoundLink } from '@components/buttons.tsx';
-import { PiArrowLeftDuotone } from 'react-icons/pi';
 
 export default async function Profile({
 	params,
@@ -10,7 +8,10 @@ export default async function Profile({
 }) {
 	// This will always return a submission.
 	// The actual submission is checked in the layout.
-	const submission = await getSubmission(params.slug, params.submissionId);
+	const submission = await getSubmissionCached(
+		params.slug,
+		params.submissionId
+	);
 
 	return (
 		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 md:mt-0'>

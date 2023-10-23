@@ -23,6 +23,7 @@
 			"@public/*": ["./public/*"],
 			"@helpers/*": ["./src/helpers/*"],
 			"@stores/*": ["./src/stores/*"],
+			"@lib/*": ["./src/lib/*"],
 			"@env": ["./src/env.ts"]
 		},
 		"plugins": [{ "name": "next" }],

@@ -1,5 +1,3 @@
-'use client';
-
 import { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '@/src/lib/utils.ts';
 import Link from 'next/link';

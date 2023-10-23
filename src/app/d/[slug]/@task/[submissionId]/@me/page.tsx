@@ -1,9 +1,10 @@
-import { PiArrowLeftDuotone } from 'react-icons/pi';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
-import { getSubmission } from '@app/[slug]/@task/[submissionId]/cache.ts';
+import { getSubmissionCached } from '@app/d/[slug]/@task/cache.ts';
 import { RoundLink } from '@components/buttons.tsx';
+import Link from 'next/link';
+import { cn } from '@lib/utils.ts';
 
 export default async function Profile({
 	params,
@@ -21,20 +22,30 @@ export default async function Profile({
 
 	// This will always return a submission.
 	// The actual submission is checked in the layout.
-	const submission = await getSubmission(params.slug, params.submissionId);
-	const user = submission?.user;
+	const submission = await getSubmissionCached(
+		params.slug,
+		params.submissionId
+	);
 
 	return (
 		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 md:mt-0'>
-			<RoundLink href={`/${submission!.taskId}`}>
+			{/*<RoundLink href={`/${submission!.taskId}`}>*/}
+			{/*	Task: {submission!.task?.title}*/}
+			{/*</RoundLink>*/}
+			<Link
+				href={`/${submission!.taskId}`}
+				className={
+					'border-normal inline-flex items-center gap-1 rounded-full bg-white p-2 px-3 transition-all dark:bg-black dark:text-white'
+				}
+			>
 				Task: {submission!.task?.title}
-			</RoundLink>
-			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
-				{`Hey ${user!.name?.split(' ')[0]}!`}
-			</div>
+			</Link>
 			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
 				{submission!.title}
 			</div>
+			<Link href={`/${submission!.taskId}`} prefetch={true}>
+				test
+			</Link>
 		</div>
 	);
 }

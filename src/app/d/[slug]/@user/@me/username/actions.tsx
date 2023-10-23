@@ -1,9 +1,9 @@
 'use server';
 
-import prisma from '@/src/lib/prisma.ts';
-import { isAuthorized } from '@/src/lib/server-utils.ts';
+import prisma from '@lib/prisma.ts';
+import { isAuthorized } from '@lib/server-utils.ts';
 import { revalidatePath } from 'next/cache';
-import { isValidUsername } from '@/src/lib/utils.ts';
+import { isValidUsername } from '@lib/utils.ts';
 
 export async function checkUsername(username: string) {
 	if (!isValidUsername(username)) {

@@ -41,6 +41,11 @@ export default function Header() {
 		};
 	}, [isMobile, prevScrollY]);
 
+	// If we're on the top of the page, always show the header
+	useEffect(() => {
+		if (window.scrollY === 0) setIsScrollingUp(true);
+	}, [path]);
+
 	if (isMobile === null) return null;
 
 	return (

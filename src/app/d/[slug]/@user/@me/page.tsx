@@ -1,10 +1,11 @@
-import prisma from '@/src/lib/prisma.ts';
-import Client from '@app/[slug]/@user/@me/client.tsx';
+import prisma from '@lib/prisma.ts';
+import Client from '@app/d/[slug]/@user/@me/client.tsx';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 import { Submission } from '@prisma/client';
 import { SubmissionEntry } from '@components/submission/submission-list.tsx';
+import Link from 'next/link';
 
 export default async function Profile() {
 	// @ts-ignore

@@ -8,7 +8,7 @@ import {
 	getUsernameSuggestion,
 	setUsername as setRemoteUsername,
 } from './actions.tsx';
-import { useDebounce } from '@/src/lib/hooks.ts';
+import { useDebounce } from '@lib/hooks.ts';
 import LoadingDots from '@components/loading-dots.tsx';
 import { toast } from 'react-hot-toast';
 
