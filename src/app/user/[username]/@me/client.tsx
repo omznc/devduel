@@ -28,7 +28,7 @@ export default function Client({
 				className={
 					'cursor-pointer text-2xl transition-all hover:opacity-100'
 				}
-				href={'/@me/username'}
+				href={'/user/@me/username'}
 			>
 				{'[set username]'}
 			</Link>

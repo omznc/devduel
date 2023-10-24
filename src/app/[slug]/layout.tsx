@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { redirect } from 'next/navigation';
-import { getTaskCached } from '@app/d/[slug]/@task/cache.ts';
+import { getTaskCached } from '@app/task/cache.ts';
 
 // @ts-ignore
 export default async function Layout({

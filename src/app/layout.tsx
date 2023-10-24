@@ -43,8 +43,7 @@ export default async function RootLayout({
 							'pattern-dots absolute top-0 -z-10 h-[100%] w-screen pattern-bg-transparent pattern-neutral-500 pattern-opacity-20 pattern-size-6 dark:pattern-opacity-10'
 						)}
 					/>
-
-					<div className='h-full min-h-screen w-full max-w-[1920px] px-4 font-mono transition-all'>
+					<div className='mt-24 h-full min-h-screen w-full max-w-[1920px] px-4 font-mono transition-all md:mt-0'>
 						{children}
 					</div>
 					<Footer />

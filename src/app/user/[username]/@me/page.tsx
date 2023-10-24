@@ -1,11 +1,9 @@
 import prisma from '@lib/prisma.ts';
-import Client from '@app/d/[slug]/@user/@me/client.tsx';
+import Client from '@app/user/[username]/@me/client.tsx';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
-import { Submission } from '@prisma/client';
 import { SubmissionEntry } from '@components/submission/submission-list.tsx';
-import Link from 'next/link';
 
 export default async function Profile() {
 	// @ts-ignore
@@ -16,7 +14,7 @@ export default async function Profile() {
 	}
 
 	if (!session?.user?.username) {
-		return redirect('/@me/username');
+		return redirect('/user/@me/username');
 	}
 
 	const user = await prisma.user.findUnique({
@@ -32,12 +30,12 @@ export default async function Profile() {
 		},
 	});
 
-	if (!user) {
-		return redirect('/@me/username');
+	if (!user?.username) {
+		return redirect('/user/@me/username');
 	}
 
 	return (
-		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-center gap-4 md:mt-0'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
 			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
 				{`Hey ${user.name?.split(' ')[0]}!`}
 			</div>

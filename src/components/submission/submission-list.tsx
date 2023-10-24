@@ -9,8 +9,7 @@ type SubmissionEntryProps = {
 export function SubmissionEntry({ submission }: SubmissionEntryProps) {
 	return (
 		<Link
-			// href={`/$${submission.id}`}
-			href={`/${submission.task.id}/${submission.id}`}
+			href={`/submission/${submission.id}`}
 			className='border-normal flex h-fit max-h-[300px] w-auto flex-col gap-2 rounded-lg bg-black bg-opacity-5 p-4 backdrop-blur-[2px] transition-all hover:bg-opacity-20 dark:bg-white dark:bg-opacity-5 dark:hover:bg-opacity-20 md:w-[500px] md:flex-row md:gap-8'
 		>
 			{submission.image && (

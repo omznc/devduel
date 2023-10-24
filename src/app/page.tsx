@@ -12,7 +12,7 @@ export default async function Home() {
 	const task = await getCurrentTask(20);
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center'>
+		<div className='-mt-24 flex h-full min-h-screen w-full flex-col items-center justify-center md:-mt-0'>
 			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
 				<div className='absolute flex h-screen w-full flex-col items-center justify-center'>
 					<BackgroundDevDuel
@@ -93,13 +93,13 @@ export default async function Home() {
 }
 
 type CardProps = {
-	submission: Submission & { user: User; task: Task };
+	submission: Submission & { user: User };
 };
 
 function Card({ submission }: CardProps) {
 	return (
 		<Link
-			href={`/${submission.task.id}/${submission.id}`}
+			href={`/submission/${submission.id}`}
 			className='group flex aspect-video w-full flex-shrink cursor-pointer flex-col items-center justify-center overflow-hidden overflow-hidden rounded-xl transition-all md:w-[300px]'
 		>
 			<div className='relative flex aspect-video h-fit w-full flex-col items-center justify-center object-cover'>

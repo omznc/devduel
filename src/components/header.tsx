@@ -170,7 +170,7 @@ const items = [
 	},
 	{
 		name: 'profile',
-		href: '/@me',
+		href: '/user/me',
 		icon: <PiUserDuotone className='h-6 w-auto' />,
 		protected: false,
 	},
