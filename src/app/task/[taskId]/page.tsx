@@ -13,7 +13,7 @@ export default async function Task({ params }: TaskProps) {
 	const task = await getTaskCached(params.taskId);
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
 			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
 				{task?.title}
 			</div>

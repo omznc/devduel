@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { useDropzone } from 'react-dropzone';
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, Suspense, useEffect, useState } from 'react';
 import { cn } from '@lib/utils.ts';
 import Image from 'next/image';
 import { PiTrashDuotone } from 'react-icons/pi';
@@ -11,7 +11,11 @@ import { toast } from 'react-hot-toast';
 import { createSubmission } from '@app/submit/actions.tsx';
 import { useTheme } from 'next-themes';
 import rehypeSanitize from 'rehype-sanitize';
-import MDEditor from '@uiw/react-md-editor';
+import dynamic from 'next/dynamic';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 const markdown = `
 # My Submission
@@ -175,6 +179,8 @@ export default function Page() {
 									return toast.error(`${key} is required.`);
 								data.append(key, entry);
 							}
+
+							console.log(data);
 
 							await toast.promise(createSubmission(data), {
 								loading: 'Uploading...',

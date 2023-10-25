@@ -1,8 +1,10 @@
 /** @type {import('next').NextConfig} */
+const removeImports = require('next-remove-imports')();
+
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ['i.imgur.com'],
+		domains: ['i.imgur.com', 'cdn-devduel.omarzunic.com'],
 	},
 	experimental: {
 		serverActions: true,
@@ -17,4 +19,4 @@ const nextConfig = {
 	},
 };
 
-module.exports = nextConfig;
+module.exports = removeImports(nextConfig);

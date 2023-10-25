@@ -12,7 +12,7 @@ export default async function Home() {
 	const task = await getCurrentTask(20);
 
 	return (
-		<div className='-mt-24 flex h-full min-h-screen w-full flex-col items-center justify-center md:-mt-0'>
+		<div className='-mt-24 flex h-full min-h-screen w-full flex-col items-center justify-center'>
 			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
 				<div className='absolute flex h-screen w-full flex-col items-center justify-center'>
 					<BackgroundDevDuel
@@ -68,15 +68,15 @@ export default async function Home() {
 				</div>
 			</div>
 			{task?.submissions && (
-				<div className='relative flex h-fit min-h-[50dvh] w-full flex-col items-center justify-center gap-2 overflow-hidden'>
-					<h1 className='block text-4xl font-bold text-white md:hidden'>
+				<div className='relative flex h-fit min-h-[50dvh] w-full flex-col items-center justify-center gap-4 overflow-hidden'>
+					<h1 className='block text-5xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
-					<div className='z-10 mt-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row'>
+					<div className='z-10 flex w-full flex-col items-start justify-center gap-4 sm:flex-row md:mt-20'>
 						{task.submissions.map(submission => {
 							return (
 								<Card
-									submission={{ ...submission, task: task }}
+									submission={submission}
 									key={submission.id}
 								/>
 							);

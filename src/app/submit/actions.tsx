@@ -2,6 +2,7 @@
 
 import prisma from '@lib/prisma.ts';
 import { getCurrentTask, isAuthorized } from '@/src/lib/server-utils.ts';
+import { uploadFile } from '@lib/storage.ts';
 
 export async function createSubmission(formData: FormData) {
 	const session = await isAuthorized();
@@ -19,7 +20,7 @@ export async function createSubmission(formData: FormData) {
 		description: (() => {
 			const description = formData.get('description') as string;
 			if (!description) throw new Error('No description');
-			if (description.length > 1000)
+			if (description.length > 10000)
 				throw new Error('Description too long');
 			return description;
 		})(),
@@ -35,7 +36,24 @@ export async function createSubmission(formData: FormData) {
 			if (source.length > 1000) throw new Error('Source too long');
 			return source;
 		})(),
+		image: (() => {
+			const image = formData.get('image') as File;
+			if (!image) throw new Error('No image');
+			if (image.size > 5 * 1024 * 1024)
+				throw new Error('Image too large');
+			if (!image.type.startsWith('image/'))
+				throw new Error('Image must be an image');
+			return image;
+		})(),
 	};
+
+	const url = await uploadFile(
+		Buffer.from(await data.image.arrayBuffer()),
+		data.image.type,
+		`submissions/${task.id}/${session.user!.id}`
+	);
+
+	console.log(url);
 
 	return prisma.submission.create({
 		data: {
@@ -51,6 +69,7 @@ export async function createSubmission(formData: FormData) {
 				},
 			},
 			...data,
+			image: url,
 		},
 	});
 }

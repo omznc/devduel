@@ -22,8 +22,6 @@ export const uploadFile = async (file: Buffer, type: string, key: string) => {
 		ContentType: type,
 	});
 
-	await s3.send(command);
-
 	return `https://${env.BACKBLAZE_CDN_URL}/file/${env.BACKBLAZE_BUCKET_NAME}/${key}`;
 };
 

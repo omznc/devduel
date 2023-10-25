@@ -13,7 +13,7 @@ export default async function Profile({
 	}
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-center gap-4'>
+		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
 			<RoundLink href={`/task/${submission!.taskId}`}>
 				Task: {submission.task.title}
 			</RoundLink>
