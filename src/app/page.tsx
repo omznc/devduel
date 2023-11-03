@@ -2,11 +2,9 @@ import BackgroundDevDuel from '@public/background-devduel.svg';
 import BackgroundLatest from '@public/background-latest.svg';
 import Image from 'next/image';
 import Countdown from '@components/countdown.tsx';
-import prisma from '@lib/prisma.ts';
-import { Submission, Task, User } from '@prisma/client';
+import { Submission } from '@prisma/client';
 import Link from 'next/link';
-import { kebabCase } from '@/src/lib/utils.ts';
-import { getCurrentTask } from '@lib/server-utils.ts';
+import { getCurrentTask } from '@lib/task.ts';
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -31,7 +29,7 @@ export default async function Home() {
 						className='pointer-events-auto  mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl'
 						suppressHydrationWarning
 					>
-						{task && <Countdown expires={task.expiresAt} />}
+						{task && <Countdown expires={task.endDate} />}
 					</span>
 				</div>
 			</div>
@@ -92,10 +90,7 @@ export default async function Home() {
 	);
 }
 
-type CardProps = {
-	submission: Submission & { user: User };
-};
-
+type CardProps = { submission: Submission };
 function Card({ submission }: CardProps) {
 	return (
 		<Link
@@ -118,7 +113,6 @@ function Card({ submission }: CardProps) {
 			</div>
 			<div className='pointer-events-none absolute flex w-full flex-col gap-1 text-center text-lg font-bold text-white opacity-0 transition-all group-hover:opacity-100'>
 				<span className='w-full text-2xl'>{submission.title}</span>
-				<span>@{submission.user.username}</span>
 			</div>
 		</Link>
 	);

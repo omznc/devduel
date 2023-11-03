@@ -14,7 +14,7 @@ export default async function Profile() {
 	}
 
 	if (!session?.user?.username) {
-		return redirect('/user/@me/username');
+		return redirect('/user/me/username');
 	}
 
 	const user = await prisma.user.findUnique({
@@ -31,7 +31,7 @@ export default async function Profile() {
 	});
 
 	if (!user?.username) {
-		return redirect('/user/@me/username');
+		return redirect('/user/me/username');
 	}
 
 	return (

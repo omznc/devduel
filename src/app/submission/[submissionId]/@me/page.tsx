@@ -17,7 +17,7 @@ export default async function Profile({
 	if (!session) return redirect('/');
 
 	if (!session?.user?.username) {
-		return redirect('/user/@me/username');
+		return redirect('/user/me/username');
 	}
 
 	const submission = await getSubmissionCached(params.submissionId);
@@ -36,7 +36,7 @@ export default async function Profile({
 			</div>
 			<Link
 				className='fit-text bg-colored text-center after:bg-yellow-500'
-				href={submission.url}
+				href={submission.website}
 				target='_blank'
 				rel='noopener noreferrer'
 			>

@@ -6,9 +6,6 @@ const nextConfig = {
 	images: {
 		domains: ['i.imgur.com', 'cdn-devduel.omarzunic.com'],
 	},
-	experimental: {
-		serverActions: true,
-	},
 	webpack(config) {
 		config.module.rules.push({
 			test: /\.svg$/,

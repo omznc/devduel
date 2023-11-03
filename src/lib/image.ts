@@ -1,4 +1,5 @@
 import sharp from 'sharp';
+import { imageConfig } from '@config';
 
 /**
  * Compresses an image to AVIF format
@@ -8,6 +9,12 @@ import sharp from 'sharp';
 export const compressImage = async (file: File, quality?: number) => {
 	const sharpImage = sharp(Buffer.from(await file.arrayBuffer()));
 
+	if (!imageConfig.compression.enabled)
+		return {
+			buffer: await sharpImage.toBuffer(),
+			type: file.type,
+		};
+
 	const metadata = await sharpImage.metadata();
 	if (!metadata) throw new Error('Failed to get metadata');
 
@@ -16,7 +23,9 @@ export const compressImage = async (file: File, quality?: number) => {
 
 	if (metadata.width && metadata.height) {
 		const image = await sharpImage
-			.toFormat('avif', { quality: quality ?? 70 })
+			.toFormat(imageConfig.compression.format, {
+				quality: quality ?? imageConfig.compression.quality,
+			})
 			.toBuffer();
 
 		const compressionRate =

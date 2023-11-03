@@ -2,7 +2,6 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 import { ReactNode } from 'react';
 
-// @ts-ignore
 export default async function Layout({
 	me,
 	other,

@@ -12,14 +12,14 @@ export async function isAuthorized() {
 }
 
 export async function getCurrentTask(submissions: number = 0) {
-	const task = await prisma.task.findFirst({
+	return prisma.task.findFirst({
 		where: {
-			expiresAt: {
+			endDate: {
 				gt: new Date(),
 			},
 		},
 		orderBy: {
-			expiresAt: 'desc',
+			endDate: 'desc',
 		},
 		include: {
 			submissions: {
@@ -33,5 +33,4 @@ export async function getCurrentTask(submissions: number = 0) {
 			},
 		},
 	});
-	return task;
 }

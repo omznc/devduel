@@ -25,7 +25,11 @@ export default function Client({ submission }: { submission: Submission }) {
 					// 		only allow images from imgur
 					const { src } = props;
 					if (!src?.startsWith('https://i.imgur.com/'))
-						return <Link href={src ?? '#'}>External Image</Link>;
+						return (
+							<Link href={src ?? '#'} target={'_blank'}>
+								External Image
+							</Link>
+						);
 					return (
 						<Image
 							src={src}

@@ -12,6 +12,7 @@ import {
 	PiHouseDuotone,
 	PiTrophyDuotone,
 	PiUserDuotone,
+	PiUserGearDuotone,
 } from 'react-icons/pi';
 import { useIsMobile } from '@/src/lib/hooks.ts';
 
@@ -47,7 +48,6 @@ export default function Header() {
 	}, [path]);
 
 	if (isMobile === null) return null;
-
 	return (
 		<div
 			onMouseEnter={() => setHovering(true)}
@@ -85,9 +85,15 @@ export default function Header() {
 				)}
 			>
 				{items
-					.filter(
-						i => !i?.protected || (i?.protected && session?.user)
-					)
+					.filter(i => {
+						if (i?.protected) {
+							if (i?.admin) {
+								return session?.user?.admin;
+							}
+							return session?.user;
+						}
+						return true;
+					})
 					.map(item => {
 						const active =
 							(path.includes(item.href ?? '') &&
@@ -148,19 +154,16 @@ const items = [
 		name: 'explore',
 		href: '/explore',
 		icon: <PiEyeDuotone className='h-6 w-auto' />,
-		protected: false,
 	},
 	{
 		name: 'winners',
 		href: '/winners',
 		icon: <PiTrophyDuotone className='h-6 w-auto' />,
-		protected: false,
 	},
 	{
 		name: 'home',
 		href: '/',
 		icon: <PiHouseDuotone className='h-6 w-auto' />,
-		protected: false,
 	},
 	{
 		name: 'submit',
@@ -172,6 +175,12 @@ const items = [
 		name: 'profile',
 		href: '/user/me',
 		icon: <PiUserDuotone className='h-6 w-auto' />,
-		protected: false,
+	},
+	{
+		name: 'admin',
+		href: '/admin',
+		icon: <PiUserGearDuotone className='h-6 w-auto' />,
+		protected: true,
+		admin: true,
 	},
 ];

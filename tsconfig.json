@@ -24,7 +24,8 @@
 			"@helpers/*": ["./src/helpers/*"],
 			"@stores/*": ["./src/stores/*"],
 			"@lib/*": ["./src/lib/*"],
-			"@env": ["./src/env.ts"]
+			"@env": ["./src/env.ts"],
+			"@config": ["./src/config.ts"],
 		},
 		"plugins": [{ "name": "next" }],
 		"strictNullChecks": true

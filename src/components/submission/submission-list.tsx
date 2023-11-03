@@ -23,9 +23,7 @@ export function SubmissionEntry({ submission }: SubmissionEntryProps) {
 			)}
 			<div className='flex flex-col gap-2 text-center md:text-left'>
 				<h3 className='text-2xl  font-bold'>{submission.title}</h3>
-				<p className='text-lg'>
-					{submission.description?.slice(0, 100) ?? 'No description'}
-				</p>
+				<p className='text-lg'>{submission.shortDescription}</p>
 				{submission.winner && <p className='text-lg'>{'🏆 Winner'}</p>}
 			</div>
 		</Link>
