@@ -91,6 +91,7 @@ const env = createEnv({
 			.boolean({
 				description: 'Whether image compression is enabled',
 			})
+			.transform(val => ['true', 'True', '1', 'yes'].includes(val))
 			.default(true),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY: z
 			.number({
