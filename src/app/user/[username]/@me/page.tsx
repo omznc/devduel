@@ -36,10 +36,10 @@ export default async function Profile() {
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
+			<Client user={user} />
 			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
 				{`Hey ${user.name?.split(' ')[0]}!`}
 			</div>
-			<Client user={user} />
 			<div className='flex w-full flex-col gap-4 md:w-fit'>
 				<h2 className='text-center text-3xl'>{'Your Submissions'}</h2>
 				<div className='flex flex-col gap-2'>

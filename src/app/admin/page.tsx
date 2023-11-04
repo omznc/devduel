@@ -1,77 +1,58 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
+import AddTaskForm from '@app/admin/AddTaskForm.tsx';
+import { isAuthorized } from '@lib/server-utils.ts';
 import prisma from '@lib/prisma.ts';
+import TaskList from '@app/admin/TaskList';
 
-export default async function Page() {
-	const session = await getServerSession(authOptions);
-	const user = session?.user;
-	if (!user) return redirect('/');
+export default async function Page({
+	searchParams,
+}: {
+	searchParams: {
+		skip?: string;
+		take?: string;
+	};
+}) {
+	const session = await isAuthorized(true);
+	if (!session) return redirect('/');
 
-	async function createTask(formData: FormData) {
-		'use server';
-
-		const startDate = new Date(formData.get('startDate') as string);
-		const endDate = new Date(formData.get('endDate') as string);
-		const title = formData.get('title') as string;
-		const description = formData.get('description') as string;
-
-		const task = await prisma.task.create({
-			data: {
-				startDate,
-				endDate,
-				title,
-				description,
+	const take = searchParams?.take ? parseInt(searchParams.take) : 10;
+	const skip = searchParams?.skip ? parseInt(searchParams.skip) : 0;
+	const [tasks, totalTasks] = await Promise.all([
+		prisma.task.findMany({
+			orderBy: {
+				startDate: 'asc',
 			},
-		});
-		console.log(task);
-		return task;
-	}
+			take,
+			skip,
+		}),
+		prisma.task.count(),
+	]);
 
 	return (
-		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-start'>
-			<div className='flex h-full w-fit flex-col items-center justify-start gap-4 font-bold transition-all'>
+		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-start gap-8'>
+			<div className='flex h-full w-full flex-col items-center justify-start gap-4 font-bold transition-all'>
 				<span className='fit-text w-full text-center transition-all'>
 					{'Admin Page'}
 				</span>
+				<div className='flex w-full flex-wrap justify-center gap-4'>
+					<div className='flex w-full max-w-[500px] flex-col gap-2'>
+						<span className='w-full text-center text-xl transition-all'>
+							{'Create Task'}
+						</span>
+						<AddTaskForm />
+					</div>
+				</div>
+			</div>
+			<div className='flex w-full max-w-[1000px] flex-col gap-2'>
 				<span className='w-full text-center text-xl transition-all'>
-					{'Create Task'}
+					{'Tasks'}
 				</span>
-				<form
-					action={createTask}
-					className='flex w-full flex-col gap-2'
-				>
-					<label htmlFor='title'>{'Title'}</label>
-					<input
-						type='text'
-						name='title'
-						className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-					/>
-					<label htmlFor='description'>{'Description'}</label>
-					<input
-						type='text'
-						name='description'
-						className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-					/>
-					<label htmlFor='startDate'>{'Start Date'}</label>
-					<input
-						type='date'
-						name='startDate'
-						className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-					/>
-					<label htmlFor='endDate'>{'End Date'}</label>
-					<input
-						type='date'
-						name='endDate'
-						className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-					/>
-					<button
-						type='submit'
-						className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-					>
-						{'Create Task'}
-					</button>
-				</form>
+				<TaskList
+					tasks={tasks}
+					take={take}
+					skip={skip}
+					total={totalTasks}
+				/>
 			</div>
 		</div>
 	);

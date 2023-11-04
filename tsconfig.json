@@ -25,7 +25,7 @@
 			"@stores/*": ["./src/stores/*"],
 			"@lib/*": ["./src/lib/*"],
 			"@env": ["./src/env.ts"],
-			"@config": ["./src/config.ts"],
+			"@config": ["./src/config.ts"]
 		},
 		"plugins": [{ "name": "next" }],
 		"strictNullChecks": true

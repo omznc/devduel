@@ -1,10 +1,9 @@
 'use client';
 import Image from 'next/image';
-import { PiTrashDuotone } from 'react-icons/pi';
+import { PiCircleDashedDuotone, PiTrashDuotone } from 'react-icons/pi';
 import rehypeSanitize from 'rehype-sanitize';
 import { toast } from 'react-hot-toast';
-import { createSubmission } from '@/src/actions/submit.ts';
-import { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, Suspense, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { cn } from '@lib/utils.ts';
 import { submitFormSchemaType } from '@app/submit/schema.ts';
@@ -13,11 +12,19 @@ import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { Submission } from '@prisma/client';
-import { redirect } from 'next/navigation';
+import { createSubmission } from '@app/submit/actions.ts';
+import { SubmitFormButton } from '@components/buttons.tsx';
 
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
+	ssr: false,
+	loading: () => (
+		<div className='flex w-full items-center justify-center'>
+			<PiCircleDashedDuotone className='h-24 w-24 animate-spin' />
+		</div>
+	),
+});
 
-export default function SubmitForm({
+export default function Form({
 	submission,
 }: {
 	submission: Submission | null;
@@ -43,7 +50,7 @@ export default function SubmitForm({
 	return (
 		<>
 			<form className='flex w-full flex-col gap-4 md:flex-row'>
-				<div className='flex h-full flex-col gap-4'>
+				<div className='flex h-full flex-col gap-2'>
 					<label htmlFor='cover'>{'Cover Image'}</label>
 					<Dropzone
 						onDrop={files => {
@@ -75,7 +82,7 @@ export default function SubmitForm({
 									width={200}
 									height={200}
 									alt='Preview'
-									className='z-20 aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter'
+									className='aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter'
 								/>
 								<div className='absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100'>
 									<PiTrashDuotone className='h-12 w-12' />
@@ -102,7 +109,7 @@ export default function SubmitForm({
 									width={200}
 									height={200}
 									alt='Preview'
-									className='z-20 aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter'
+									className='aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter'
 								/>
 								<div className='absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100'>
 									<PiTrashDuotone className='h-12 w-12' />
@@ -198,9 +205,7 @@ export default function SubmitForm({
 						rehypePlugins: [[rehypeSanitize]],
 					}}
 				/>
-
-				<button
-					className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
+				<SubmitFormButton
 					onClick={async () => {
 						const formData = new FormData();
 						formData.append('title', data.title);
@@ -212,6 +217,21 @@ export default function SubmitForm({
 						formData.append('website', data.website);
 						if (data.source) formData.append('source', data.source);
 						formData.append('image', data.image);
+
+						// Don't do anything if the user didn't change anything
+						if (
+							submission?.title === data.title &&
+							submission?.description === data.description &&
+							submission?.shortDescription ===
+								data.shortDescription &&
+							submission?.website === data.website &&
+							submission?.source === data.source &&
+							submission?.image &&
+							data.image.size === 0
+						) {
+							toast.success('Nothing to update.');
+							return;
+						}
 
 						if (submission?.image) {
 							// 	get the existing image as a file
@@ -228,21 +248,19 @@ export default function SubmitForm({
 							);
 						}
 
-						await toast
-							.promise(createSubmission(formData), {
-								loading: 'Submitting...',
-								success: 'Submitted!',
-								error: e => {
-									return e.message;
-								},
-							})
-							.then(s => {
-								redirect(`/submission/${s.id}`);
-							});
+						toast.promise(createSubmission(formData), {
+							loading: submission?.id
+								? 'Updating...'
+								: 'Submitting...',
+							success: submission?.id ? 'Updated!' : 'Submitted!',
+							error: e => {
+								return e?.message ?? 'Failed to submit.';
+							},
+						});
 					}}
 				>
-					{'Submit'}
-				</button>
+					{submission?.id ? 'Update' : 'Submit'}
+				</SubmitFormButton>
 			</div>
 		</>
 	);

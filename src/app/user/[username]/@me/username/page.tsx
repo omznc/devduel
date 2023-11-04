@@ -101,12 +101,12 @@ export default function Page() {
 				{usernameStatus?.ok && !isPending && (
 					<span
 						className={'cursor-pointer transition-all'}
-						onClick={async () => {
-							await toast.promise(setRemoteUsername(username), {
+						onClick={() => {
+							toast.promise(setRemoteUsername(username), {
 								loading: 'Just a moment...',
 								success: () => {
 									update().then(() => {
-										router.push('/@me');
+										router.push('/user/me');
 									});
 									return `You are now ${username}!`;
 								},
@@ -121,7 +121,7 @@ export default function Page() {
 					<span
 						className={'cursor-pointer transition-all'}
 						onClick={async () => {
-							router.push('/@me');
+							router.push('/user/me');
 						}}
 					>
 						{'[profile]'}

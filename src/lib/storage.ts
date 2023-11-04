@@ -4,6 +4,8 @@ import {
 	S3Client,
 } from '@aws-sdk/client-s3';
 import env from '@env';
+import sharp from 'sharp';
+import { imageConfig } from '@config';
 
 const s3 = new S3Client({
 	endpoint: env.BACKBLAZE_BUCKET_ENDPOINT,
@@ -14,11 +16,11 @@ const s3 = new S3Client({
 	},
 });
 
-export const uploadFile = async (file: Buffer, type: string, key: string) => {
+export const uploadFile = async (buffer: Buffer, type: string, key: string) => {
 	const command = new PutObjectCommand({
 		Bucket: env.BACKBLAZE_BUCKET_NAME,
 		Key: key,
-		Body: file,
+		Body: buffer,
 		ContentType: type,
 	});
 
@@ -34,4 +36,42 @@ export const deleteFile = async (key: string) => {
 	});
 
 	await s3.send(command);
+};
+
+export const compressImage = async (file: File, quality?: number) => {
+	const sharpImage = sharp(Buffer.from(await file.arrayBuffer()));
+
+	if (!imageConfig.compression.enabled)
+		return {
+			buffer: await sharpImage.toBuffer(),
+			type: file.type,
+		};
+
+	const metadata = await sharpImage.metadata();
+	if (!metadata) throw new Error('Failed to get metadata');
+
+	const size = metadata.size;
+	if (!size) throw new Error('Failed to get image size');
+
+	if (metadata.width && metadata.height) {
+		const image = await sharpImage
+			.toFormat(imageConfig.compression.format, {
+				quality: quality ?? imageConfig.compression.quality,
+			})
+			.toBuffer();
+
+		const compressionRate =
+			Math.round(((size - image.length) / size) * 10000) / 100;
+
+		console.log(`Compression rate: ${compressionRate}%`);
+
+		return {
+			buffer: image,
+			type: 'image/avif',
+		};
+	} else
+		return {
+			buffer: await sharpImage.toBuffer(),
+			type: file.type,
+		};
 };

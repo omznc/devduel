@@ -1,5 +1,22 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
+import { AvailableFormatInfo, FormatEnum } from 'sharp';
+
+// export const validSources: ValidSources = [
+// 	'https://github.com',
+// 	'https://gitlab.com',
+// 	'https://bitbucket.org',
+// ];
+//
+// export const imageConfig: ImageConfig = {
+// 	formats: ['image/png', 'image/jpeg', 'image/webp'],
+// 	maxSize: 5_000_000,
+// 	compression: {
+// 		enabled: true,
+// 		quality: 70,
+// 		format: 'avif',
+// 	},
+// };
 
 const env = createEnv({
 	// These are only visible to server-side code
@@ -46,7 +63,48 @@ const env = createEnv({
 			description: 'Backblaze B2 CDN URL',
 		}),
 	},
-	client: {},
+	client: {
+		NEXT_PUBLIC_CONFIG_VALID_SOURCES: z
+			.array(
+				z.string({
+					description: 'Valid sources for image uploads',
+				})
+			)
+			.default([
+				'https://github.com',
+				'https://gitlab.com',
+				'https://bitbucket.org',
+			]),
+		NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: z
+			.array(
+				z.string({
+					description: 'Valid image formats',
+				})
+			)
+			.default(['image/png', 'image/jpeg', 'image/webp']),
+		NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE: z
+			.number({
+				description: 'Maximum image size in bytes',
+			})
+			.default(5_000_000),
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED: z
+			.boolean({
+				description: 'Whether image compression is enabled',
+			})
+			.default(true),
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY: z
+			.number({
+				description: 'Image compression quality',
+			})
+			.default(70),
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT: z
+			.string({
+				description: 'Image compression format',
+			})
+			.default('avif') as z.ZodType<
+			keyof FormatEnum | AvailableFormatInfo
+		>,
+	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
 		GITHUB_CLIENT_ID: process.env.GITHUB_CLIENT_ID,
@@ -59,6 +117,20 @@ const env = createEnv({
 		BACKBLAZE_APPLICATION_KEY_ID: process.env.BACKBLAZE_APPLICATION_KEY_ID,
 		BACKBLAZE_APPLICATION_KEY: process.env.BACKBLAZE_APPLICATION_KEY,
 		BACKBLAZE_CDN_URL: process.env.BACKBLAZE_CDN_URL,
+		NEXT_PUBLIC_CONFIG_VALID_SOURCES: JSON.stringify(
+			process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES
+		),
+		NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: JSON.stringify(
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS
+		),
+		NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE:
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE,
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED:
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED,
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY:
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
+		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT:
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
 	},
 });
 

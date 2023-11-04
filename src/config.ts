@@ -1,30 +1,13 @@
-import { AvailableFormatInfo, FormatEnum } from 'sharp';
+import env from '@env';
 
-export const validSources: ValidSources = [
-	'https://github.com',
-	'https://gitlab.com',
-	'https://bitbucket.org',
-];
+export const validSources = env.NEXT_PUBLIC_CONFIG_VALID_SOURCES;
 
-export const imageConfig: ImageConfig = {
-	formats: ['image/png', 'image/jpeg', 'image/webp'],
-	maxSize: 5_000_000,
+export const imageConfig = {
+	formats: env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS,
+	maxSize: env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE,
 	compression: {
-		enabled: true,
-		quality: 70,
-		format: 'avif',
+		enabled: env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED,
+		quality: env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
+		format: env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
 	},
 };
-
-// Types
-interface ValidSources extends Array<string> {}
-
-interface ImageConfig {
-	formats: string[];
-	maxSize: number;
-	compression: {
-		enabled: boolean;
-		quality: number;
-		format: keyof FormatEnum | AvailableFormatInfo;
-	};
-}

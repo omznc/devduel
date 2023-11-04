@@ -3,34 +3,12 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 import prisma from '@lib/prisma.ts';
 
-export async function isAuthorized() {
+export async function isAuthorized(admin: boolean = false) {
 	const session = await getServerSession(authOptions);
 	if (session && session.user) {
-		return session;
+		if (!admin || (admin && session.user.admin)) {
+			return session;
+		}
 	}
 	return null;
-}
-
-export async function getCurrentTask(submissions: number = 0) {
-	return prisma.task.findFirst({
-		where: {
-			endDate: {
-				gt: new Date(),
-			},
-		},
-		orderBy: {
-			endDate: 'desc',
-		},
-		include: {
-			submissions: {
-				orderBy: {
-					createdAt: 'desc',
-				},
-				take: submissions,
-				include: {
-					user: true,
-				},
-			},
-		},
-	});
 }

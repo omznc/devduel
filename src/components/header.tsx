@@ -68,7 +68,9 @@ export default function Header() {
 					className={cn(
 						'text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg'
 					)}
-					onClick={() => router.back()}
+					onClick={() => {
+						router.back();
+					}}
 					aria-label='Go back'
 				>
 					<PiArrowLeftDuotone />
@@ -86,11 +88,15 @@ export default function Header() {
 			>
 				{items
 					.filter(i => {
+						// I know this looks weird, but it does work
 						if (i?.protected) {
 							if (i?.admin) {
 								return session?.user?.admin;
 							}
 							return session?.user;
+						}
+						if (i?.admin) {
+							return session?.user?.admin;
 						}
 						return true;
 					})
@@ -151,6 +157,11 @@ export default function Header() {
 
 const items = [
 	{
+		name: 'home',
+		href: '/',
+		icon: <PiHouseDuotone className='h-6 w-auto' />,
+	},
+	{
 		name: 'explore',
 		href: '/explore',
 		icon: <PiEyeDuotone className='h-6 w-auto' />,
@@ -159,11 +170,6 @@ const items = [
 		name: 'winners',
 		href: '/winners',
 		icon: <PiTrophyDuotone className='h-6 w-auto' />,
-	},
-	{
-		name: 'home',
-		href: '/',
-		icon: <PiHouseDuotone className='h-6 w-auto' />,
 	},
 	{
 		name: 'submit',

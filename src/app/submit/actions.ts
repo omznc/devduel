@@ -2,10 +2,11 @@
 
 import { isAuthorized } from '@lib/server-utils.ts';
 import { getCurrentTask } from '@lib/task.ts';
-import { uploadFile } from '@lib/storage.ts';
+import { compressImage, uploadFile } from '@lib/storage.ts';
 import prisma from '@lib/prisma.ts';
-import { compressImage } from '@lib/image.ts';
 import { submitFormSchema } from '@app/submit/schema.ts';
+import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 export async function createSubmission(formData: FormData) {
 	const data = submitFormSchema.parse({
@@ -16,9 +17,13 @@ export async function createSubmission(formData: FormData) {
 		website: formData.get('website'),
 		source: formData.get('source'),
 	});
-	const session = await isAuthorized();
+
+	const [session, task] = await Promise.all([
+		isAuthorized(),
+		getCurrentTask(),
+	]);
+
 	if (!session) throw new Error('Unauthorized');
-	const task = await getCurrentTask();
 	if (!task) throw new Error('No task found');
 
 	const compressed = await compressImage(data.image);
@@ -28,7 +33,7 @@ export async function createSubmission(formData: FormData) {
 		`submissions/${task.id}/${session.user!.id}`
 	);
 
-	return prisma.submission.upsert({
+	const submission = await prisma.submission.upsert({
 		where: {
 			taskId_userId: {
 				taskId: task.id,
@@ -54,4 +59,7 @@ export async function createSubmission(formData: FormData) {
 			image: url,
 		},
 	});
+
+	revalidatePath(`/submission/${submission.id}`);
+	return redirect(`/submission/${submission.id}`);
 }
