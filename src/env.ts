@@ -88,11 +88,11 @@ const env = createEnv({
 			})
 			.default(5_000_000),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED: z
-			.boolean({
+			.string({
 				description: 'Whether image compression is enabled',
 			})
 			.transform(val => ['true', 'True', '1', 'yes'].includes(val))
-			.default(true),
+			.default('true'),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY: z
 			.number({
 				description: 'Image compression quality',
