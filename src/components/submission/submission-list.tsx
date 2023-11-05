@@ -1,9 +1,9 @@
-import { Submission, Task } from '@prisma/client';
+import { Submission } from '@prisma/client';
 import Link from 'next/link';
 import Image from 'next/image';
 
 type SubmissionEntryProps = {
-	submission: Submission & { task: Task };
+	submission: Submission;
 };
 
 export function SubmissionEntry({ submission }: SubmissionEntryProps) {

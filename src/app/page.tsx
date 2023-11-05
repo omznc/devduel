@@ -5,6 +5,7 @@ import Countdown from '@components/countdown.tsx';
 import { Submission } from '@prisma/client';
 import Link from 'next/link';
 import { getCurrentTask } from '@lib/task.ts';
+import { PiEyeDuotone } from 'react-icons/pi';
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -19,17 +20,29 @@ export default async function Home() {
 					/>
 				</div>
 				<div className='pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all'>
-					<span className='pointer-events-auto w-fit text-center text-lg transition-all md:text-4xl'>
-						{"This week's task"}
+					<span className='pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl'>
+						{task?.status === 'OPEN'
+							? "This week's task"
+							: 'Voting is open for'}
 					</span>
 					<span className='fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500'>
 						{task?.title ?? 'Coming soon'}
 					</span>
 					<span
-						className='pointer-events-auto  mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl'
+						className='pointer-events-auto mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl'
 						suppressHydrationWarning
 					>
-						{task && <Countdown expires={task.endDate} />}
+						{task?.status === 'OPEN' && (
+							<Countdown expires={task.endDate} />
+						)}
+						{task?.status === 'VOTING' && (
+							<Link
+								href={`/explore`}
+								className='inline-flex items-center gap-2 hover:underline'
+							>
+								<PiEyeDuotone /> Let's explore!
+							</Link>
+						)}
 					</span>
 				</div>
 			</div>
@@ -70,7 +83,7 @@ export default async function Home() {
 					<h1 className='block text-5xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
-					<div className='z-10 flex w-full flex-col items-start justify-center gap-4 sm:flex-row md:mt-20'>
+					<div className='z-10 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20'>
 						{task.submissions.map(submission => {
 							return (
 								<Card

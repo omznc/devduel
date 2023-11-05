@@ -41,12 +41,6 @@ export const deleteFile = async (key: string) => {
 export const compressImage = async (file: File, quality?: number) => {
 	const sharpImage = sharp(Buffer.from(await file.arrayBuffer()));
 
-	if (!imageConfig.compression.enabled)
-		return {
-			buffer: await sharpImage.toBuffer(),
-			type: file.type,
-		};
-
 	const metadata = await sharpImage.metadata();
 	if (!metadata) throw new Error('Failed to get metadata');
 
@@ -68,10 +62,12 @@ export const compressImage = async (file: File, quality?: number) => {
 		return {
 			buffer: image,
 			type: 'image/avif',
+			size: image.length,
 		};
 	} else
 		return {
 			buffer: await sharpImage.toBuffer(),
 			type: file.type,
+			size: file.size,
 		};
 };

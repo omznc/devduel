@@ -2,11 +2,8 @@ import { getSubmissionCached } from '@app/submission/cache.ts';
 import { RoundButton, RoundLink } from '@components/buttons.tsx';
 import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import remarkGfm from 'remark-gfm';
-import Image from 'next/image';
-import { cn } from '@lib/utils.ts';
-import Markdown from 'react-markdown';
 import '@app/markdown.css';
+import Markdown from '@app/submission/Markdown.tsx';
 
 export default async function Page({
 	params,
@@ -38,41 +35,7 @@ export default async function Page({
 			>
 				{submission.title}
 			</Link>
-			<Markdown
-				remarkPlugins={[remarkGfm]}
-				components={{
-					img: ({ node, ...props }) => {
-						// 		only allow images from imgur
-						const { src } = props;
-						if (!src?.startsWith('https://i.imgur.com/'))
-							return (
-								<Link href={src ?? '#'} target={'_blank'}>
-									External Image
-								</Link>
-							);
-						return (
-							<Image
-								src={src}
-								width={parseInt(
-									(props.width as string) ?? '500'
-								)}
-								height={parseInt(
-									(props.height as string) ?? '500'
-								)}
-								alt={
-									(props.alt as string) ?? 'Submission Image'
-								}
-								className='w-full rounded-lg'
-							/>
-						);
-					},
-				}}
-				className={cn(
-					'markdown-body border-normal z-20 h-full w-full max-w-4xl rounded-lg p-4'
-				)}
-			>
-				{submission!.description}
-			</Markdown>
+			<Markdown submission={submission} />
 		</div>
 	);
 }

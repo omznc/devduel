@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
-const removeImports = require('next-remove-imports')();
+// const removeImports = require('next-remove-imports')();
 
 const nextConfig = {
 	reactStrictMode: true,
 	images: {
-		domains: ['i.imgur.com', 'cdn-devduel.omarzunic.com'],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'cdn-devduel.omarzunic.com',
+			},
+		],
 	},
 	webpack(config) {
 		config.module.rules.push({
@@ -16,4 +21,4 @@ const nextConfig = {
 	},
 };
 
-module.exports = removeImports(nextConfig);
+module.exports = nextConfig;

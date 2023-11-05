@@ -5,12 +5,17 @@ import { getSubmissionCached } from '@app/submission/cache.ts';
 import { RoundButton, RoundLink } from '@components/buttons.tsx';
 import Link from 'next/link';
 import { getCurrentTask } from '@lib/task.ts';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import Image from 'next/image';
-import { cn } from '@lib/utils.ts';
 import '@app/markdown.css';
-import { PiGitBranchDuotone, PiPencilDuotone } from 'react-icons/pi';
+import {
+	PiArrowUpRight,
+	PiArrowUpRightDuotone,
+	PiGitBranchDuotone,
+	PiPencilDuotone,
+	PiTrashDuotone,
+} from 'react-icons/pi';
+import prisma from '@lib/prisma.ts';
+import { revalidatePath } from 'next/cache';
+import Markdown from '@app/submission/Markdown.tsx';
 
 export default async function Page({
 	params,
@@ -33,7 +38,7 @@ export default async function Page({
 				<RoundLink href={`/task/${submission!.taskId}`}>
 					Task: {submission!.task?.title}
 				</RoundLink>
-				{task?.id === submission.taskId && (
+				{task?.id === submission.taskId && task?.status === 'OPEN' && (
 					<RoundLink href={`/submit`}>
 						<PiPencilDuotone />
 						Edit
@@ -45,51 +50,43 @@ export default async function Page({
 						Source Code
 					</RoundLink>
 				)}
+				<RoundButton>
+					<form
+						action={async () => {
+							'use server';
+							const deleted = await prisma.submission.delete({
+								where: {
+									id: submission?.id,
+								},
+							});
+							if (deleted) {
+								revalidatePath('/submit');
+								redirect('/submit');
+							}
+						}}
+						className='flex items-center'
+					>
+						<button
+							type='submit'
+							className='inline-flex items-center gap-2'
+						>
+							<PiTrashDuotone />
+							Delete
+						</button>
+					</form>
+				</RoundButton>
 				{submission.winner && <RoundButton>🏆 Winner</RoundButton>}
 			</div>
 			<Link
-				className='fit-text bg-colored text-center after:bg-yellow-500'
+				className='fit-text bg-colored inline-flex items-center text-center after:bg-yellow-500 hover:underline'
 				href={submission.website}
 				target='_blank'
 				rel='noopener noreferrer'
 			>
 				{submission!.title}
+				<PiArrowUpRightDuotone />
 			</Link>
-			<Markdown
-				remarkPlugins={[remarkGfm]}
-				components={{
-					img: ({ node, ...props }) => {
-						// 		only allow images from imgur
-						const { src } = props;
-						if (!src?.startsWith('https://i.imgur.com/'))
-							return (
-								<Link href={src ?? '#'} target={'_blank'}>
-									External Image
-								</Link>
-							);
-						return (
-							<Image
-								src={src}
-								width={parseInt(
-									(props.width as string) ?? '500'
-								)}
-								height={parseInt(
-									(props.height as string) ?? '500'
-								)}
-								alt={
-									(props.alt as string) ?? 'Submission Image'
-								}
-								className='w-full rounded-lg'
-							/>
-						);
-					},
-				}}
-				className={cn(
-					'markdown-body border-normal z-20 h-full w-full max-w-4xl rounded-lg p-4'
-				)}
-			>
-				{submission!.description}
-			</Markdown>
+			<Markdown submission={submission} />
 		</div>
 	);
 }

@@ -6,7 +6,13 @@ import Form from '@app/submit/form.tsx';
 import prisma from '@lib/prisma.ts';
 import { RoundButton, RoundLink } from '@components/buttons.tsx';
 import { revalidatePath } from 'next/cache';
-import { PiTrashDuotone } from 'react-icons/pi';
+import {
+	PiEyeDuotone,
+	PiFolderDuotone,
+	PiFolderPlusDuotone,
+	PiPaperclipDuotone,
+	PiTrashDuotone,
+} from 'react-icons/pi';
 import { isAuthorized } from '@lib/server-utils.ts';
 
 export default async function Page() {
@@ -26,6 +32,7 @@ export default async function Page() {
 
 	let title = task ? `Ready? Let's go.` : 'No task yet.';
 	title = submission ? `${submission.title}` : title;
+	title = task?.status === 'VOTING' ? 'Voting is open!' : title;
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
@@ -34,39 +41,38 @@ export default async function Page() {
 					<RoundLink href={`/task/${task?.id}`}>
 						Task: {task?.title}
 					</RoundLink>
-					<RoundButton>
-						<form
-							action={async () => {
-								'use server';
-								const deleted = await prisma.submission.delete({
-									where: {
-										id: submission?.id,
-									},
-								});
-								if (deleted) {
-									revalidatePath('/submit');
-									redirect('/submit');
-								}
-							}}
-						>
-							<button
-								type='submit'
-								className='inline-flex items-center gap-2'
-							>
-								<PiTrashDuotone />
-								Delete
-							</button>
-						</form>
-					</RoundButton>
+					{task?.status === 'VOTING' && (
+						<>
+							{submission && (
+								<RoundLink
+									href={`/submission/${submission.id}`}
+								>
+									<PiFolderDuotone />
+									{'Go to your submission'}
+								</RoundLink>
+							)}
+							<RoundLink href={`/explore`}>
+								<PiEyeDuotone />
+								{'Explore'}
+							</RoundLink>
+						</>
+					)}
 				</div>
 				<span className='fit-text w-full text-center transition-all'>
 					{title}
 				</span>
-				{task && (
+				{task?.status === 'OPEN' && (
 					<Form
 						submission={submission}
 						key={submission?.id ?? 'submit'}
 					/>
+				)}
+				{task?.status === 'VOTING' && (
+					<p className='text-center text-xl transition-all'>
+						{
+							"It's the weekend! That means it's up to YOU to vote for this week's best submission."
+						}
+					</p>
 				)}
 			</div>
 		</div>
