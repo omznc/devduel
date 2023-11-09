@@ -1,19 +1,11 @@
 import { redirect } from 'next/navigation';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
 import { getCurrentTask } from '@lib/task.ts';
 import Form from '@app/submit/form.tsx';
 import prisma from '@lib/prisma.ts';
 import { RoundButton, RoundLink } from '@components/buttons.tsx';
-import { revalidatePath } from 'next/cache';
-import {
-	PiEyeDuotone,
-	PiFolderDuotone,
-	PiFolderPlusDuotone,
-	PiPaperclipDuotone,
-	PiTrashDuotone,
-} from 'react-icons/pi';
+import { PiEyeDuotone, PiFolderDuotone, PiTrashDuotone } from 'react-icons/pi';
 import { isAuthorized } from '@lib/server-utils.ts';
+import { deleteSubmission } from '@/src/actions/submission.ts';
 
 export default async function Page() {
 	const session = await isAuthorized(true);
@@ -36,24 +28,38 @@ export default async function Page() {
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
-			<div className='flex h-full w-fit flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]'>
-				<div className='flex w-full max-w-4xl flex-col items-center justify-center gap-4 md:flex-row'>
+			<div className='flex h-full w-fit max-w-4xl flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]'>
+				<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 					<RoundLink href={`/task/${task?.id}`}>
 						Task: {task?.title}
 					</RoundLink>
 					{task?.status === 'VOTING' && (
+						<RoundLink href={`/explore`}>
+							<PiEyeDuotone />
+							{'Explore'}
+						</RoundLink>
+					)}
+					{submission && (
 						<>
-							{submission && (
-								<RoundLink
-									href={`/submission/${submission.id}`}
+							<RoundButton>
+								<form
+									action={async () => {
+										'use server';
+										await deleteSubmission(submission.id);
+									}}
 								>
-									<PiFolderDuotone />
-									{'Go to your submission'}
-								</RoundLink>
-							)}
-							<RoundLink href={`/explore`}>
-								<PiEyeDuotone />
-								{'Explore'}
+									<button
+										type='submit'
+										className='inline-flex items-center gap-2'
+									>
+										<PiTrashDuotone />
+										Delete
+									</button>
+								</form>
+							</RoundButton>
+							<RoundLink href={`/submission/${submission.id}`}>
+								<PiFolderDuotone />
+								{'Go to your submission'}
 							</RoundLink>
 						</>
 					)}

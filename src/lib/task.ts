@@ -18,6 +18,15 @@ export const getCurrentTask = async (includeSubmissions?: number) => {
 				orderBy: {
 					createdAt: 'desc',
 				},
+				include: {
+					user: {
+						select: {
+							name: true,
+							image: true,
+							id: true,
+						},
+					},
+				},
 			},
 		},
 	});

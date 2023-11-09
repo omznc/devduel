@@ -42,7 +42,7 @@ export function RoundLink(props: RoundLinkProps) {
 				props.className
 			)}
 		>
-			<span className='inline-flex items-center  gap-2 rounded-full px-2 py-1 transition-all group-hover:bg-black group-hover:bg-opacity-10 group-hover:dark:bg-white group-hover:dark:bg-opacity-10'>
+			<span className='inline-flex items-center gap-2 rounded-full px-2 py-1 text-center transition-all group-hover:bg-black group-hover:bg-opacity-10 group-hover:dark:bg-white group-hover:dark:bg-opacity-10'>
 				{props.children}
 			</span>
 		</Link>

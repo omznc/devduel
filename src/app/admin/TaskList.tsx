@@ -1,6 +1,6 @@
 'use client';
 import { Task } from '@prisma/client';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 export default function TaskList({
 	tasks,

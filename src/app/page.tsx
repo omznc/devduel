@@ -5,7 +5,8 @@ import Countdown from '@components/countdown.tsx';
 import { Submission } from '@prisma/client';
 import Link from 'next/link';
 import { getCurrentTask } from '@lib/task.ts';
-import { PiEyeDuotone } from 'react-icons/pi';
+import { PiArrowUpRightDuotone, PiEyeDuotone } from 'react-icons/pi';
+import { SubmissionEntry } from '@components/submission/submission-list.tsx';
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -40,7 +41,7 @@ export default async function Home() {
 								href={`/explore`}
 								className='inline-flex items-center gap-2 hover:underline'
 							>
-								<PiEyeDuotone /> Let's explore!
+								<PiEyeDuotone /> {"Let's explore!"}
 							</Link>
 						)}
 					</span>
@@ -79,14 +80,14 @@ export default async function Home() {
 				</div>
 			</div>
 			{task?.submissions && (
-				<div className='relative flex h-fit min-h-[50dvh] w-full flex-col items-center justify-center gap-4 overflow-hidden'>
+				<div className='relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden'>
 					<h1 className='block text-5xl font-bold text-white md:hidden'>
 						Latest
 					</h1>
-					<div className='z-10 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20'>
+					<div className='z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20'>
 						{task.submissions.map(submission => {
 							return (
-								<Card
+								<SubmissionEntry
 									submission={submission}
 									key={submission.id}
 								/>
@@ -103,29 +104,54 @@ export default async function Home() {
 	);
 }
 
-type CardProps = { submission: Submission };
+type CardProps = {
+	submission: Submission & {
+		user?: {
+			name: string | null;
+			image: string | null;
+		};
+	};
+};
+
 function Card({ submission }: CardProps) {
 	return (
 		<Link
 			href={`/submission/${submission.id}`}
-			className='group flex aspect-video w-full flex-shrink cursor-pointer flex-col items-center justify-center overflow-hidden overflow-hidden rounded-xl transition-all md:w-[300px]'
+			className='group relative grid aspect-video w-[20rem] items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent'
 		>
-			<div className='relative flex aspect-video h-fit w-full flex-col items-center justify-center object-cover'>
-				{submission.image && (
-					<Image
-						src={submission.image}
-						alt='Background'
-						className='relative h-full w-full animate-fade-in rounded-xl object-cover filter transition-all hover:scale-105 hover:blur-sm group-hover:brightness-75'
-						width={500}
-						height={300}
-					/>
-				)}
-				{!submission.image && (
-					<div className='relative h-full w-full animate-fade-in rounded-xl bg-gray-800 object-cover filter transition-all hover:scale-105 hover:blur-sm group-hover:brightness-75' />
-				)}
+			<div className='absolute h-full w-full scale-105 bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none transition-all group-hover:scale-100'>
+				<Image
+					alt='submission image'
+					src={submission.image}
+					width={200}
+					height={200}
+					className='absolute h-full w-full object-cover object-center transition-all'
+				/>
+				<PiArrowUpRightDuotone className='absolute right-0 top-0 m-4 text-4xl text-white opacity-0 drop-shadow-2xl transition-all group-hover:opacity-100' />
+
+				<div className='absolute inset-0 h-full w-full bg-gradient-to-t from-black to-transparent opacity-50 transition-all group-hover:opacity-100' />
 			</div>
-			<div className='pointer-events-none absolute flex w-full flex-col gap-1 text-center text-lg font-bold text-white opacity-0 transition-all group-hover:opacity-100'>
-				<span className='w-full text-2xl'>{submission.title}</span>
+			<div className='mb-4 ml-4 flex w-full translate-y-[100px] flex-col items-start justify-center gap-16 transition-all group-hover:translate-y-0 group-hover:gap-2'>
+				<div className='w-full gap-4 text-left font-sans text-2xl font-bold text-white'>
+					{submission.title}
+				</div>
+				{submission.user && (
+					<div className='flex w-full items-center justify-start gap-4 '>
+						<Image
+							alt='user image'
+							src={
+								submission.user.image ??
+								`https://ui-avatars.com/api/?name=${submission.user.name}`
+							}
+							width={50}
+							height={50}
+							className='relative inline-block h-[50px] w-[50px] rounded-full object-cover object-center transition-all'
+						/>
+						<h3 className='block font-sans text-lg font-semibold text-white antialiased'>
+							{submission.user.name}
+						</h3>
+					</div>
+				)}
 			</div>
 		</Link>
 	);

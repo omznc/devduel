@@ -2,24 +2,20 @@
 
 import { useSession } from 'next-auth/react';
 import { redirect, useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '@lib/hooks.ts';
+import LoadingDots from '@components/loading-dots.tsx';
+import { toast } from 'react-hot-toast';
 import {
 	checkUsername,
 	getUsernameSuggestion,
 	setUsername as setRemoteUsername,
-} from './actions.tsx';
-import { useDebounce } from '@lib/hooks.ts';
-import LoadingDots from '@components/loading-dots.tsx';
-import { toast } from 'react-hot-toast';
+} from '@/src/actions/user.ts';
 
-type UsernameStatus = {
-	ok: boolean;
-	message: string;
-};
 export default function Page() {
-	const [usernameStatus, setUsernameStatus] = useState<
-		UsernameStatus | undefined
-	>();
+	const [usernameStatus, setUsernameStatus] = useState<boolean | undefined>(
+		false
+	);
 	const { data: session, update } = useSession();
 	const user = session?.user;
 
@@ -39,10 +35,16 @@ export default function Page() {
 
 		setIsPending(true);
 
-		checkUsername(debouncedUsername).then(exists => {
-			setUsernameStatus(exists);
-			setIsPending(false);
-		});
+		checkUsername(debouncedUsername)
+			.then(() => {
+				setUsernameStatus(true);
+			})
+			.catch(() => {
+				setUsernameStatus(false);
+			})
+			.finally(() => {
+				setIsPending(false);
+			});
 	}, [debouncedUsername, user?.username]);
 
 	useEffect(() => {
@@ -97,8 +99,12 @@ export default function Page() {
 						[<LoadingDots />]
 					</span>
 				)}
-				{!isPending && <span>{usernameStatus?.message}</span>}
-				{usernameStatus?.ok && !isPending && (
+				{!isPending && usernameStatus !== undefined && (
+					<span>
+						{usernameStatus ? 'Available!' : 'Unavailable.'}
+					</span>
+				)}
+				{usernameStatus && !isPending && (
 					<span
 						className={'cursor-pointer transition-all'}
 						onClick={() => {
@@ -120,7 +126,7 @@ export default function Page() {
 				{user.username && (
 					<span
 						className={'cursor-pointer transition-all'}
-						onClick={async () => {
+						onClick={() => {
 							router.push('/user/me');
 						}}
 					>

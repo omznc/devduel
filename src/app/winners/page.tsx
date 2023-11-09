@@ -6,6 +6,14 @@ export default async function Page() {
 		where: {
 			winner: true,
 		},
+		include: {
+			user: {
+				select: {
+					name: true,
+					image: true,
+				},
+			},
+		},
 	});
 
 	return (

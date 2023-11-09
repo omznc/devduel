@@ -7,15 +7,13 @@ import Link from 'next/link';
 import { getCurrentTask } from '@lib/task.ts';
 import '@app/markdown.css';
 import {
-	PiArrowUpRight,
 	PiArrowUpRightDuotone,
 	PiGitBranchDuotone,
 	PiPencilDuotone,
 	PiTrashDuotone,
 } from 'react-icons/pi';
-import prisma from '@lib/prisma.ts';
-import { revalidatePath } from 'next/cache';
 import Markdown from '@app/submission/Markdown.tsx';
+import { deleteSubmission } from '@/src/actions/submission.ts';
 
 export default async function Page({
 	params,
@@ -34,7 +32,7 @@ export default async function Page({
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
-			<div className='flex w-full max-w-4xl flex-col items-center justify-center gap-4 md:flex-row'>
+			<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 				<RoundLink href={`/task/${submission!.taskId}`}>
 					Task: {submission!.task?.title}
 				</RoundLink>
@@ -54,17 +52,8 @@ export default async function Page({
 					<form
 						action={async () => {
 							'use server';
-							const deleted = await prisma.submission.delete({
-								where: {
-									id: submission?.id,
-								},
-							});
-							if (deleted) {
-								revalidatePath('/submit');
-								redirect('/submit');
-							}
+							await deleteSubmission(submission.id);
 						}}
-						className='flex items-center'
 					>
 						<button
 							type='submit'
@@ -78,13 +67,13 @@ export default async function Page({
 				{submission.winner && <RoundButton>🏆 Winner</RoundButton>}
 			</div>
 			<Link
-				className='fit-text bg-colored inline-flex items-center text-center after:bg-yellow-500 hover:underline'
+				className='fit-text bg-colored text-center after:bg-yellow-500 hover:underline'
 				href={submission.website}
 				target='_blank'
 				rel='noopener noreferrer'
 			>
-				{submission!.title}
-				<PiArrowUpRightDuotone />
+				{submission.title}
+				<PiArrowUpRightDuotone className='ml-2 inline' />
 			</Link>
 			<Markdown submission={submission} />
 		</div>

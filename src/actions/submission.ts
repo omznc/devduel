@@ -79,3 +79,27 @@ export async function createSubmission(formData: FormData) {
 	revalidatePath(`/submission/${submission.id}`);
 	return redirect(`/submission/${submission.id}`);
 }
+
+export async function deleteSubmission(id: string) {
+	const [session, submission] = await Promise.all([
+		isAuthorized(),
+		prisma.submission.findUnique({
+			where: {
+				id,
+			},
+		}),
+	]);
+
+	if (!session) throw new Error('Unauthorized');
+	if (!submission) throw new Error('No submission found');
+	if (submission.userId !== session.user!.id) throw new Error('Unauthorized');
+
+	await prisma.submission.delete({
+		where: {
+			id,
+		},
+	});
+
+	revalidatePath(`/task/${submission.taskId}`);
+	return redirect(`/task/${submission.taskId}`);
+}

@@ -1,15 +1,9 @@
 'use client';
 
 import { Submission, User } from '@prisma/client';
-import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { RoundButton, RoundLink } from '@components/buttons.tsx';
-import {
-	PiAtDuotone,
-	PiDoorDuotone,
-	PiTagDuotone,
-	PiUserCircleMinusDuotone,
-} from 'react-icons/pi';
+import { PiAtDuotone, PiUserCircleMinusDuotone } from 'react-icons/pi';
 import { BiCog } from 'react-icons/bi';
 
 export default function Client({
@@ -20,7 +14,7 @@ export default function Client({
 	};
 }) {
 	return (
-		<div className='flex w-full max-w-4xl flex-col items-center justify-center gap-4 md:flex-row'>
+		<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 			<RoundButton
 				onClick={async () => {
 					await signOut();

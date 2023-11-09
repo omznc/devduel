@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { PiCircleDashedDuotone, PiTrashDuotone } from 'react-icons/pi';
 import rehypeSanitize from 'rehype-sanitize';
 import { toast } from 'react-hot-toast';
-import React, { ReactNode, Suspense, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { cn } from '@lib/utils.ts';
 import { submitFormSchemaType } from '@app/submit/schema.ts';
@@ -12,8 +12,9 @@ import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { Submission } from '@prisma/client';
-import { createSubmission } from '@app/submit/actions.ts';
 import { SubmitFormButton } from '@components/buttons.tsx';
+import { createSubmission } from '@/src/actions/submission.ts';
+import { imageConfig } from '@config';
 
 const MDEditor = dynamic(() => import('@uiw/react-md-editor'), {
 	ssr: false,
@@ -31,7 +32,7 @@ export default function Form({
 }) {
 	const [data, setData] = useState<submitFormSchemaType>({
 		title: submission?.title || '',
-		description: submission?.description || '',
+		description: submission?.description || '# My amazing submission',
 		shortDescription: submission?.shortDescription || '',
 		image: new File([], ''),
 		website: submission?.website || '',
@@ -51,9 +52,23 @@ export default function Form({
 		<>
 			<form className='flex w-full flex-col gap-4 md:flex-row'>
 				<div className='flex h-full flex-col gap-2'>
-					<label htmlFor='cover'>{'Cover Image'}</label>
+					<label htmlFor='cover'>{`Cover Image (${
+						imageConfig.maxSize / 1000000
+					}MB max)`}</label>
 					<Dropzone
 						onDrop={files => {
+							if (files.length > 1) {
+								toast.error('Only one image allowed.');
+								return;
+							}
+							if (files[0].size > imageConfig.maxSize) {
+								toast.error(
+									`Image too large. Max size is ${
+										imageConfig.maxSize / 1000000
+									}MB.`
+								);
+								return;
+							}
 							setData(data => ({
 								...data,
 								image: files[0],
@@ -121,17 +136,18 @@ export default function Form({
 				</div>
 				<div className='flex w-full flex-col justify-start gap-4'>
 					<div className='flex w-full flex-col gap-2'>
-						<label htmlFor='title'>{'Title'}</label>
+						<label htmlFor='title'>{`Title (${data.title.length}/50)`}</label>
 						<input
 							type='text'
 							id='title'
 							className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-							onChange={e =>
+							onChange={e => {
+								e.target.value = e.target.value.slice(0, 50);
 								setData(data => ({
 									...data,
 									title: e.target.value,
-								}))
-							}
+								}));
+							}}
 							defaultValue={submission?.title}
 						/>
 					</div>
@@ -152,18 +168,19 @@ export default function Form({
 					</div>
 					<div className='flex w-full flex-col gap-2'>
 						<label htmlFor='short-description'>
-							{'Short Description'}
+							{`Short Description (${data.shortDescription.length}/100)`}
 						</label>
 						<input
 							type='short-description'
 							id='short-description'
 							className='border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white'
-							onChange={e =>
+							onChange={e => {
+								e.target.value = e.target.value.slice(0, 100);
 								setData(data => ({
 									...data,
 									shortDescription: e.target.value,
-								}))
-							}
+								}));
+							}}
 							defaultValue={submission?.shortDescription}
 						/>
 					</div>
@@ -188,11 +205,14 @@ export default function Form({
 				className='z-20 flex w-full max-w-4xl flex-col gap-4'
 				data-color-mode={theme}
 			>
-				<label htmlFor='description'>{'Description'}</label>
+				<label htmlFor='description'>{`Description (${
+					data.description?.length ?? 0
+				}/10000)`}</label>
 
 				<MDEditor
 					height={200}
 					onChange={value => {
+						value = value?.slice(0, 10000);
 						setData(data => ({
 							...data,
 							description: value || '',
@@ -279,7 +299,6 @@ const Dropzone = ({ onDrop, children }: DropzoneProps) => {
 			'image/gif': ['.gif'],
 			'image/webp': ['.webp'],
 		},
-		maxFiles: 1,
 	});
 
 	return (

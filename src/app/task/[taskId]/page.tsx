@@ -1,4 +1,3 @@
-import prisma from '@lib/prisma.ts';
 import { redirect } from 'next/navigation';
 import { getTaskCached } from '@app/task/cache.ts';
 

@@ -9,6 +9,14 @@ const nextConfig = {
 				protocol: 'https',
 				hostname: 'cdn-devduel.omarzunic.com',
 			},
+			{
+				protocol: 'https',
+				hostname: 'avatars.githubusercontent.com',
+			},
+			{
+				protocol: 'https',
+				hostname: 'ui-avatars.com',
+			},
 		],
 	},
 	webpack(config) {

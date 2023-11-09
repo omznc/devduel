@@ -26,7 +26,7 @@
 
 /* Font that resizes to fully fit any parent width*/
 .fit-text {
-	font-size: clamp(1rem, 8vw, 5em);
+	font-size: clamp(1rem, 8vw, 4em);
 }
 
 .animate-path path {
@@ -69,6 +69,7 @@
 .bg-colored::after {
 	width: 100%;
 	height: 100%;
+	opacity: 0.5;
 	content: '';
 	position: absolute;
 	top: 10%;

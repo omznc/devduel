@@ -1,30 +1,68 @@
 import { Submission } from '@prisma/client';
 import Link from 'next/link';
 import Image from 'next/image';
+import { PiArrowUpRightDuotone } from 'react-icons/pi';
+import { cn } from '@lib/utils.ts';
 
 type SubmissionEntryProps = {
-	submission: Submission;
+	submission: Submission & {
+		user?: {
+			name: string | null;
+			image: string | null;
+		};
+	};
 };
 
 export function SubmissionEntry({ submission }: SubmissionEntryProps) {
 	return (
 		<Link
 			href={`/submission/${submission.id}`}
-			className='border-normal flex h-fit max-h-[300px] w-auto flex-col gap-2 rounded-lg bg-black bg-opacity-5 p-4 backdrop-blur-[2px] transition-all hover:bg-opacity-20 dark:bg-white dark:bg-opacity-5 dark:hover:bg-opacity-20 md:w-[500px] md:flex-row md:gap-8'
+			className='border-normal group relative z-20 grid aspect-video w-[20rem] items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent'
 		>
-			{submission.image && (
+			<div className='absolute h-full w-full bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none transition-all group-hover:scale-100'>
 				<Image
+					alt='submission image'
 					src={submission.image}
-					alt={submission.title}
 					width={200}
 					height={200}
-					className='z-20 aspect-video h-auto max-h-[150px] w-full rounded-lg object-cover md:h-32 md:w-auto'
+					className='absolute h-full w-full object-cover object-center transition-all'
 				/>
-			)}
-			<div className='flex flex-col gap-2 text-center md:text-left'>
-				<h3 className='text-2xl  font-bold'>{submission.title}</h3>
-				<p className='text-lg'>{submission.shortDescription}</p>
-				{submission.winner && <p className='text-lg'>{'🏆 Winner'}</p>}
+				<PiArrowUpRightDuotone className='absolute right-0 top-0 m-4 origin-bottom-left scale-125 text-4xl text-white opacity-0 drop-shadow-2xl transition-all group-hover:scale-100 group-hover:opacity-100' />
+
+				<div className='absolute inset-0 h-full w-full bg-gradient-to-t from-black to-transparent opacity-50 transition-all group-hover:opacity-100' />
+			</div>
+			<div
+				className={cn(
+					'mb-4 ml-4 flex w-full flex-col items-start justify-center gap-16 transition-all',
+					{
+						'translate-y-[100px] group-hover:translate-y-0 group-hover:gap-2':
+							submission?.user,
+						'translate-y-0': !submission?.user,
+					}
+				)}
+			>
+				<div className='w-full gap-4 text-left font-sans text-xl font-bold text-white'>
+					{submission.title.length > 50
+						? submission.title.slice(0, 50) + '...'
+						: submission.title}
+				</div>
+				{submission.user && (
+					<div className='flex w-full items-center justify-start gap-4 '>
+						<Image
+							alt='user image'
+							src={
+								submission.user.image ??
+								`https://ui-avatars.com/api/?name=${submission.user.name}`
+							}
+							width={50}
+							height={50}
+							className='relative inline-block h-[50px] w-[50px] rounded-full object-cover object-center transition-all'
+						/>
+						<h3 className='block font-sans text-lg font-semibold text-white antialiased'>
+							{submission.user.name}
+						</h3>
+					</div>
+				)}
 			</div>
 		</Link>
 	);

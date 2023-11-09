@@ -17,6 +17,12 @@ export default async function Profile({
 			submissions: {
 				include: {
 					task: true,
+					user: {
+						select: {
+							name: true,
+							image: true,
+						},
+					},
 				},
 			},
 		},

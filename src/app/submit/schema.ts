@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { validSources } from '@config';
-import { imageConfig } from '@config';
+import { imageConfig, validSources } from '@config';
 
 export const submitFormSchema = z.object({
 	title: z.string().min(3).max(100),

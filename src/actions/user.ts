@@ -7,24 +7,21 @@ import { isValidUsername } from '@lib/utils.ts';
 
 export async function checkUsername(username: string) {
 	if (!isValidUsername(username)) {
-		return {
-			ok: false,
-			message: 'Invalid username format',
-		};
+		throw new Error('Invalid username format');
 	}
 	const exists = await prisma.user.exists({
 		username,
 	});
-	return {
-		ok: !exists,
-		message: exists ? 'Username already taken' : 'Username available',
-	};
+	if (exists) {
+		throw new Error('Username already exists');
+	}
 }
 
 export async function setUsername(username: string) {
 	const authorized = await isAuthorized();
 	if (!authorized || !authorized?.user) throw new Error('Not authorized');
 	if (!isValidUsername(username)) throw new Error('Invalid username format');
+
 	await prisma.user.update({
 		where: {
 			id: authorized.user.id,

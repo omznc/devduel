@@ -23,6 +23,7 @@ export default async function Layout({
 	if (!session || !session?.user?.username) return other;
 
 	const submission = await getSubmissionCached(params.submissionId);
+	console.log(submission);
 	if (!submission) return redirect(`/task/${params.taskId}`);
 	if (submission?.user?.username === session?.user?.username) return me;
 

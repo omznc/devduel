@@ -29,7 +29,7 @@ export default async function RootLayout({
 				className={cn(
 					jetbrainsMono.className,
 					inter.className,
-					'relative flex h-full w-full flex-col items-center justify-center',
+					'relative flex h-full w-full flex-col items-center justify-center overflow-x-hidden',
 					'selection:bg-black selection:text-white dark:selection:bg-white dark:selection:text-black',
 					'bg-white dark:bg-black'
 				)}
