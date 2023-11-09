@@ -12,6 +12,7 @@ module.exports = {
 			},
 		],
 		'@next/next/no-html-link-for-pages': 'off',
+		'no-mixed-spaces-and-tabs': 'off',
 	},
 	overrides: [
 		// Next.js needs default exports for pages and API points
