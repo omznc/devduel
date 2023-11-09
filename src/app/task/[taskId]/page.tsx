@@ -1,5 +1,6 @@
 import { redirect } from 'next/navigation';
 import { getTaskCached } from '@app/task/cache.ts';
+import prisma from '@lib/prisma.ts';
 
 type TaskProps = {
 	params: {
@@ -21,4 +22,20 @@ export default async function Task({ params }: TaskProps) {
 			</p>
 		</div>
 	);
+}
+
+export async function generateStaticParams() {
+	const latestTasks = await prisma.task.findMany({
+		take: 40,
+		select: {
+			id: true,
+		},
+		orderBy: {
+			endDate: 'desc',
+		},
+	});
+
+	return latestTasks.map(task => ({
+		taskId: task.id,
+	}));
 }
