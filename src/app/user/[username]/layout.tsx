@@ -14,8 +14,10 @@ export default async function Layout({
 	};
 }) {
 	const session = await getServerSession(authOptions);
-	if (!session) return other;
-	return [session.user?.username, 'me'].includes(params?.username)
-		? me
-		: other;
+	if (!session) return <>{other}</>;
+
+	const isSameUser = [session.user?.username, 'me'].includes(
+		params?.username
+	);
+	return <>{isSameUser ? me : other}</>;
 }

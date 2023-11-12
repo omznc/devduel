@@ -52,7 +52,7 @@ export default function Header() {
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className='fly-in group fixed left-0 top-0 z-10 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all'
+			className='fly-in group fixed left-0 top-0 z-30 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all'
 		>
 			<div
 				className={cn(

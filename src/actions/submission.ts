@@ -103,3 +103,34 @@ export async function deleteSubmission(id: string) {
 	revalidatePath(`/task/${submission.taskId}`);
 	return redirect(`/task/${submission.taskId}`);
 }
+
+interface getSubmissionsOptions {
+	taskId: string;
+	take?: number;
+	skip?: number;
+	includeUser?: boolean;
+}
+
+export const getSubmissions = async ({
+	taskId,
+	take = 10,
+	skip = 0,
+	includeUser = false,
+}: getSubmissionsOptions) => {
+	// most votes to least
+	return prisma.submission.findMany({
+		where: {
+			taskId,
+		},
+		orderBy: {
+			votes: {
+				_count: 'desc',
+			},
+		},
+		take,
+		skip,
+		include: {
+			user: includeUser,
+		},
+	});
+};

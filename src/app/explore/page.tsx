@@ -1,20 +1,34 @@
 import { getCurrentTask } from '@lib/task.ts';
+import prisma from '@lib/prisma.ts';
+import { SubmissionEntry } from '@components/submission/submission-list.tsx';
+import { RoundLink } from '@components/buttons.tsx';
+import InfiniteSubmissions from '@app/explore/infinite-submissions.tsx';
 
 export default async function Page() {
 	const task = await getCurrentTask();
-	const title = task
-		? task.status === 'VOTING'
-			? 'Voting is open!'
-			: `Ready? Let's go.`
-		: 'No task yet.';
+
+	const submissions =
+		task &&
+		(await prisma.submission.findMany({
+			where: {
+				taskId: task.id,
+			},
+			orderBy: {
+				createdAt: 'desc',
+			},
+			take: 10,
+		}));
 
 	return (
 		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
-			<div className='flex h-full w-fit flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]'>
-				<span className='fit-text w-full text-center transition-all'>
-					{title}
-				</span>
-			</div>
+			{task && (
+				<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
+					<RoundLink href={`/task/${task?.id}`}>
+						Task: {task?.title}
+					</RoundLink>
+				</div>
+			)}
+			{task && <InfiniteSubmissions taskId={task.id} />}
 		</div>
 	);
 }

@@ -6,6 +6,7 @@ import { RoundButton, RoundLink } from '@components/buttons.tsx';
 import { PiEyeDuotone, PiFolderDuotone, PiTrashDuotone } from 'react-icons/pi';
 import { isAuthorized } from '@lib/server-utils.ts';
 import { deleteSubmission } from '@/src/actions/submission.ts';
+import { SubmissionEntry } from '@components/submission/submission-list.tsx';
 
 export default async function Page() {
 	const session = await isAuthorized(true);
@@ -53,14 +54,10 @@ export default async function Page() {
 										className='inline-flex items-center gap-2'
 									>
 										<PiTrashDuotone />
-										Delete
+										Delete your submission
 									</button>
 								</form>
 							</RoundButton>
-							<RoundLink href={`/submission/${submission.id}`}>
-								<PiFolderDuotone />
-								{'Go to your submission'}
-							</RoundLink>
 						</>
 					)}
 				</div>
@@ -80,6 +77,10 @@ export default async function Page() {
 						}
 					</p>
 				)}
+				<span className='w-full text-center text-4xl transition-all'>
+					Your submission
+				</span>
+				{submission && <SubmissionEntry submission={submission} />}
 			</div>
 		</div>
 	);
