@@ -12,7 +12,7 @@ export default async function Home() {
 	const task = await getCurrentTask(20);
 
 	return (
-		<div className='-mt-24 flex h-full min-h-screen w-full flex-col items-center justify-center'>
+		<div className='-mt-24 flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-center'>
 			<div className='relative flex h-screen w-full flex-col items-center justify-center'>
 				<div className='absolute flex h-screen w-full flex-col items-center justify-center'>
 					<BackgroundDevDuel

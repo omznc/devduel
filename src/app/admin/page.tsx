@@ -29,7 +29,7 @@ export default async function Page({
 	]);
 
 	return (
-		<div className='mt-16 flex h-full min-h-screen w-full flex-col items-center justify-start gap-8'>
+		<div className='mt-16 flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-8'>
 			<div className='flex h-full w-full flex-col items-center justify-start gap-4 font-bold transition-all'>
 				<span className='fit-text w-full text-center transition-all'>
 					{'Admin Page'}

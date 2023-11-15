@@ -30,7 +30,7 @@ export default async function Profile({
 	if (!user) return redirect('/');
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
+		<div className='flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4'>
 			<div className='fit-text bg-colored text-center after:bg-yellow-500'>
 				{`This is ${user.username}`}
 			</div>

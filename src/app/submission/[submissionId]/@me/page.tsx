@@ -31,7 +31,7 @@ export default async function Page({
 	if (!submission) return redirect('/');
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
+		<div className='flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4'>
 			<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 				<RoundLink href={`/task/${submission!.taskId}`}>
 					Task: {submission!.task?.title}

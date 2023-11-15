@@ -24,11 +24,11 @@ export default async function Page() {
 		}));
 
 	let title = task ? `Ready? Let's go.` : 'No task yet.';
-	title = submission ? `${submission.title}` : title;
+	title = submission ? `Edit` : title;
 	title = task?.status === 'VOTING' ? 'Voting is open!' : title;
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
+		<div className='flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4'>
 			<div className='flex h-full w-fit max-w-4xl flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]'>
 				<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 					<RoundLink href={`/task/${task?.id}`}>
@@ -71,16 +71,23 @@ export default async function Page() {
 					/>
 				)}
 				{task?.status === 'VOTING' && (
-					<p className='text-center text-xl transition-all'>
-						{
-							"It's the weekend! That means it's up to YOU to vote for this week's best submission."
-						}
-					</p>
+					<>
+						<p className='text-center text-xl transition-all'>
+							{
+								"It's the weekend! That means it's up to YOU to vote for this week's best submission."
+							}
+						</p>
+
+						{submission && (
+							<>
+								<span className='w-full text-center text-4xl transition-all'>
+									Your submission
+								</span>
+								<SubmissionEntry submission={submission} />
+							</>
+						)}
+					</>
 				)}
-				<span className='w-full text-center text-4xl transition-all'>
-					Your submission
-				</span>
-				{submission && <SubmissionEntry submission={submission} />}
 			</div>
 		</div>
 	);

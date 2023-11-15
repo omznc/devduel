@@ -2,7 +2,7 @@ import { getCurrentTask } from '@lib/task.ts';
 import prisma from '@lib/prisma.ts';
 import { SubmissionEntry } from '@components/submission/submission-list.tsx';
 import { RoundLink } from '@components/buttons.tsx';
-import InfiniteSubmissions from '@app/explore/infinite-submissions.tsx';
+import InfiniteExplore from '@app/explore/infinite-explore.tsx';
 
 export default async function Page() {
 	const task = await getCurrentTask();
@@ -20,7 +20,7 @@ export default async function Page() {
 		}));
 
 	return (
-		<div className='flex h-full min-h-screen w-full flex-col items-center justify-start gap-4'>
+		<div className='flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4'>
 			{task && (
 				<div className='flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4'>
 					<RoundLink href={`/task/${task?.id}`}>
@@ -28,7 +28,7 @@ export default async function Page() {
 					</RoundLink>
 				</div>
 			)}
-			{task && <InfiniteSubmissions taskId={task.id} />}
+			{task && <InfiniteExplore taskId={task.id} />}
 		</div>
 	);
 }

@@ -105,10 +105,11 @@ export async function deleteSubmission(id: string) {
 }
 
 interface getSubmissionsOptions {
-	taskId: string;
+	taskId?: string;
 	take?: number;
 	skip?: number;
 	includeUser?: boolean;
+	winnersOnly?: boolean;
 }
 
 export const getSubmissions = async ({
@@ -116,11 +117,21 @@ export const getSubmissions = async ({
 	take = 10,
 	skip = 0,
 	includeUser = false,
+	winnersOnly = false,
 }: getSubmissionsOptions) => {
 	// most votes to least
 	return prisma.submission.findMany({
 		where: {
-			taskId,
+			...(winnersOnly
+				? {
+						winner: true,
+				  }
+				: {}),
+			...(taskId
+				? {
+						taskId,
+				  }
+				: {}),
 		},
 		orderBy: {
 			votes: {

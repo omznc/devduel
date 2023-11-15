@@ -83,3 +83,47 @@ export async function getUsernameSuggestion() {
 		}
 	}
 }
+
+interface getWinnersOptions {
+	take?: number;
+	skip?: number;
+}
+
+export interface getWinnersResponse {
+	username: string | null;
+	name: string | null;
+	id: string;
+	submissions: number;
+	image: string | null;
+}
+export const getWinners = async ({
+	take = 10,
+	skip = 0,
+}: getWinnersOptions): Promise<getWinnersResponse[]> => {
+	const users = await prisma.user.findMany({
+		orderBy: {
+			submissions: {
+				_count: 'desc',
+			},
+		},
+		take,
+		skip,
+		include: {
+			submissions: {
+				where: {
+					winner: true,
+				},
+			},
+		},
+	});
+
+	console.log(users);
+
+	return users.map(user => ({
+		username: user.username,
+		name: user.name,
+		id: user.id,
+		image: user.image,
+		submissions: user.submissions.length,
+	}));
+};

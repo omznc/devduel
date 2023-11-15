@@ -11,13 +11,23 @@ type SubmissionEntryProps = {
 			image: string | null;
 		};
 	};
+	fullWidth?: boolean;
 };
 
-export function SubmissionEntry({ submission }: SubmissionEntryProps) {
+export function SubmissionEntry({
+	submission,
+	fullWidth,
+}: SubmissionEntryProps) {
 	return (
 		<Link
 			href={`/submission/${submission.id}`}
-			className='border-normal group relative z-20 grid aspect-video w-[20rem] items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent'
+			className={cn(
+				'border-normal group relative z-20 grid aspect-video h-[12rem] min-h-[12rem] snap-start items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent',
+				{
+					'w-full': fullWidth,
+					'w-[20rem]': !fullWidth,
+				}
+			)}
 		>
 			<div className='absolute h-full w-full bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none transition-all group-hover:scale-100'>
 				<Image
