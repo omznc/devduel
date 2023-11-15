@@ -1,10 +1,11 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { cn } from '@/src/lib/utils.ts';
-import { useEffect, useState } from 'react';
-import { signIn, useSession } from 'next-auth/react';
+import { useIsMobile } from "@/src/lib/hooks.ts";
+import { cn } from "@/src/lib/utils.ts";
+import { signIn, useSession } from "next-auth/react";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import {
 	PiArrowLeftDuotone,
 	PiEyeDuotone,
@@ -13,8 +14,7 @@ import {
 	PiTrophyDuotone,
 	PiUserDuotone,
 	PiUserGearDuotone,
-} from 'react-icons/pi';
-import { useIsMobile } from '@/src/lib/hooks.ts';
+} from "react-icons/pi";
 
 export default function Header() {
 	const path = usePathname();
@@ -36,9 +36,9 @@ export default function Header() {
 			}
 			setPrevScrollY(currentScrollY);
 		};
-		window.addEventListener('scroll', handleScroll);
+		window.addEventListener("scroll", handleScroll);
 		return () => {
-			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener("scroll", handleScroll);
 		};
 	}, [isMobile, prevScrollY]);
 
@@ -52,42 +52,42 @@ export default function Header() {
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className='fly-in group fixed left-0 top-0 z-30 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all'
+			className="fly-in group fixed left-0 top-0 z-30 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all"
 		>
 			<div
 				className={cn(
-					'border-normal flex items-center gap-1 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2',
+					"border-normal flex items-center gap-1 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2",
 					{
-						'-translate-y-24 opacity-0': !isScrollingUp,
-						'translate-y-0 opacity-100': isScrollingUp || hovering,
-						'translate-x-10 opacity-0': path === '/',
-					}
+						"-translate-y-24 opacity-0": !isScrollingUp,
+						"translate-y-0 opacity-100": isScrollingUp || hovering,
+						"translate-x-10 opacity-0": path === "/",
+					},
 				)}
 			>
 				<button
 					className={cn(
-						'text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg'
+						"text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg",
 					)}
 					onClick={() => {
 						router.back();
 					}}
-					aria-label='Go back'
+					aria-label="Go back"
 				>
 					<PiArrowLeftDuotone />
 				</button>
 			</div>
 			<div
 				className={cn(
-					'border-normal flex gap-1 rounded-full bg-white bg-opacity-25 p-1.5 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2',
+					"border-normal flex gap-1 rounded-full bg-white bg-opacity-25 p-1.5 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2",
 					{
-						'-translate-y-24 opacity-0': !isScrollingUp,
-						'translate-y-0 opacity-100': isScrollingUp || hovering,
-						'-ml-16': path === '/',
-					}
+						"-translate-y-24 opacity-0": !isScrollingUp,
+						"translate-y-0 opacity-100": isScrollingUp || hovering,
+						"-ml-16": path === "/",
+					},
 				)}
 			>
 				{items
-					.filter(i => {
+					.filter((i) => {
 						// I know this looks weird, but it does work
 						if (i?.protected) {
 							if (i?.admin) {
@@ -100,10 +100,9 @@ export default function Header() {
 						}
 						return true;
 					})
-					.map(item => {
+					.map((item) => {
 						const active =
-							(path.includes(item.href ?? '') &&
-								item.href !== '/') ||
+							(path.includes(item.href ?? "") && item.href !== "/") ||
 							path === item.href;
 						return (
 							<Link
@@ -111,41 +110,38 @@ export default function Header() {
 								key={item.name}
 								aria-label={item.name}
 								className={cn(
-									'text-md inline-flex items-center justify-center gap-2 rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg',
+									"text-md inline-flex items-center justify-center gap-2 rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg",
 									{
-										'bg-black text-white hover:bg-opacity-100 dark:bg-white dark:text-black dark:hover:bg-opacity-100':
+										"bg-black text-white hover:bg-opacity-100 dark:bg-white dark:text-black dark:hover:bg-opacity-100":
 											active,
-									}
+									},
 								)}
-								onClick={async e => {
-									if (
-										!session?.user &&
-										item.name === 'profile'
-									) {
+								onClick={async (e) => {
+									if (!session?.user && item.name === "profile") {
 										e.preventDefault();
 										e.stopPropagation();
-										await signIn('github');
+										await signIn("github");
 									} else if (path === item.href) {
 										e.preventDefault();
 										e.stopPropagation();
 										window?.scrollTo({
 											top: 0,
-											behavior: 'smooth',
+											behavior: "smooth",
 										});
 									}
 								}}
 							>
 								{item.icon}
 								<span
-									className={cn('block transition-all', {
+									className={cn("block transition-all", {
 										hidden: isMobile && !active,
 									})}
 								>
-									{item.name !== 'profile'
+									{item.name !== "profile"
 										? item.name
 										: session?.user
 										? item.name
-										: 'login'}
+										: "login"}
 								</span>
 							</Link>
 						);
@@ -157,35 +153,35 @@ export default function Header() {
 
 const items = [
 	{
-		name: 'home',
-		href: '/',
-		icon: <PiHouseDuotone className='h-6 w-auto' />,
+		name: "home",
+		href: "/",
+		icon: <PiHouseDuotone className="h-6 w-auto" />,
 	},
 	{
-		name: 'explore',
-		href: '/explore',
-		icon: <PiEyeDuotone className='h-6 w-auto' />,
+		name: "explore",
+		href: "/explore",
+		icon: <PiEyeDuotone className="h-6 w-auto" />,
 	},
 	{
-		name: 'winners',
-		href: '/winners',
-		icon: <PiTrophyDuotone className='h-6 w-auto' />,
+		name: "winners",
+		href: "/winners",
+		icon: <PiTrophyDuotone className="h-6 w-auto" />,
 	},
 	{
-		name: 'submit',
-		href: '/submit',
-		icon: <PiFolderSimplePlusDuotone className='h-6 w-auto' />,
+		name: "submit",
+		href: "/submit",
+		icon: <PiFolderSimplePlusDuotone className="h-6 w-auto" />,
 		protected: true,
 	},
 	{
-		name: 'profile',
-		href: '/user/me',
-		icon: <PiUserDuotone className='h-6 w-auto' />,
+		name: "profile",
+		href: "/user/me",
+		icon: <PiUserDuotone className="h-6 w-auto" />,
 	},
 	{
-		name: 'admin',
-		href: '/admin',
-		icon: <PiUserGearDuotone className='h-6 w-auto' />,
+		name: "admin",
+		href: "/admin",
+		icon: <PiUserGearDuotone className="h-6 w-auto" />,
 		protected: true,
 		admin: true,
 	},

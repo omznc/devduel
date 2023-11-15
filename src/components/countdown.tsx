@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 interface CurrentTaskProps {
 	expires: Date;
@@ -23,10 +23,10 @@ export default function Countdown({ expires }: CurrentTaskProps) {
 
 	return (
 		<>
-			{days > 0 && `${days} day${days === 1 ? ' ' : 's '}`}
-			{hours > 0 && `${hours} hour${hours === 1 ? ' ' : 's '}`}
-			{minutes > 0 && `${minutes} minute${minutes === 1 ? ' ' : 's '}`}
-			{`${seconds} second${seconds === 1 ? '' : 's'}`}
+			{days > 0 && `${days} day${days === 1 ? " " : "s "}`}
+			{hours > 0 && `${hours} hour${hours === 1 ? " " : "s "}`}
+			{minutes > 0 && `${minutes} minute${minutes === 1 ? " " : "s "}`}
+			{`${seconds} second${seconds === 1 ? "" : "s"}`}
 		</>
 	);
 }

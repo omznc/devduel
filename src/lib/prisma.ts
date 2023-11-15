@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import { Prisma } from '@prisma/client/extension';
+import { PrismaClient } from "@prisma/client";
+import { Prisma } from "@prisma/client/extension";
 
 const prismaClientSingleton = () => {
 	return new PrismaClient().$extends({
@@ -7,7 +7,7 @@ const prismaClientSingleton = () => {
 			$allModels: {
 				async exists<T>(
 					this: T,
-					where: Prisma.Args<T, 'findFirst'>['where']
+					where: Prisma.Args<T, "findFirst">["where"],
 				): Promise<boolean> {
 					const context = Prisma.getExtensionContext(this);
 					const result = await (context as any).findFirst({ where });
@@ -26,6 +26,6 @@ const globalForPrisma = globalThis as unknown as {
 };
 
 const prisma = globalForPrisma.prisma ?? prismaClientSingleton();
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
+if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 export default prisma;

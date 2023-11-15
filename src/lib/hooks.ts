@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function useDebounce<T>(value: T, delay: number) {
 	const [debouncedValue, setDebouncedValue] = useState(value);
@@ -17,9 +17,9 @@ export function useIsMobile() {
 		const updateSize = (): void => {
 			setIsMobile(window.innerWidth < 768);
 		};
-		window.addEventListener('resize', updateSize);
+		window.addEventListener("resize", updateSize);
 
-		return (): void => window.removeEventListener('resize', updateSize);
+		return (): void => window.removeEventListener("resize", updateSize);
 	}, []);
 
 	return isMobile;

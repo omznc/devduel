@@ -1,4 +1,4 @@
-import env from '@env';
+import env from "@env";
 
 export const validSources = env.NEXT_PUBLIC_CONFIG_VALID_SOURCES;
 

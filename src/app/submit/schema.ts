@@ -1,5 +1,5 @@
-import { z } from 'zod';
-import { imageConfig, validSources } from '@config';
+import { imageConfig, validSources } from "@config";
+import { z } from "zod";
 
 export const submitFormSchema = z.object({
 	title: z.string().min(3).max(100),
@@ -17,7 +17,7 @@ export const submitFormSchema = z.object({
 		.url()
 		.refine((val: string) => {
 			if (!val) return true;
-			return validSources.some(source => val.startsWith(source));
+			return validSources.some((source) => val.startsWith(source));
 		})
 		.optional(),
 });

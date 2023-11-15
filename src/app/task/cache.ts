@@ -1,5 +1,5 @@
-import { cache } from 'react';
-import prisma from '@lib/prisma.ts';
+import prisma from "@lib/prisma.ts";
+import { cache } from "react";
 
 export const getTaskCached = cache(async (taskId: string) => {
 	return prisma.task.findUnique({
@@ -21,5 +21,5 @@ export const getSubmissionCached = cache(
 				task: true,
 			},
 		});
-	}
+	},
 );

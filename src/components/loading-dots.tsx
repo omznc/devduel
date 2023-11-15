@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function LoadingDots() {
 	// 	[...] but the dots are animated
@@ -12,5 +12,5 @@ export default function LoadingDots() {
 		setDots((dots + 1) % 6);
 	}, 500);
 
-	return <>{'.'.repeat(dots)}</>;
+	return <>{".".repeat(dots)}</>;
 }

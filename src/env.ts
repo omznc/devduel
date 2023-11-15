@@ -1,6 +1,6 @@
-import { createEnv } from '@t3-oss/env-nextjs';
-import { z } from 'zod';
-import { AvailableFormatInfo, FormatEnum } from 'sharp';
+import { createEnv } from "@t3-oss/env-nextjs";
+import { AvailableFormatInfo, FormatEnum } from "sharp";
+import { z } from "zod";
 
 // export const validSources: ValidSources = [
 // 	'https://github.com',
@@ -23,88 +23,86 @@ const env = createEnv({
 	server: {
 		DATABASE_URL: z
 			.string({
-				description: 'Postgres database URL',
+				description: "Postgres database URL",
 			})
 			.url({
-				message: 'DATABASE_URL must be a valid URL (postgres://)',
+				message: "DATABASE_URL must be a valid URL (postgres://)",
 			}),
 		GITHUB_CLIENT_ID: z.string({
-			description: 'Google OAuth Client ID',
+			description: "Google OAuth Client ID",
 		}),
 		GITHUB_CLIENT_SECRET: z.string({
-			description: 'Google OAuth Client Secret',
+			description: "Google OAuth Client Secret",
 		}),
 		NEXTAUTH_SECRET: z.string({
 			description:
-				'Secret used to sign next-auth tokens (https://generate-secret.vercel.app/32)',
+				"Secret used to sign next-auth tokens (https://generate-secret.vercel.app/32)",
 		}),
 		NEXTAUTH_URL: z
 			.string({
 				description:
-					'The final, public-facing app URL. (http://localhost:3000 for local development, default)',
+					"The final, public-facing app URL. (http://localhost:3000 for local development, default)",
 			})
-			.default('http://localhost:3000'),
+			.default("http://localhost:3000"),
 		BACKBLAZE_BUCKET_NAME: z.string({
-			description: 'Backblaze B2 Bucket Name',
+			description: "Backblaze B2 Bucket Name",
 		}),
 		BACKBLAZE_BUCKET_ENDPOINT: z.string({
-			description: 'Backblaze B2 Bucket Endpoint',
+			description: "Backblaze B2 Bucket Endpoint",
 		}),
 		BACKBLAZE_BUCKET_REGION: z.string({
-			description: 'Backblaze B2 Bucket Region',
+			description: "Backblaze B2 Bucket Region",
 		}),
 		BACKBLAZE_APPLICATION_KEY_ID: z.string({
-			description: 'Backblaze B2 Application Key ID',
+			description: "Backblaze B2 Application Key ID",
 		}),
 		BACKBLAZE_APPLICATION_KEY: z.string({
-			description: 'Backblaze B2 Application Key',
+			description: "Backblaze B2 Application Key",
 		}),
 		BACKBLAZE_CDN_URL: z.string({
-			description: 'Backblaze B2 CDN URL',
+			description: "Backblaze B2 CDN URL",
 		}),
 	},
 	client: {
 		NEXT_PUBLIC_CONFIG_VALID_SOURCES: z
 			.array(
 				z.string({
-					description: 'Valid sources for image uploads',
-				})
+					description: "Valid sources for image uploads",
+				}),
 			)
 			.default([
-				'https://github.com',
-				'https://gitlab.com',
-				'https://bitbucket.org',
+				"https://github.com",
+				"https://gitlab.com",
+				"https://bitbucket.org",
 			]),
 		NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: z
 			.array(
 				z.string({
-					description: 'Valid image formats',
-				})
+					description: "Valid image formats",
+				}),
 			)
-			.default(['image/png', 'image/jpeg', 'image/webp']),
+			.default(["image/png", "image/jpeg", "image/webp"]),
 		NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE: z
 			.number({
-				description: 'Maximum image size in bytes',
+				description: "Maximum image size in bytes",
 			})
 			.default(5_000_000),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED: z
 			.string({
-				description: 'Whether image compression is enabled',
+				description: "Whether image compression is enabled",
 			})
-			.transform(val => ['true', 'True', '1', 'yes'].includes(val))
-			.default('true'),
+			.transform((val) => ["true", "True", "1", "yes"].includes(val))
+			.default("true"),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY: z
 			.number({
-				description: 'Image compression quality',
+				description: "Image compression quality",
 			})
 			.default(70),
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT: z
 			.string({
-				description: 'Image compression format',
+				description: "Image compression format",
 			})
-			.default('avif') as z.ZodType<
-			keyof FormatEnum | AvailableFormatInfo
-		>,
+			.default("avif") as z.ZodType<keyof FormatEnum | AvailableFormatInfo>,
 	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
@@ -119,10 +117,10 @@ const env = createEnv({
 		BACKBLAZE_APPLICATION_KEY: process.env.BACKBLAZE_APPLICATION_KEY,
 		BACKBLAZE_CDN_URL: process.env.BACKBLAZE_CDN_URL,
 		NEXT_PUBLIC_CONFIG_VALID_SOURCES: JSON.stringify(
-			process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES
+			process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES,
 		),
 		NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: JSON.stringify(
-			process.env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS
+			process.env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS,
 		),
 		NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE:
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE,

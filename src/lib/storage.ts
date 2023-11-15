@@ -2,10 +2,10 @@ import {
 	DeleteObjectCommand,
 	PutObjectCommand,
 	S3Client,
-} from '@aws-sdk/client-s3';
-import env from '@env';
-import sharp from 'sharp';
-import { imageConfig } from '@config';
+} from "@aws-sdk/client-s3";
+import { imageConfig } from "@config";
+import env from "@env";
+import sharp from "sharp";
 
 const s3 = new S3Client({
 	endpoint: env.BACKBLAZE_BUCKET_ENDPOINT,
@@ -42,10 +42,10 @@ export const compressImage = async (file: File, quality?: number) => {
 	const sharpImage = sharp(Buffer.from(await file.arrayBuffer()));
 
 	const metadata = await sharpImage.metadata();
-	if (!metadata) throw new Error('Failed to get metadata');
+	if (!metadata) throw new Error("Failed to get metadata");
 
 	const size = metadata.size;
-	if (!size) throw new Error('Failed to get image size');
+	if (!size) throw new Error("Failed to get image size");
 
 	if (metadata.width && metadata.height) {
 		const image = await sharpImage
@@ -61,7 +61,7 @@ export const compressImage = async (file: File, quality?: number) => {
 
 		return {
 			buffer: image,
-			type: 'image/avif',
+			type: "image/avif",
 			size: image.length,
 		};
 	} else

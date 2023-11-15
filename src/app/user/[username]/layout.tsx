@@ -1,23 +1,21 @@
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@app/api/auth/[...nextauth]/route.ts';
-import { ReactNode } from 'react';
+import { getServerSession } from "next-auth";
+import { ReactNode } from "react";
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 
 export default async function Layout({
-	me,
-	other,
-	params,
+  me,
+  other,
+  params,
 }: {
-	me: ReactNode;
-	other: ReactNode;
-	params: {
-		username: string;
-	};
+  me: ReactNode;
+  other: ReactNode;
+  params: {
+    username: string;
+  };
 }) {
-	const session = await getServerSession(authOptions);
-	if (!session) return <>{other}</>;
+  const session = await getServerSession(authOptions);
+  if (!session) return <>{other}</>;
 
-	const isSameUser = [session.user?.username, 'me'].includes(
-		params?.username
-	);
-	return <>{isSameUser ? me : other}</>;
+  const isSameUser = [session.user?.username, "me"].includes(params?.username);
+  return <>{isSameUser ? me : other}</>;
 }

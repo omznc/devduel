@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Submission, User } from '@prisma/client';
+import { Submission, User } from "@prisma/client";
 
 export default function Client({
 	user,
@@ -10,7 +10,7 @@ export default function Client({
 	};
 }) {
 	return (
-		<div className='inline-flex gap-2'>
+		<div className="inline-flex gap-2">
 			<h2>hi</h2>
 		</div>
 	);

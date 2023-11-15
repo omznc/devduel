@@ -1,5 +1,5 @@
-import prisma from '@lib/prisma.ts';
-import { TaskStatus } from '@prisma/client';
+import prisma from "@lib/prisma.ts";
+import { TaskStatus } from "@prisma/client";
 
 export const getCurrentTask = async (includeSubmissions?: number) => {
 	const today = new Date();
@@ -16,7 +16,7 @@ export const getCurrentTask = async (includeSubmissions?: number) => {
 			submissions: {
 				take: includeSubmissions ?? 0,
 				orderBy: {
-					createdAt: 'desc',
+					createdAt: "desc",
 				},
 				include: {
 					user: {
