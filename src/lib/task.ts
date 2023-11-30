@@ -6,7 +6,7 @@ export const getCurrentTask = async (includeSubmissions?: number) => {
 		where: {
 			status: {
 				in: [TaskStatus.OPEN, TaskStatus.VOTING],
-			}
+			},
 		},
 		include: {
 			submissions: {

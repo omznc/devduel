@@ -118,9 +118,7 @@ const env = createEnv({
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT:
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
-
 	},
-
 });
 
 export default env;
