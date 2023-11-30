@@ -11,7 +11,7 @@ const Toast = () => {
 			reverseOrder={true}
 			toastOptions={{
 				className:
-					"border-normal bg-colored after:bg-yellow-500 after:opacity-20 font-mono text-xl text-black dark:text-white bg-white dark:bg-black bg-opacity-10 dark:bg-opacity-10 backdrop-blur-lg",
+					"border-normal bg-colored after:bg-yellow-500 after:opacity-20 text-xl text-black dark:text-white bg-white dark:bg-black bg-opacity-10 dark:bg-opacity-10 backdrop-blur-lg",
 				style: {
 					borderRadius: "1rem",
 				},

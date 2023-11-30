@@ -6,7 +6,7 @@ import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { redirect } from "next/navigation";
-import { PiEyeDuotone, PiFolderDuotone, PiTrashDuotone } from "react-icons/pi";
+import { PiEyeDuotone, PiTrashDuotone } from "react-icons/pi";
 
 export default async function Page() {
 	const session = await isAuthorized(true);
@@ -23,7 +23,7 @@ export default async function Page() {
 			},
 		}));
 
-	let title = task ? `Ready? Let's go.` : "No task yet.";
+	let title = task ? `Ready? Let's go.` : "No task yet";
 	title = submission ? `Edit` : title;
 	title = task?.status === "VOTING" ? "Voting is open!" : title;
 
@@ -40,21 +40,14 @@ export default async function Page() {
 					)}
 					{submission && (
 						<>
-							<RoundButton>
-								<form
-									action={async () => {
-										"use server";
-										await deleteSubmission(submission.id);
-									}}
-								>
-									<button
-										type="submit"
-										className="inline-flex items-center gap-2"
-									>
-										<PiTrashDuotone />
-										Delete your submission
-									</button>
-								</form>
+							<RoundButton
+								onClick={async () => {
+									"use server";
+									await deleteSubmission(submission.id);
+								}}
+							>
+								<PiTrashDuotone />
+								Delete your submission
 							</RoundButton>
 						</>
 					)}

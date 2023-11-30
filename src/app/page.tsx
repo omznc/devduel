@@ -33,7 +33,20 @@ export default async function Home() {
 						className="pointer-events-auto mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl"
 						suppressHydrationWarning
 					>
-						{task?.status === "OPEN" && <Countdown expires={task.endDate} />}
+						{task?.status === "OPEN" && (
+							<Countdown
+								expires={
+									new Date(
+										new Date().getFullYear(),
+										new Date().getMonth(),
+										new Date().getDate() + (5 - new Date().getDay()),
+										23,
+										59,
+										59,
+									)
+								}
+							/>
+						)}
 						{task?.status === "VOTING" && (
 							<Link
 								href={`/explore`}

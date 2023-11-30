@@ -20,7 +20,7 @@ export default async function Page({
 	const [tasks, totalTasks] = await Promise.all([
 		prisma.task.findMany({
 			orderBy: {
-				startDate: "asc",
+				createdAt: "desc",
 			},
 			take,
 			skip,

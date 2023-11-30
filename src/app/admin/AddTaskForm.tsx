@@ -28,18 +28,6 @@ export default function AddTaskForm() {
 				name="description"
 				className="border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white"
 			/>
-			<label htmlFor="startDate">{"Start Date"}</label>
-			<input
-				type="date"
-				name="startDate"
-				className="border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white"
-			/>
-			<label htmlFor="endDate">{"End Date"}</label>
-			<input
-				type="date"
-				name="endDate"
-				className="border-normal rounded-sm bg-white p-2 dark:bg-black dark:text-white"
-			/>
 			<SubmitFormButton>{"Create Task"}</SubmitFormButton>
 		</form>
 	);

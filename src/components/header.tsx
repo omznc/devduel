@@ -52,11 +52,11 @@ export default function Header() {
 		<div
 			onMouseEnter={() => setHovering(true)}
 			onMouseLeave={() => setHovering(false)}
-			className="fly-in group fixed left-0 top-0 z-30 flex h-24 w-full items-center justify-center gap-2 font-mono transition-all"
+			className="relative fly-in group fixed left-0 top-0 z-30 flex h-24 w-fit ml-[50px] md:ml-[70px] items-center justify-center transition-all"
 		>
 			<div
 				className={cn(
-					"border-normal flex items-center gap-1 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:justify-center md:p-2",
+					"absolute -left-[50px] w-[80px] md:-left-[70px] md:w-[150px] border-normal flex items-start justify-start rounded-l-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:p-2.5",
 					{
 						"-translate-y-24 opacity-0": !isScrollingUp,
 						"translate-y-0 opacity-100": isScrollingUp || hovering,
@@ -66,14 +66,14 @@ export default function Header() {
 			>
 				<button
 					className={cn(
-						"text-md inline-flex items-center justify-center gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg",
+						"text-md w-full inline-flex items-center justify-start gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:p-3 md:px-4 md:text-lg",
 					)}
 					onClick={() => {
 						router.back();
 					}}
 					aria-label="Go back"
 				>
-					<PiArrowLeftDuotone />
+					<PiArrowLeftDuotone className={"h-6 w-auto -m-1"} />
 				</button>
 			</div>
 			<div
@@ -133,15 +133,15 @@ export default function Header() {
 							>
 								{item.icon}
 								<span
-									className={cn("block transition-all", {
-										hidden: isMobile && !active,
+									className={cn("block w-fit overflow-hidden transition-all", {
+										"w-0": isMobile && !active,
 									})}
 								>
 									{item.name !== "profile"
 										? item.name
 										: session?.user
-										? item.name
-										: "login"}
+										  ? item.name
+										  : "login"}
 								</span>
 							</Link>
 						);

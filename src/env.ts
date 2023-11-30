@@ -2,22 +2,6 @@ import { createEnv } from "@t3-oss/env-nextjs";
 import { AvailableFormatInfo, FormatEnum } from "sharp";
 import { z } from "zod";
 
-// export const validSources: ValidSources = [
-// 	'https://github.com',
-// 	'https://gitlab.com',
-// 	'https://bitbucket.org',
-// ];
-//
-// export const imageConfig: ImageConfig = {
-// 	formats: ['image/png', 'image/jpeg', 'image/webp'],
-// 	maxSize: 5_000_000,
-// 	compression: {
-// 		enabled: true,
-// 		quality: 70,
-// 		format: 'avif',
-// 	},
-// };
-
 const env = createEnv({
 	// These are only visible to server-side code
 	server: {
@@ -61,6 +45,9 @@ const env = createEnv({
 		}),
 		BACKBLAZE_CDN_URL: z.string({
 			description: "Backblaze B2 CDN URL",
+		}),
+		ADMIN_API_TOKEN: z.string({
+			description: "Admin API Token",
 		}),
 	},
 	client: {
@@ -116,6 +103,7 @@ const env = createEnv({
 		BACKBLAZE_APPLICATION_KEY_ID: process.env.BACKBLAZE_APPLICATION_KEY_ID,
 		BACKBLAZE_APPLICATION_KEY: process.env.BACKBLAZE_APPLICATION_KEY,
 		BACKBLAZE_CDN_URL: process.env.BACKBLAZE_CDN_URL,
+		ADMIN_API_TOKEN: process.env.ADMIN_API_TOKEN,
 		NEXT_PUBLIC_CONFIG_VALID_SOURCES: JSON.stringify(
 			process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES,
 		),
@@ -130,7 +118,9 @@ const env = createEnv({
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT:
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
+
 	},
+
 });
 
 export default env;

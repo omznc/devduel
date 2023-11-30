@@ -53,14 +53,13 @@ enum TaskStatus {
     OPEN
     CLOSED
     VOTING
+    HIDDEN
 }
 
 model Task {
     id          String       @id @default(nanoid())
     createdAt   DateTime     @default(now())
-    startDate   DateTime
-    endDate     DateTime
-    status      TaskStatus   @default(CLOSED)
+    status      TaskStatus   @default(HIDDEN)
     title       String
     description String?
     submissions Submission[]

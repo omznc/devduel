@@ -4,6 +4,7 @@ import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { redirect } from "next/navigation";
 import { PiEyeDuotone } from "react-icons/pi";
+import { TaskStatus } from "@prisma/client";
 
 type TaskProps = {
 	params: {
@@ -50,18 +51,22 @@ export default async function Task({ params }: TaskProps) {
 	);
 }
 
+// Generate static paths for all tasks that aren't HIDDEN
 export async function generateStaticParams() {
-	const latestTasks = await prisma.task.findMany({
-		take: 40,
-		select: {
-			id: true,
+	const tasks = await prisma.task.findMany({
+		where: {
+			status: {
+				not: TaskStatus.HIDDEN,
+			},
 		},
 		orderBy: {
-			endDate: "desc",
+			createdAt: "desc",
 		},
 	});
 
-	return latestTasks.map((task) => ({
-		taskId: task.id,
+	return tasks.map((task) => ({
+		params: {
+			taskId: task.id,
+		},
 	}));
 }

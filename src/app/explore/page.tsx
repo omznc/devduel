@@ -1,6 +1,5 @@
 import InfiniteExplore from "@app/explore/infinite-explore.tsx";
 import { RoundLink } from "@components/buttons.tsx";
-import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { getCurrentTask } from "@lib/task.ts";
 
