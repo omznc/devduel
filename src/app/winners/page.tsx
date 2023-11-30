@@ -1,7 +1,7 @@
+import { getSubmissions } from "@/src/actions/submission.ts";
+import { getWinners } from "@/src/actions/user.ts";
 import InfinitePeople from "@app/winners/infinite-people.tsx";
 import { PiUserDuotone } from "react-icons/pi";
-import { getWinners } from "@/src/actions/user.ts";
-import { getSubmissions } from "@/src/actions/submission.ts";
 
 export default async function Page() {
 	const [submissions, winners] = await Promise.all([

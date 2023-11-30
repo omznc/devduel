@@ -1,6 +1,6 @@
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import { getServerSession } from "next-auth";
 import { ReactNode } from "react";
-import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 
 export default async function Layout({
 	me,

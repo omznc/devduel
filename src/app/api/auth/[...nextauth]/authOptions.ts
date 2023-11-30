@@ -1,8 +1,8 @@
-import { AuthOptions } from "next-auth";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@lib/prisma.ts";
-import GithubProvider from "next-auth/providers/github";
 import env from "@env";
+import prisma from "@lib/prisma.ts";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import { AuthOptions } from "next-auth";
+import GithubProvider from "next-auth/providers/github";
 
 export const authOptions: AuthOptions = {
 	// @ts-ignore

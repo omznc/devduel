@@ -5,13 +5,13 @@ import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
 import { getCurrentTask } from "@lib/task.ts";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import {
 	PiCircleDashedDuotone,
 	PiEyeDuotone,
 	PiTrashDuotone,
 } from "react-icons/pi";
-import dynamic from "next/dynamic";
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,
@@ -38,7 +38,7 @@ export default async function Page() {
 		}));
 
 	let title = task ? `Ready? Let's go.` : "No task yet";
-	title = submission ? `Edit` : title;
+	title = submission ? "Edit" : title;
 	title = task?.status === "VOTING" ? "Voting is open!" : title;
 
 	return (
@@ -47,7 +47,7 @@ export default async function Page() {
 				<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
 					<RoundLink href={`/task/${task?.id}`}>Task: {task?.title}</RoundLink>
 					{task?.status === "VOTING" && (
-						<RoundLink href={`/explore`}>
+						<RoundLink href={"/explore"}>
 							<PiEyeDuotone />
 							{"Explore"}
 						</RoundLink>

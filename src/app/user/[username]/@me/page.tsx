@@ -1,9 +1,9 @@
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import Client from "@app/user/[username]/@me/client.tsx";
 import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
-import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 
 export default async function Profile() {
 	// @ts-ignore

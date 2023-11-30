@@ -53,7 +53,7 @@ export function SubmissionEntry({
 			>
 				<div className="w-full gap-4 text-left font-sans text-xl font-bold text-white">
 					{submission.title.length > 50
-						? submission.title.slice(0, 50) + "..."
+						? `${submission.title.slice(0, 50)}...`
 						: submission.title}
 				</div>
 				{submission.user && (

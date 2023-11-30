@@ -302,7 +302,7 @@ const Dropzone = ({ onDrop, children }: DropzoneProps) => {
 		<div
 			{...getRootProps()}
 			className={cn(
-				`border-normal flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-black bg-opacity-10 p-4 text-black transition-all dark:bg-white dark:bg-opacity-10 dark:text-white md:max-w-fit`,
+				"border-normal flex w-full cursor-pointer flex-col items-center justify-center gap-2 rounded-lg bg-black bg-opacity-10 p-4 text-black transition-all dark:bg-white dark:bg-opacity-10 dark:text-white md:max-w-fit",
 				{
 					"p-8": isDragActive,
 				},

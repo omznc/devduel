@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { Submission, Task } from "@prisma/client";
 import { getCurrentTask } from "@lib/task.ts";
+import { Submission, Task } from "@prisma/client";
+import { create } from "zustand";
 
 type CurrentTaskStore = {
 	task:

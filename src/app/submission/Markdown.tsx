@@ -37,7 +37,7 @@ export default function Markdown({ submission }: MarkdownProps) {
 				"markdown-body border-normal z-20 h-full w-full max-w-4xl rounded-lg p-4",
 			)}
 		>
-			{submission!.description}
+			{submission?.description}
 		</MD>
 	);
 }

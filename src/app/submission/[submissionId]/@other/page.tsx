@@ -1,11 +1,11 @@
 import "@app/markdown.css";
 import { getSubmissionCached } from "@app/submission/cache.ts";
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
+import dynamic from "next/dynamic";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
-import dynamic from "next/dynamic";
 import React from "react";
+import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
 	loading: () => (
@@ -27,7 +27,7 @@ export default async function Page({
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
 				<RoundLink href={`/task/${submission.taskId}`}>
-					Task: {submission!.task?.title}
+					Task: {submission?.task?.title}
 				</RoundLink>
 				<RoundLink href={`/user/${submission.user.username}`}>
 					User: {submission.user?.name}

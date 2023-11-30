@@ -28,7 +28,7 @@ export default function ThemeToggle() {
 					"flex h-8 w-8  cursor-pointer items-center justify-center rounded-full p-1 text-2xl opacity-80 transition-all hover:opacity-100 md:h-10 md:w-10",
 					{
 						"bg-black text-white opacity-100 dark:bg-white dark:text-black":
-							mounted ? theme == "system" : true,
+							mounted ? theme === "system" : true,
 					},
 				)}
 				onClick={() => setTheme("system")}

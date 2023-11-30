@@ -43,20 +43,20 @@ export async function createSubmission(formData: FormData) {
 	const url = await uploadFile(
 		image.buffer,
 		image.type,
-		`submissions/${task.id}/${session.user!.id}`,
+		`submissions/${task.id}/${session.user?.id}`,
 	);
 
 	const submission = await prisma.submission.upsert({
 		where: {
 			taskId_userId: {
 				taskId: task.id,
-				userId: session.user!.id,
+				userId: session.user?.id,
 			},
 		},
 		create: {
 			user: {
 				connect: {
-					id: session.user!.id,
+					id: session.user?.id,
 				},
 			},
 			task: {
@@ -89,7 +89,7 @@ export async function deleteSubmission(id: string) {
 
 	if (!session) throw new Error("Unauthorized");
 	if (!submission) throw new Error("No submission found");
-	if (submission.userId !== session.user!.id) throw new Error("Unauthorized");
+	if (submission.userId !== session.user?.id) throw new Error("Unauthorized");
 
 	await prisma.submission.delete({
 		where: {

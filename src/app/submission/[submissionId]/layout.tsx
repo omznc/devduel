@@ -1,10 +1,10 @@
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import { getSubmissionCached } from "@app/submission/cache.ts";
 import prisma from "@lib/prisma.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { ReactNode } from "react";
-import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 
 export default async function Layout({
 	me,

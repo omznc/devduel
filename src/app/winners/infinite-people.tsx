@@ -2,10 +2,10 @@
 
 import { getWinners, getWinnersResponse } from "@/src/actions/user.ts";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { PiCircleDashedDuotone, PiTrophyDuotone } from "react-icons/pi";
 import { useInView } from "react-intersection-observer";
-import Link from "next/link";
 
 export default function InfinitePeople({
 	initial,

@@ -49,7 +49,7 @@ export default async function Home() {
 						)}
 						{task?.status === "VOTING" && (
 							<Link
-								href={`/explore`}
+								href={"/explore"}
 								className="inline-flex items-center gap-2 hover:underline"
 							>
 								<PiEyeDuotone /> {"Let's explore!"}

@@ -50,7 +50,7 @@ export default function BackgroundHoverEffect() {
 		<>
 			<div
 				className={cn(
-					`reveal-color pointer-events-none fixed z-20 h-[500px] w-[500px] rounded-full bg-opacity-30 mix-blend-color-dodge`,
+					"reveal-color pointer-events-none fixed z-20 h-[500px] w-[500px] rounded-full bg-opacity-30 mix-blend-color-dodge",
 					color,
 				)}
 				style={{
@@ -66,7 +66,7 @@ export default function BackgroundHoverEffect() {
 				<>
 					<div
 						className={cn(
-							`pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-blue-500 mix-blend-color transition-all duration-200`,
+							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-blue-500 mix-blend-color transition-all duration-200",
 						)}
 						style={{
 							top: (randomCoordinates.y - 250) * Math.random(),
@@ -77,7 +77,7 @@ export default function BackgroundHoverEffect() {
 					/>
 					<div
 						className={cn(
-							`pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-green-500 mix-blend-color transition-all duration-500`,
+							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-green-500 mix-blend-color transition-all duration-500",
 						)}
 						style={{
 							top: (randomCoordinates.y - 250) * Math.random(),
@@ -88,7 +88,7 @@ export default function BackgroundHoverEffect() {
 					/>
 					<div
 						className={cn(
-							`duration-800 pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-yellow-500 mix-blend-color transition-all`,
+							"duration-800 pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-yellow-500 mix-blend-color transition-all",
 						)}
 						style={{
 							top: (randomCoordinates.y - 250) * Math.random(),
@@ -99,7 +99,7 @@ export default function BackgroundHoverEffect() {
 					/>
 					<div
 						className={cn(
-							`pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-orange-500 mix-blend-color transition-all duration-1000`,
+							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-orange-500 mix-blend-color transition-all duration-1000",
 						)}
 						style={{
 							top: (randomCoordinates.y - 250) * Math.random(),

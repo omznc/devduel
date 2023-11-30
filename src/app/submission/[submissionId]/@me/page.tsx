@@ -1,4 +1,5 @@
 import { deleteSubmission } from "@/src/actions/submission.ts";
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import "@app/markdown.css";
 import Markdown from "@app/submission/Markdown.tsx";
 import { getSubmissionCached } from "@app/submission/cache.ts";
@@ -7,14 +8,13 @@ import { getCurrentTask } from "@lib/task.ts";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import React from "react";
 import {
 	PiArrowUpRightDuotone,
 	PiGitBranchDuotone,
 	PiPencilDuotone,
 	PiTrashDuotone,
 } from "react-icons/pi";
-import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
-import React from "react";
 
 export default async function Page({
 	params,
@@ -34,11 +34,11 @@ export default async function Page({
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
-				<RoundLink href={`/task/${submission!.taskId}`}>
-					Task: {submission!.task?.title}
+				<RoundLink href={`/task/${submission?.taskId}`}>
+					Task: {submission?.task?.title}
 				</RoundLink>
 				{task?.id === submission.taskId && task?.status === "OPEN" && (
-					<RoundLink href={`/submit`}>
+					<RoundLink href={"/submit"}>
 						<PiPencilDuotone />
 						Edit
 					</RoundLink>
