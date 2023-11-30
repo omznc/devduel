@@ -13,14 +13,14 @@ bunx create-next-app -e https://github.com/omznc/next
 
 ### Features
 
--   Bun Support
--   App Router & Server Actions
--   Authentication (Auth.js) 🗝️
--   Database (Prisma) 📄
--   Storage (Backblaze or S3 compatible) 📦
--   Pre-commit hooks (Husky) 🤖
--   Formatting (Prettier) 🌅
--   State management (Zustand) 🐻
--   Icons (react-icons) 💖
--   Environment variables (t3-env) 🥸
--   Styling (Tailwind) 🫡
+- Bun Support
+- App Router & Server Actions
+- Authentication (Auth.js) 🗝️
+- Database (Prisma) 📄
+- Storage (Backblaze or S3 compatible) 📦
+- Pre-commit hooks (Husky) 🤖
+- Formatting (Prettier) 🌅
+- State management (Zustand) 🐻
+- Icons (react-icons) 💖
+- Environment variables (t3-env) 🥸
+- Styling (Tailwind) 🫡

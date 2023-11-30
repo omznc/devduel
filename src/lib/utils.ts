@@ -2,9 +2,9 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs));
+  return twMerge(clsx(inputs));
 }
 
 export function isValidUsername(username: string) {
-	return /^[a-z0-9-]{3,20}$/.test(username);
+  return /^[a-z0-9-]{3,20}$/.test(username);
 }
