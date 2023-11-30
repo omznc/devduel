@@ -39,6 +39,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.3.3",
+    "@svgr/webpack": "^8.1.0",
     "@t3-oss/env-nextjs": "^0.7.1",
     "@types/node": "^20.9.0",
     "@types/react": "^18.2.37",
@@ -49,15 +50,15 @@
     "eslint-config-next": "14.0.2",
     "husky": "^8.0.3",
     "lint-staged": "^15.1.0",
+    "next-remove-imports": "^1.0.12",
     "postcss": "^8.4.31",
     "postcss-nesting": "^12.0.1",
+    "preact": "^10.19.2",
     "prettier-plugin-prisma": "^5.0.0",
     "prettier-plugin-tailwindcss": "^0.5.7",
-    "typescript": "5.2.2",
-    "@svgr/webpack": "^8.1.0",
-    "next-remove-imports": "^1.0.12",
     "tailwindcss": "^3.3.5",
-    "tailwindcss-bg-patterns": "^0.3.0"
+    "tailwindcss-bg-patterns": "^0.3.0",
+    "typescript": "5.2.2"
   },
   "name": "next",
   "private": true,
