@@ -1,22 +1,9 @@
 import InfiniteExplore from "@app/explore/infinite-explore.tsx";
 import { RoundLink } from "@components/buttons.tsx";
-import prisma from "@lib/prisma.ts";
 import { getCurrentTask } from "@lib/task.ts";
 
 export default async function Page() {
 	const task = await getCurrentTask();
-
-	const submissions =
-		task &&
-		(await prisma.submission.findMany({
-			where: {
-				taskId: task.id,
-			},
-			orderBy: {
-				createdAt: "desc",
-			},
-			take: 10,
-		}));
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">

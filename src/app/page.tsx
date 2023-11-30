@@ -1,12 +1,10 @@
 import Countdown from "@components/countdown.tsx";
 import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import { getCurrentTask } from "@lib/task.ts";
-import { Submission } from "@prisma/client";
 import BackgroundDevDuel from "@public/background-devduel.svg";
 import BackgroundLatest from "@public/background-latest.svg";
-import Image from "next/image";
 import Link from "next/link";
-import { PiArrowUpRightDuotone, PiEyeDuotone } from "react-icons/pi";
+import { PiEyeDuotone } from "react-icons/pi";
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -90,7 +88,7 @@ export default async function Home() {
 					</p>
 				</div>
 			</div>
-			{task?.submissions && (
+			{task?.submissions && task?.submissions?.length > 0 && (
 				<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
 					<h1 className="block text-5xl font-bold text-white md:hidden">
 						Latest
@@ -109,58 +107,5 @@ export default async function Home() {
 				</div>
 			)}
 		</div>
-	);
-}
-
-type CardProps = {
-	submission: Submission & {
-		user?: {
-			name: string | null;
-			image: string | null;
-		};
-	};
-};
-
-function Card({ submission }: CardProps) {
-	return (
-		<Link
-			href={`/submission/${submission.id}`}
-			className="group relative grid aspect-video w-[20rem] items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent"
-		>
-			<div className="absolute h-full w-full scale-105 bg-transparent bg-cover bg-clip-border bg-center text-gray-700 shadow-none transition-all group-hover:scale-100">
-				<Image
-					alt="submission image"
-					src={submission.image}
-					width={200}
-					height={200}
-					className="absolute h-full w-full object-cover object-center transition-all"
-				/>
-				<PiArrowUpRightDuotone className="absolute right-0 top-0 m-4 text-4xl text-white opacity-0 drop-shadow-2xl transition-all group-hover:opacity-100" />
-
-				<div className="absolute inset-0 h-full w-full bg-gradient-to-t from-black to-transparent opacity-50 transition-all group-hover:opacity-100" />
-			</div>
-			<div className="mb-4 ml-4 flex w-full translate-y-[100px] flex-col items-start justify-center gap-16 transition-all group-hover:translate-y-0 group-hover:gap-2">
-				<div className="w-full gap-4 text-left font-sans text-2xl font-bold text-white">
-					{submission.title}
-				</div>
-				{submission.user && (
-					<div className="flex w-full items-center justify-start gap-4 ">
-						<Image
-							alt="user image"
-							src={
-								submission.user.image ??
-								`https://ui-avatars.com/api/?name=${submission.user.name}`
-							}
-							width={50}
-							height={50}
-							className="relative inline-block h-[50px] w-[50px] rounded-full object-cover object-center transition-all"
-						/>
-						<h3 className="block font-sans text-lg font-semibold text-white antialiased">
-							{submission.user.name}
-						</h3>
-					</div>
-				)}
-			</div>
-		</Link>
 	);
 }

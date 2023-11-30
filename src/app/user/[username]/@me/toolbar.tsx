@@ -1,18 +1,11 @@
 "use client";
 
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
-import { Submission, User } from "@prisma/client";
 import { signOut } from "next-auth/react";
 import { BiCog } from "react-icons/bi";
 import { PiAtDuotone, PiUserCircleMinusDuotone } from "react-icons/pi";
 
-export default function Client({
-	user,
-}: {
-	user: User & {
-		submissions: Submission[];
-	};
-}) {
+export default function Toolbar() {
 	return (
 		<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
 			<RoundButton

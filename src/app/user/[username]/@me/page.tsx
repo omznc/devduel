@@ -1,5 +1,5 @@
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
-import Client from "@app/user/[username]/@me/client.tsx";
+import Toolbar from "@app/user/[username]/@me/toolbar.tsx";
 import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { getServerSession } from "next-auth";
@@ -36,7 +36,7 @@ export default async function Profile() {
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
-			<Client user={user} />
+			<Toolbar />
 			<div className="fit-text bg-colored text-center after:bg-yellow-500">
 				{`Hey ${user.name?.split(" ")[0]}!`}
 			</div>

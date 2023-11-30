@@ -1,5 +1,4 @@
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
-import prisma from "@lib/prisma.ts";
 import { getServerSession } from "next-auth";
 import "server-only";
 

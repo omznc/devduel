@@ -14,7 +14,7 @@ export default function Markdown({ submission }: MarkdownProps) {
 		<MD
 			remarkPlugins={[remarkGfm]}
 			components={{
-				img: ({ node, ...props }) => {
+				img: ({ ...props }) => {
 					const { src } = props;
 					if (!src?.startsWith("https://i.imgur.com/"))
 						return (

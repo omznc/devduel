@@ -21,7 +21,7 @@ export async function createSubmission(formData: FormData) {
 
 	const [session, task] = await Promise.all([isAuthorized(), getCurrentTask()]);
 
-	if (!session) throw new Error("Unauthorized");
+	if (!session?.user) throw new Error("Unauthorized");
 	if (!task) throw new Error("No task found");
 	if (task.status !== "OPEN") throw new Error("Submissions are closed");
 

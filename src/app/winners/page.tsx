@@ -1,21 +1,13 @@
-import { getSubmissions } from "@/src/actions/submission.ts";
 import { getWinners } from "@/src/actions/user.ts";
 import InfinitePeople from "@app/winners/infinite-people.tsx";
 import { PiUserDuotone } from "react-icons/pi";
 
 export default async function Page() {
-	const [submissions, winners] = await Promise.all([
-		getSubmissions({
+	const winners = await getWinners({
 			take: 10,
 			skip: 0,
-			includeUser: true,
-			// winnersOnly: true,
-		}),
-		getWinners({
-			take: 10,
-			skip: 0,
-		}),
-	]);
+		})
+
 
 	return (
 		<div className="flex h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
