@@ -1,6 +1,6 @@
 "use client";
 
-import { getWinners, getWinnersResponse } from "@/src/actions/user.ts";
+import { getWinnerUsers, GetWinnerUsersResponse } from "@/src/actions/user.ts";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -10,16 +10,16 @@ import { useInView } from "react-intersection-observer";
 export default function InfinitePeople({
 	initial,
 }: {
-	initial: getWinnersResponse[];
+	initial: GetWinnerUsersResponse[];
 }) {
 	const { ref, inView } = useInView();
-	const [winners, setWinners] = useState<getWinnersResponse[]>(initial);
+	const [winners, setWinners] = useState<GetWinnerUsersResponse[]>(initial);
 	const [loading, setLoading] = useState(false);
 
 	const fetchMore = async () => {
 		if (loading) return;
 		setLoading(true);
-		const newWinners = await getWinners({
+		const newWinners = await getWinnerUsers({
 			take: 10,
 			skip: 0,
 		});

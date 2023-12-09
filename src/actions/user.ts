@@ -89,17 +89,17 @@ interface getWinnersOptions {
 	skip?: number;
 }
 
-export interface getWinnersResponse {
+export interface GetWinnerUsersResponse {
 	username: string | null;
 	name: string | null;
 	id: string;
 	submissions: number;
 	image: string | null;
 }
-export const getWinners = async ({
+export const getWinnerUsers = async ({
 	take = 10,
 	skip = 0,
-}: getWinnersOptions): Promise<getWinnersResponse[]> => {
+}: getWinnersOptions): Promise<GetWinnerUsersResponse[]> => {
 	const users = await prisma.user.findMany({
 		orderBy: {
 			submissions: {

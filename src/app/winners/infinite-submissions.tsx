@@ -38,7 +38,7 @@ export default function InfiniteSubmissions({
 	}, [inView]);
 
 	return (
-		<div className="h-full w-full snap-y overflow-y-scroll grid grid-cols-1 md:grid-cols-2 gap-4">
+		<div className="h-full w-full snap-y overflow-y-scroll grid grid-cols-1 md:grid-cols-4 gap-4">
 			{submissions?.map((submission) => {
 				return (
 					<SubmissionEntry
