@@ -8,17 +8,19 @@ import { PiEyeDuotone } from "react-icons/pi";
 
 type TaskProps = {
 	params: {
-		taskId: string;
+		slug: string;
 	};
 };
 export default async function Task({ params }: TaskProps) {
-	if (!params.taskId) return redirect("/");
+	if (!params.slug) return redirect("/");
 
 	const [task, submissions] = await Promise.all([
-		getTaskCached(params.taskId),
+		getTaskCached(params.slug),
 		prisma.submission.findMany({
 			where: {
-				taskId: params.taskId,
+				task: {
+					slug: params.slug,
+				},
 			},
 			orderBy: {
 				createdAt: "desc",
@@ -66,7 +68,7 @@ export async function generateStaticParams() {
 
 	return tasks.map((task) => ({
 		params: {
-			taskId: task.id,
+			taskId: task.slug,
 		},
 	}));
 }

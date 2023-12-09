@@ -8,6 +8,7 @@ import { compressImage, uploadFile } from "@lib/storage.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { toSlug } from "@lib/utils.ts";
 
 export async function createSubmission(formData: FormData) {
 	const data = submitFormSchema.parse({
@@ -65,6 +66,7 @@ export async function createSubmission(formData: FormData) {
 				},
 			},
 			...data,
+			slug: toSlug(data.title, true),
 			image: url,
 		},
 		update: {
@@ -84,6 +86,13 @@ export async function deleteSubmission(id: string) {
 			where: {
 				id,
 			},
+			include: {
+				task: {
+					select: {
+						slug: true,
+					},
+				},
+			},
 		}),
 	]);
 
@@ -97,8 +106,8 @@ export async function deleteSubmission(id: string) {
 		},
 	});
 
-	revalidatePath(`/task/${submission.taskId}`);
-	return redirect(`/task/${submission.taskId}`);
+	revalidatePath(`/task/${submission.task.slug}`);
+	return redirect(`/task/${submission.task.slug}`);
 }
 
 interface getSubmissionsOptions {

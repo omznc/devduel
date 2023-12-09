@@ -19,14 +19,14 @@ import {
 export default async function Page({
 	params,
 }: {
-	params: { submissionId: string };
+	params: { slug: string };
 }) {
 	const session = await getServerSession(authOptions);
 	if (!session) return redirect("/");
 	if (!session?.user?.username) return redirect("/user/me/username");
 
 	const [submission, task] = await Promise.all([
-		getSubmissionCached(params.submissionId),
+		getSubmissionCached(params.slug),
 		getCurrentTask(),
 	]);
 	if (!submission) return redirect("/");
@@ -34,7 +34,7 @@ export default async function Page({
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
-				<RoundLink href={`/task/${submission.taskId}`}>
+				<RoundLink href={`/task/${submission.task.slug}`}>
 					Task: {submission.task.title}
 				</RoundLink>
 				{task?.id === submission.taskId && task.status === "OPEN" && (

@@ -3,7 +3,7 @@
 import { createSubmission } from "@/src/actions/submission.ts";
 import { submitFormSchemaType } from "@app/submit/schema.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
-import { imageConfig } from "@config";
+import { imageConfig, validSources } from "@config";
 import { cn } from "@lib/utils.ts";
 import { Submission } from "@prisma/client";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -14,8 +14,9 @@ import Image from "next/image";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
-import { PiCircleDashedDuotone, PiTrashDuotone } from "react-icons/pi";
+import { PiArrowUpRightDuotone, PiCircleDashedDuotone, PiTrashDuotone } from 'react-icons/pi';
 import rehypeSanitize from "rehype-sanitize";
+import Link from "next/link";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,
@@ -140,6 +141,20 @@ export default function Form({
 				<div className="flex w-full flex-col justify-start gap-4">
 					<div className="flex w-full flex-col gap-2">
 						<label htmlFor="title">{`Title (${data.title.length}/50)`}</label>
+						{submission && (
+							<span className="text-sm text-gray-500">
+								The URL of{" "}
+								<Link
+									className={"underline"}
+									href={`/submissions/${submission.slug}`}
+									target="_blank"
+								>
+									your submission
+									<PiArrowUpRightDuotone className="ml-1 inline" />
+								</Link>{" "}
+								will not change
+							</span>
+						)}
 						<input
 							type="text"
 							id="title"
@@ -189,6 +204,11 @@ export default function Form({
 					</div>
 					<div className="flex w-full flex-col gap-2">
 						<label htmlFor="source">{"Source Code"}</label>
+						<span className="text-sm text-gray-500">
+							{`Available: ${validSources
+								.map((source) => source.substring(8))
+								.join(", ")}`}
+						</span>
 						<input
 							type="text"
 							id="source"

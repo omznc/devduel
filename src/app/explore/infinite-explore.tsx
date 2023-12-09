@@ -7,9 +7,9 @@ import { useEffect, useState } from "react";
 import { PiCircleDashedDuotone } from "react-icons/pi";
 import { useInView } from "react-intersection-observer";
 
-export default function InfiniteExplore({ taskId }: { taskId: string }) {
+export default function InfiniteExplore({ taskId, data }: { taskId: string, data: Submission[] }) {
 	const { ref, inView } = useInView();
-	const [submissions, setSubmissions] = useState<Submission[]>([]);
+	const [submissions, setSubmissions] = useState<Submission[]>(data ? data : []);
 	const [loading, setLoading] = useState(false);
 
 	const fetchMore = async () => {
@@ -22,7 +22,7 @@ export default function InfiniteExplore({ taskId }: { taskId: string }) {
 			includeUser: true,
 		});
 
-		setSubmissions([...(submissions ?? []), ...newSubmissions]);
+		setSubmissions(prev => [...prev, ...newSubmissions.filter(sub => !prev.find(prevSub => prevSub.id === sub.id))]);
 	};
 
 	useEffect(() => {

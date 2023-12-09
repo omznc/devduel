@@ -5,7 +5,7 @@ import { cn } from "@lib/utils.ts";
 import Link from "next/link";
 import { getSubmissions } from "@/src/actions/submission.ts";
 import InfiniteSubmissions from "@app/winners/infinite-submissions.tsx";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 export default async function Page({
 	searchParams,
@@ -14,9 +14,8 @@ export default async function Page({
 		type: string;
 	};
 }) {
-
-	if (!['submissions', 'people'].includes(searchParams.type)) {
-		searchParams.type = 'submissions';
+	if (!["submissions", "people"].includes(searchParams.type)) {
+		searchParams.type = "submissions";
 	}
 
 	const [winners, submissions] = await Promise.all([

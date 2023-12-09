@@ -2,6 +2,7 @@
 
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
+import { toSlug } from "@lib/utils.ts";
 
 export async function createTask(formData: FormData) {
 	const authorized = await isAuthorized(true);
@@ -9,10 +10,12 @@ export async function createTask(formData: FormData) {
 
 	const title = formData.get("title") as string;
 	const description = formData.get("description") as string;
+	const slug = toSlug(title, true);
 
 	const data = {
 		title,
 		description,
+		slug,
 	} as const;
 
 	for (const key in data) {

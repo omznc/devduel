@@ -8,3 +8,14 @@ export function cn(...inputs: ClassValue[]) {
 export function isValidUsername(username: string) {
 	return /^[a-z0-9-]{3,20}$/.test(username);
 }
+
+export function toSlug(text: string, unique: boolean = false) {
+	const slug = text
+		.toLowerCase()
+		.replace(/[^\w ]+/g, "")
+		.replace(/ +/g, "-");
+
+	if (!unique) return slug;
+
+	return `${slug}-${Math.random().toString(36).substring(2, 7)}`;
+}

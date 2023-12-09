@@ -20,7 +20,7 @@ export function SubmissionEntry({
 }: SubmissionEntryProps) {
 	return (
 		<Link
-			href={`/submission/${submission.id}`}
+			href={`/submission/${submission.slug}`}
 			className={cn(
 				"border-normal group relative z-20 grid aspect-video h-[12rem] min-h-[12rem] snap-start items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all bg-white backdrop-blur-sm dark:backdrop-blur-sm bg-opacity-50 dark:bg-opacity-20 dark:bg-black hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent",
 				{

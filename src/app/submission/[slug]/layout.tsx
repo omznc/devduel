@@ -14,16 +14,15 @@ export default async function Layout({
 	me: ReactNode;
 	other: ReactNode;
 	params: {
-		submissionId: string;
-		taskId: string;
+		slug: string;
 	};
 }) {
 	const session = await getServerSession(authOptions);
 
 	if (!session || !session?.user?.username) return <>{other}</>;
 
-	const submission = await getSubmissionCached(params.submissionId);
-	if (!submission) return redirect(`/task/${params.taskId}`);
+	const submission = await getSubmissionCached(params.slug);
+	if (!submission) return redirect("/");
 
 	if (submission?.user?.username === session?.user?.username) return <>{me}</>;
 

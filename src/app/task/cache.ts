@@ -1,10 +1,10 @@
 import prisma from "@lib/prisma.ts";
 import { cache } from "react";
 
-export const getTaskCached = cache(async (taskId: string) => {
+export const getTaskCached = cache(async (slug: string) => {
 	return prisma.task.findUnique({
 		where: {
-			id: taskId,
+			slug,
 		},
 	});
 });

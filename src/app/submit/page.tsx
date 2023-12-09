@@ -38,14 +38,16 @@ export default async function Page() {
 		}));
 
 	let title = task ? `Ready? Let's go.` : "No task yet";
-	title = submission ? "Edit" : title;
+	title = submission ? "Editing" : title;
 	title = task?.status === "VOTING" ? "Voting is open!" : title;
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex h-full w-fit max-w-4xl flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]">
 				<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
-					<RoundLink href={`/task/${task?.id}`}>Task: {task?.title}</RoundLink>
+					<RoundLink href={`/task/${task?.slug}`}>
+						Task: {task?.title}
+					</RoundLink>
 					{task?.status === "VOTING" && (
 						<RoundLink href={"/explore"}>
 							<PiEyeDuotone />

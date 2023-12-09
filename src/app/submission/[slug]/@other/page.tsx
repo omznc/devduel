@@ -18,15 +18,15 @@ const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 export default async function Page({
 	params,
 }: {
-	params: { submissionId: string };
+	params: { slug: string };
 }) {
-	const submission = await getSubmissionCached(params.submissionId);
+	const submission = await getSubmissionCached(params.slug);
 	if (!submission) return redirect("/");
 
 	return (
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
-				<RoundLink href={`/task/${submission.taskId}`}>
+				<RoundLink href={`/task/${submission.task.slug}`}>
 					Task: {submission?.task?.title}
 				</RoundLink>
 				<RoundLink href={`/user/${submission.user.username}`}>
