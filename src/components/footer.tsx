@@ -23,6 +23,7 @@ export default function Footer() {
 	const isMobile = useIsMobile();
 
 	useEffect(() => {
+		if (isMobile) return;
 		if (isAnimating) {
 			rocketRef.current?.classList.add("animate-rocket");
 			setTimeout(() => {
@@ -40,7 +41,7 @@ export default function Footer() {
 						inter.className,
 					)}
 					onClick={() => {
-						setIsAnimating(true);
+						!isMobile && setIsAnimating(true);
 					}}
 				>
 					DevDuel

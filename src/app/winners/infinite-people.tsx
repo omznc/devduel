@@ -25,7 +25,6 @@ export default function InfinitePeople({
 		});
 
 		setWinners([...(winners ?? []), ...newWinners]);
-		// setWinners([...(winners ?? []), ...new Array(20).fill(newWinners).flat()]);
 	};
 
 	useEffect(() => {
@@ -65,17 +64,13 @@ export default function InfinitePeople({
 				ref={ref}
 				className="flex h-fit w-full flex-col items-center justify-center gap-4 md:col-span-2"
 			>
-				{loading && (
-					<PiCircleDashedDuotone className="h-24 w-24 animate-spin" />
-				)}
-				{!loading && (
-					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
-						<p className="text-2xl font-bold">
-							{" "}
-							{winners?.length ?? 0 > 0 ? "End of the road" : "No winners"}
-						</p>
-					</div>
-				)}
+				<div className="flex h-full w-full flex-col items-center justify-center gap-4">
+					<p className="text-2xl font-bold">
+						{(!loading && winners?.length) ?? 0 > 0
+							? "End of the road"
+							: "No winners"}
+					</p>
+				</div>
 			</div>
 		</div>
 	);

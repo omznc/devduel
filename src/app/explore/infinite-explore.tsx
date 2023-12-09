@@ -9,7 +9,7 @@ import { useInView } from "react-intersection-observer";
 
 export default function InfiniteExplore({ taskId }: { taskId: string }) {
 	const { ref, inView } = useInView();
-	const [submissions, setSubmissions] = useState<Submission[]>();
+	const [submissions, setSubmissions] = useState<Submission[]>([]);
 	const [loading, setLoading] = useState(false);
 
 	const fetchMore = async () => {
@@ -42,10 +42,12 @@ export default function InfiniteExplore({ taskId }: { taskId: string }) {
 				ref={ref}
 				className="flex h-fit w-full flex-col items-center justify-center gap-4"
 			>
-				{loading && (
-					<PiCircleDashedDuotone className="h-24 w-24 animate-spin" />
+				{!submissions && !loading && (
+					<span className="fit-text w-full text-center transition-all">
+						{"No submissions yet"}
+					</span>
 				)}
-				{!loading && (
+				{submissions && !loading && (
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
 						<p className="text-2xl font-bold">End of the road</p>
 					</div>

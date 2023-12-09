@@ -22,7 +22,7 @@ export function SubmissionEntry({
 		<Link
 			href={`/submission/${submission.id}`}
 			className={cn(
-				"border-normal group relative z-20 grid aspect-video h-[12rem] min-h-[12rem] snap-start items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all  hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent",
+				"border-normal group relative z-20 grid aspect-video h-[12rem] min-h-[12rem] snap-start items-end justify-start overflow-hidden overflow-hidden rounded-lg text-center text-gray-700 transition-all bg-white backdrop-blur-sm dark:backdrop-blur-sm bg-opacity-50 dark:bg-opacity-20 dark:bg-black hover:gap-2 hover:bg-gradient-to-t hover:from-black hover:to-transparent",
 				{
 					"w-full": fullWidth,
 					"w-[20rem]": !fullWidth,
@@ -34,7 +34,7 @@ export function SubmissionEntry({
 					alt="submission image"
 					src={submission.image}
 					width={200}
-					height={200}
+					height={320}
 					className="absolute h-full w-full object-cover object-center transition-all"
 				/>
 				<PiArrowUpRightDuotone className="absolute right-0 top-0 m-4 origin-bottom-left scale-125 text-4xl text-white opacity-0 drop-shadow-2xl transition-all group-hover:scale-100 group-hover:opacity-100" />

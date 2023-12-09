@@ -34,10 +34,10 @@ export default async function Page({
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
-				<RoundLink href={`/task/${submission?.taskId}`}>
-					Task: {submission?.task?.title}
+				<RoundLink href={`/task/${submission.taskId}`}>
+					Task: {submission.task.title}
 				</RoundLink>
-				{task?.id === submission.taskId && task?.status === "OPEN" && (
+				{task?.id === submission.taskId && task.status === "OPEN" && (
 					<RoundLink href={"/submit"}>
 						<PiPencilDuotone />
 						Edit
