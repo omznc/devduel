@@ -59,7 +59,7 @@ export default function InfiniteExplore({
 				)}
 				{submissions && !loading && (
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
-						<p className="text-2xl font-bold">End of the road</p>
+						<p className="text-2xl font-bold opacity-0">End of the road</p>
 					</div>
 				)}
 			</div>

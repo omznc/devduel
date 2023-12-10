@@ -2,9 +2,9 @@
 
 import { cn } from "@/src/lib/utils.ts";
 import Link from "next/link";
-import { HTMLAttributes, ReactNode, useEffect, useState } from 'react';
+import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 interface RoundButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
@@ -42,7 +42,6 @@ export function RoundButton(props: RoundButtonProps) {
 				toast.dismiss("confirm");
 				setConfirm(false);
 				if (props.onClick) props.onClick(e);
-
 			}}
 			className={cn(
 				"border-normal group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2 transition-all dark:bg-black dark:text-white",

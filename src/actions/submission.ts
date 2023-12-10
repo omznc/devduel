@@ -4,11 +4,17 @@ import { submitFormSchema } from "@app/submit/schema.ts";
 import { imageConfig } from "@config";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
-import { compressImage, uploadFile } from "@lib/storage.ts";
+import { compressImage, getSignedURL, uploadFile } from "@lib/storage.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { toSlug } from "@lib/utils.ts";
+import env from "@env";
+
+const RAW_HOSTNAME = `https://${
+	env.BACKBLAZE_BUCKET_NAME
+}.${env.BACKBLAZE_BUCKET_ENDPOINT.replace("https://", "")}`;
+const CDN_HOSTNAME = `https://${env.BACKBLAZE_CDN_URL}/file/${env.BACKBLAZE_BUCKET_NAME}`;
 
 export async function createSubmission(formData: FormData) {
 	const data = submitFormSchema.parse({
@@ -25,27 +31,11 @@ export async function createSubmission(formData: FormData) {
 	if (!session?.user) throw new Error("Unauthorized");
 	if (!task) throw new Error("No task found");
 	if (task.status !== "OPEN") throw new Error("Submissions are closed");
+	if (!data.image) throw new Error("No image found");
+	if (![RAW_HOSTNAME, CDN_HOSTNAME].some((host) => data.image.startsWith(host)))
+		throw new Error("Invalid image host");
 
-	const image = imageConfig.compression.enabled
-		? await compressImage(data.image)
-		: {
-				buffer: Buffer.from(await data.image.arrayBuffer()),
-				type: data.image.type,
-				size: data.image.size,
-		  };
-
-	if (image.size > imageConfig.maxSize)
-		throw new Error(
-			`Image too large (${Math.round(image.size / 1_000_000)}MB > ${Math.round(
-				imageConfig.maxSize / 1_000_000,
-			)}MB max)`,
-		);
-
-	const url = await uploadFile(
-		image.buffer,
-		image.type,
-		`submissions/${task.id}/${session.user?.id}`,
-	);
+	data.image = data.image.replace(RAW_HOSTNAME, CDN_HOSTNAME);
 
 	const submission = await prisma.submission.upsert({
 		where: {
@@ -67,17 +57,19 @@ export async function createSubmission(formData: FormData) {
 			},
 			...data,
 			slug: toSlug(data.title, true),
-			image: url,
 		},
 		update: {
 			...data,
-			image: url,
 		},
 	});
 
-	revalidatePath(`/submission/${submission.id}`);
-	return redirect(`/submission/${submission.id}`);
+	revalidatePath(`/submission/${submission.slug}`);
+	return redirect(`/submission/${submission.slug}`);
 }
+
+export const getSignedUploadURL = async (type: string, size: number) => {
+	return getSignedURL(type, size);
+};
 
 export async function deleteSubmission(id: string) {
 	const [session, submission] = await Promise.all([

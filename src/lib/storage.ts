@@ -3,9 +3,12 @@ import {
 	PutObjectCommand,
 	S3Client,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { imageConfig } from "@config";
 import env from "@env";
 import sharp from "sharp";
+import { isAuthorized } from "@lib/server-utils.ts";
+import { getCurrentTask } from "@lib/task.ts";
 
 const s3 = new S3Client({
 	endpoint: env.BACKBLAZE_BUCKET_ENDPOINT,
@@ -70,4 +73,26 @@ export const compressImage = async (file: File, quality?: number) => {
 			type: file.type,
 			size: file.size,
 		};
+};
+
+export const getSignedURL = async (type: string, size: number) => {
+	if (!type.startsWith("image/")) throw new Error("Invalid file type");
+	if (size > imageConfig.maxSize)
+		throw new Error(
+			`File is too big (${
+				Math.round((size / 1024 / 1024) * 100) / 100
+			} MB max)`,
+		);
+	const [session, task] = await Promise.all([isAuthorized(), getCurrentTask()]);
+
+	const command = new PutObjectCommand({
+		Bucket: env.BACKBLAZE_BUCKET_NAME,
+		Key: `submissions/${task?.id}/${session?.user?.id}`,
+		ContentType: type,
+		ContentLength: size,
+	});
+
+	return getSignedUrl(s3, command, {
+		expiresIn: 60 * 5,
+	});
 };

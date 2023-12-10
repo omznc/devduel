@@ -57,7 +57,7 @@ export default function InfiniteSubmissions({
 				)}
 				{!loading && (
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
-						<p className="text-2xl font-bold">
+						<p className="text-2xl font-bold opacity-0">
 							{submissions?.length ?? 0 > 0
 								? "End of the road"
 								: "No submissions"}

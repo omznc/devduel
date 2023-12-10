@@ -8,9 +8,10 @@ import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import {
 	PiCircleDashedDuotone,
-	PiEyeDuotone, PiFolderDuotone,
+	PiEyeDuotone,
+	PiFolderDuotone,
 	PiTrashDuotone,
-} from 'react-icons/pi';
+} from "react-icons/pi";
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,

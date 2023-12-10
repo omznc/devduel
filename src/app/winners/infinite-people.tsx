@@ -65,7 +65,7 @@ export default function InfinitePeople({
 				className="flex h-fit w-full flex-col items-center justify-center gap-4 md:col-span-2"
 			>
 				<div className="flex h-full w-full flex-col items-center justify-center gap-4">
-					<p className="text-2xl font-bold">
+					<p className="text-2xl font-bold opacity-0">
 						{(!loading && winners?.length) ?? 0 > 0
 							? "End of the road"
 							: "No winners"}

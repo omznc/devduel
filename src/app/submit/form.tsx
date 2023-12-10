@@ -1,6 +1,9 @@
 "use client";
 
-import { createSubmission } from "@/src/actions/submission.ts";
+import {
+	createSubmission,
+	getSignedUploadURL,
+} from "@/src/actions/submission.ts";
 import { submitFormSchemaType } from "@app/submit/schema.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
 import { imageConfig, validSources } from "@config";
@@ -11,7 +14,7 @@ import "@uiw/react-md-editor/markdown-editor.css";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import React, { ReactNode, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
 import {
@@ -40,10 +43,11 @@ export default function Form({
 		title: submission?.title || "",
 		description: submission?.description || "# My amazing submission",
 		shortDescription: submission?.shortDescription || "",
-		image: null,
+		image: submission?.image || "",
 		website: submission?.website || "",
 		source: submission?.source || "",
 	});
+	const [image, setImage] = useState<File | null>(null);
 
 	const [mounted, setMounted] = useState(false);
 	const { theme } = useTheme();
@@ -75,36 +79,25 @@ export default function Form({
 								);
 								return;
 							}
-							setData((data) => ({
-								...data,
-								image: files[0],
-							}));
+							setImage(files[0]);
 						}}
 					>
-						{!submission?.image && (!data?.image || data.image.size === 0) && (
-							<span className="flex h-[300px] w-[300px] items-center justify-center text-center transition-all">
-								{"Drop it like it's hot... or just click."}
-							</span>
-						)}
-						{!submission?.image && data.image && data.image.size > 0 && (
+						{image && (
 							<span
 								className="group relative flex h-[300px] w-[300px] items-center justify-center overflow-hidden rounded-sm text-center transition-all"
 								onClick={(e) => {
 									console.log("remove image");
 									e.preventDefault();
 									e.stopPropagation();
-									setData((data) => ({
-										...data,
-										image: new File([], ""),
-									}));
+									setImage(null);
 								}}
 							>
 								<Image
-									src={URL.createObjectURL(data.image)}
+									src={URL.createObjectURL(image)}
 									width={200}
 									height={200}
 									alt="Preview"
-									className="aspect-square h-[300px] w-[300px] fade-in rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
+									className="aspect-square z-20 h-[300px] w-[300px] fade-in rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
 								/>
 								<div className="absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100">
 									<PiTrashDuotone className="h-12 w-12" />
@@ -112,32 +105,40 @@ export default function Form({
 								</div>
 							</span>
 						)}
-						{submission?.image && (
-							<span
-								className="group relative flex h-[300px] w-[300px] items-center justify-center overflow-hidden rounded-sm text-center transition-all"
-								onClick={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									setData((data) => ({
-										...data,
-										image: new File([], ""),
-									}));
-									submission.image = "";
-								}}
-							>
-								<Image
-									src={submission.image}
-									id={"existing-image"}
-									width={200}
-									height={200}
-									alt="Preview"
-									className="aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
-								/>
-								<div className="absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100">
-									<PiTrashDuotone className="h-12 w-12" />
-									<span className="text-2xl">{"Remove"}</span>
-								</div>
-							</span>
+						{!image && (
+							<>
+								{data.image && (
+									<span
+										className="group relative flex h-[300px] w-[300px] items-center justify-center overflow-hidden rounded-sm text-center transition-all"
+										onClick={(e) => {
+											console.log("remove image");
+											e.preventDefault();
+											e.stopPropagation();
+											setData((data) => ({
+												...data,
+												image: "",
+											}));
+										}}
+									>
+										<Image
+											src={data.image}
+											width={200}
+											height={200}
+											alt="Preview"
+											className="aspect-square z-20 h-[300px] w-[300px] fade-in rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
+										/>
+										<div className="absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100">
+											<PiTrashDuotone className="h-12 w-12" />
+											<span className="text-2xl">{"Remove"}</span>
+										</div>
+									</span>
+								)}
+								{!data.image && (
+									<span className="flex h-[300px] w-[300px] items-center justify-center text-center transition-all">
+										{"Drop it like it's hot... or just click."}
+									</span>
+								)}
+							</>
 						)}
 					</Dropzone>
 				</div>
@@ -253,50 +254,71 @@ export default function Form({
 				/>
 				<SubmitFormButton
 					onClick={async () => {
-						const formData = new FormData();
-						formData.append("title", data.title);
-						formData.append("description", data.description);
-						formData.append("shortDescription", data.shortDescription);
-						formData.append("website", data.website);
-						if (data.source) formData.append("source", data.source);
-						formData.append("image", data.image);
+						toast.promise(
+							(async () => {
+								const formData = new FormData();
+								formData.append("title", data.title);
+								formData.append("description", data.description);
+								formData.append("shortDescription", data.shortDescription);
+								formData.append("website", data.website);
+								if (data.source) formData.append("source", data.source);
 
-						// Don't do anything if the user didn't change anything
-						if (
-							submission?.title === data.title &&
-							submission?.description === data.description &&
-							submission?.shortDescription === data.shortDescription &&
-							submission?.website === data.website &&
-							submission?.source === data.source &&
-							submission?.image &&
-							data.image.size === 0
-						) {
-							toast.success("Nothing to update.");
-							return;
-						}
+								if (image) {
+									console.log("uploading image");
+									const signedUrl = await getSignedUploadURL(
+										image.type,
+										image.size,
+									);
+									const resp = await fetch(signedUrl, {
+										method: "PUT",
+										body: image,
+										headers: {
+											"Content-Type": image.type,
+											"Content-Length": image.size.toString(),
+										},
+									})
+										.then((resp) => resp.ok)
+										.catch(() => false);
 
-						if (submission?.image) {
-							// 	get the existing image as a file
-							const existingImage = document.getElementById(
-								"existing-image",
-							) as HTMLImageElement;
-							const response = await fetch(existingImage.src);
-							const blob = await response.blob();
-							formData.set(
-								"image",
-								new File([blob], "image", {
-									type: blob.type,
-								}),
-							);
-						}
+									if (!resp) {
+										toast.error("Failed to upload image.");
+										return;
+									}
 
-						toast.promise(createSubmission(formData), {
-							loading: submission?.id ? "Updating..." : "Submitting...",
-							success: submission?.id ? "Updated!" : "Submitted!",
-							error: (e) => {
-								return e?.message ?? "Failed to submit.";
+									formData.append("image", signedUrl.split("?")[0]);
+								} else if (data.image) {
+									formData.append("image", data.image);
+								} else {
+									toast.error("No image provided.");
+									return;
+								}
+
+								// If nothing changed, don't submit
+								if (
+									submission?.title === data.title &&
+									submission?.description === data.description &&
+									submission?.shortDescription === data.shortDescription &&
+									submission?.website === data.website &&
+									submission?.source === data.source &&
+									submission?.image === data.image
+								) {
+									throw new Error("No changes");
+								}
+
+								await createSubmission(formData);
+							})(),
+							{
+								loading: submission?.id ? "Updating..." : "Submitting...",
+								success: () => {
+									window?.scrollTo({
+										top: 0,
+										behavior: "smooth",
+									});
+									return submission?.id ? "Updated!" : "Submitted!";
+								},
+								error: (e) => e?.message || "Failed",
 							},
-						});
+						);
 					}}
 				>
 					{submission?.id ? "Update" : "Submit"}
