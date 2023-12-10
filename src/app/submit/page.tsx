@@ -1,5 +1,4 @@
 import { deleteSubmission } from "@/src/actions/submission.ts";
-// import Form from "@app/submit/form.tsx";
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import prisma from "@lib/prisma.ts";
@@ -9,9 +8,9 @@ import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 import {
 	PiCircleDashedDuotone,
-	PiEyeDuotone,
+	PiEyeDuotone, PiFolderDuotone,
 	PiTrashDuotone,
-} from "react-icons/pi";
+} from 'react-icons/pi';
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,
@@ -56,6 +55,10 @@ export default async function Page() {
 					)}
 					{submission && (
 						<>
+							<RoundLink href={`/submission/${submission.slug}`}>
+								<PiFolderDuotone />
+								{"View"}
+							</RoundLink>
 							<RoundButton
 								onClick={async () => {
 									"use server";
@@ -63,7 +66,7 @@ export default async function Page() {
 								}}
 							>
 								<PiTrashDuotone />
-								Delete your submission
+								Delete
 							</RoundButton>
 						</>
 					)}

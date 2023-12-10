@@ -64,11 +64,14 @@ export async function generateStaticParams() {
 		orderBy: {
 			createdAt: "desc",
 		},
+		select: {
+			slug: true,
+		},
 	});
 
 	return tasks.map((task) => ({
 		params: {
-			taskId: task.slug,
+			slug: task.slug,
 		},
 	}));
 }

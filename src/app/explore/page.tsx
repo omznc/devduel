@@ -3,7 +3,7 @@ import { getCurrentTask } from "@lib/task.ts";
 import dynamic from "next/dynamic";
 import { PiCircleDashedDuotone } from "react-icons/pi";
 import InfiniteExplore from "@app/explore/infinite-explore.tsx";
-import prisma from '@lib/prisma.ts';
+import prisma from "@lib/prisma.ts";
 
 export default async function Page() {
 	const task = await getCurrentTask();
@@ -17,17 +17,22 @@ export default async function Page() {
 					</RoundLink>
 				</div>
 			)}
-			{task && <InfiniteExplore taskId={task.id} data={
-				await prisma.submission.findMany({
-					where: {
-						taskId: task.id,
-					},
-					orderBy: {
-						createdAt: "desc",
-					},
-					take: 10,
-				})
-			} />}
+			{task && (
+				<InfiniteExplore
+					taskId={task.id}
+					data={
+						await prisma.submission.findMany({
+							where: {
+								taskId: task.id,
+							},
+							orderBy: {
+								createdAt: "desc",
+							},
+							take: 10,
+						})
+					}
+				/>
+			)}
 			{!task && (
 				<span className="fit-text w-full text-center transition-all">
 					{"No task yet"}

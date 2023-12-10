@@ -14,7 +14,11 @@ import Image from "next/image";
 import React, { ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { toast } from "react-hot-toast";
-import { PiArrowUpRightDuotone, PiCircleDashedDuotone, PiTrashDuotone } from 'react-icons/pi';
+import {
+	PiArrowUpRightDuotone,
+	PiCircleDashedDuotone,
+	PiTrashDuotone,
+} from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import Link from "next/link";
 
@@ -50,8 +54,6 @@ export default function Form({
 
 	if (!mounted) return;
 
-	console.log(submission);
-
 	return (
 		<>
 			<form className="flex w-full flex-col gap-4 md:flex-row">
@@ -79,15 +81,16 @@ export default function Form({
 							}));
 						}}
 					>
-						{!submission?.image && !data?.image && (
+						{!submission?.image && (!data?.image || data.image.size === 0) && (
 							<span className="flex h-[300px] w-[300px] items-center justify-center text-center transition-all">
 								{"Drop it like it's hot... or just click."}
 							</span>
 						)}
-						{!submission?.image && data.image && (
+						{!submission?.image && data.image && data.image.size > 0 && (
 							<span
 								className="group relative flex h-[300px] w-[300px] items-center justify-center overflow-hidden rounded-sm text-center transition-all"
 								onClick={(e) => {
+									console.log("remove image");
 									e.preventDefault();
 									e.stopPropagation();
 									setData((data) => ({
@@ -101,7 +104,7 @@ export default function Form({
 									width={200}
 									height={200}
 									alt="Preview"
-									className="aspect-square h-[300px] w-[300px] rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
+									className="aspect-square h-[300px] w-[300px] fade-in rounded-sm object-cover transition-all group-hover:scale-105 group-hover:blur-sm group-hover:brightness-50 group-hover:filter"
 								/>
 								<div className="absolute z-30 flex flex-col items-center justify-center text-white opacity-0 transition-all group-hover:opacity-100">
 									<PiTrashDuotone className="h-12 w-12" />
@@ -146,7 +149,7 @@ export default function Form({
 								The URL of{" "}
 								<Link
 									className={"underline"}
-									href={`/submissions/${submission.slug}`}
+									href={`/submission/${submission.slug}`}
 									target="_blank"
 								>
 									your submission
@@ -203,7 +206,7 @@ export default function Form({
 						/>
 					</div>
 					<div className="flex w-full flex-col gap-2">
-						<label htmlFor="source">{"Source Code"}</label>
+						<label htmlFor="source">{"Source Code (optional)"}</label>
 						<span className="text-sm text-gray-500">
 							{`Available: ${validSources
 								.map((source) => source.substring(8))

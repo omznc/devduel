@@ -8,7 +8,7 @@ import { getCurrentTask } from "@lib/task.ts";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
+
 import {
 	PiArrowUpRightDuotone,
 	PiGitBranchDuotone,
@@ -52,8 +52,10 @@ export default async function Page({
 				<RoundButton
 					onClick={async () => {
 						"use server";
+						console.log("delete submission");
 						await deleteSubmission(submission.id);
 					}}
+					confirm={true}
 				>
 					<PiTrashDuotone />
 					Delete

@@ -146,8 +146,8 @@ export default function Header() {
 											{item.name !== "profile"
 												? item.name
 												: session?.user
-												? item.name
-												: "login"}
+												  ? item.name
+												  : "login"}
 										</span>
 									</Link>
 								);
