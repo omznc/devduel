@@ -5,6 +5,7 @@ import BackgroundDevDuel from "@public/background-devduel.svg";
 import BackgroundLatest from "@public/background-latest.svg";
 import Link from "next/link";
 import { PiEyeDuotone } from "react-icons/pi";
+import { TaskStatus } from '@prisma/client';
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -88,7 +89,7 @@ export default async function Home() {
 					</p>
 				</div>
 			</div>
-			{task?.submissions && task?.submissions?.length > 0 && (
+			{task.status === TaskStatus.VOTING && task?.submissions && task?.submissions?.length > 0 && (
 				<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
 					<h1 className="block text-5xl font-bold text-white md:hidden">
 						Latest
