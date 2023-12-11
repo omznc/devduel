@@ -5,7 +5,7 @@ import BackgroundDevDuel from "@public/background-devduel.svg";
 import BackgroundLatest from "@public/background-latest.svg";
 import Link from "next/link";
 import { PiEyeDuotone } from "react-icons/pi";
-import { TaskStatus } from '@prisma/client';
+import { TaskStatus } from "@prisma/client";
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
@@ -89,24 +89,29 @@ export default async function Home() {
 					</p>
 				</div>
 			</div>
-			{task.status === TaskStatus.VOTING && task?.submissions && task?.submissions?.length > 0 && (
-				<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
-					<h1 className="block text-5xl font-bold text-white md:hidden">
-						Latest
-					</h1>
-					<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20">
-						{task.submissions.map((submission) => {
-							return (
-								<SubmissionEntry submission={submission} key={submission.id} />
-							);
-						})}
+			{task.status === TaskStatus.VOTING &&
+				task?.submissions &&
+				task?.submissions?.length > 0 && (
+					<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
+						<h1 className="block text-5xl font-bold text-white md:hidden">
+							Latest
+						</h1>
+						<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20">
+							{task.submissions.map((submission) => {
+								return (
+									<SubmissionEntry
+										submission={submission}
+										key={submission.id}
+									/>
+								);
+							})}
+						</div>
+						<BackgroundLatest
+							viewBox="0 0 1351 1112"
+							className="animate-path absolute top-8 hidden h-auto w-full opacity-70 filter dark:invert md:block"
+						/>
 					</div>
-					<BackgroundLatest
-						viewBox="0 0 1351 1112"
-						className="animate-path absolute top-8 hidden h-auto w-full opacity-70 filter dark:invert md:block"
-					/>
-				</div>
-			)}
+				)}
 		</div>
 	);
 }
