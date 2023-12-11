@@ -27,6 +27,12 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 	const { data: session } = useSession();
 
 	useEffect(() => {
+		if (!session?.user?.username && path !== "/user/me/username") {
+			router.push("/user/me/username");
+		}
+	}, [path, router, session]);
+
+	useEffect(() => {
 		if (isMobile) return;
 		const handleScroll = () => {
 			const currentScrollY = window.scrollY;
@@ -207,4 +213,12 @@ const items = [
 		protected: true,
 		admin: true,
 	},
-];
+] as {
+	name: string;
+	href: string;
+	icon: JSX.Element;
+	protected?: boolean;
+	admin?: boolean;
+	show?: TaskStatus;
+}[];
+

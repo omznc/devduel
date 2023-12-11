@@ -23,7 +23,9 @@ export default async function Page({
 	const submission = await getSubmissionCached(params.slug);
 	if (!submission) return redirect("/");
 
-	const visible = submission.task.status === TaskStatus.VOTING || submission.task.status === TaskStatus.CLOSED;
+	const visible =
+		submission.task.status === TaskStatus.VOTING ||
+		submission.task.status === TaskStatus.CLOSED;
 
 	return (
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
