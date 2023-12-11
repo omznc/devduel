@@ -43,7 +43,9 @@ export default async function Task({ params }: TaskProps) {
 				Latest submissions
 			</span>
 			<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row">
-				{submissions.map((submission) => <SubmissionEntry submission={submission} key={submission.id} />)}
+				{submissions.map((submission) => (
+					<SubmissionEntry submission={submission} key={submission.id} />
+				))}
 			</div>
 		</div>
 	);
@@ -62,6 +64,7 @@ export async function generateStaticParams() {
 		},
 		select: {
 			slug: true,
+
 		},
 	});
 

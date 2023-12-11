@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
-import { TaskStatus } from '@prisma/client';
+import { TaskStatus } from "@prisma/client";
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
 	loading: () => (
@@ -39,9 +39,8 @@ export default async function Page({
 				)}
 				{visible && submission.winner && <RoundButton>🏆 Winner</RoundButton>}
 			</div>
-			{
-				visible && (
-					<>
+			{visible && (
+				<>
 					<Link
 						className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline"
 						href={submission.website}
@@ -51,22 +50,19 @@ export default async function Page({
 						{submission.title}
 						<PiArrowUpRightDuotone className="ml-2 inline" />
 					</Link>
-				<Markdown submission={submission} />
-					</>
-				)
-			}
-			{
-				!visible && (
-					<div className="flex w-full items-center justify-center flex-col gap-2">
-						<h2 className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline">
-							{"You can't see this, yet"}
-						</h2>
-						<p className="text-center text-2xl">
-							{"Wait until the voting period opens"}
-						</p>
-					</div>
-				)
-			}
+					<Markdown submission={submission} />
+				</>
+			)}
+			{!visible && (
+				<div className="flex w-full items-center justify-center flex-col gap-2">
+					<h2 className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline">
+						{"You can't see this, yet"}
+					</h2>
+					<p className="text-center text-2xl">
+						{"Wait until the voting period opens"}
+					</p>
+				</div>
+			)}
 		</div>
 	);
 }

@@ -45,7 +45,7 @@ export async function generateStaticParams() {
 				_count: "desc",
 			},
 		},
-		take: 200
+		take: 200,
 	});
 
 	return submissions.map((submission) => ({
