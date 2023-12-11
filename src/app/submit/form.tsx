@@ -322,7 +322,7 @@ export default function Form({
 									});
 								} catch (e: any) {
 									throw new Error(
-										e.errors.map((err) => err.message).join("\n"),
+										e.errors.map((err: any) => err.message).join("\n"),
 									);
 								}
 
