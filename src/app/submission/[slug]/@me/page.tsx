@@ -37,18 +37,19 @@ export default async function Page({
 				<RoundLink href={`/task/${submission.task.slug}`}>
 					Task: {submission.task.title}
 				</RoundLink>
-				{task?.id === submission.taskId && task.status === "OPEN" && (
-					<RoundLink href={"/submit"}>
-						<PiPencilDuotone />
-						Edit
-					</RoundLink>
-				)}
 				{submission.source && (
 					<RoundLink href={submission.source}>
 						<PiGitBranchDuotone />
 						Source Code
 					</RoundLink>
 				)}
+				{task?.id === submission.taskId && task.status === "OPEN" && (
+					<RoundLink href={"/submit"}>
+						<PiPencilDuotone />
+						Edit
+					</RoundLink>
+				)}
+
 				<RoundButton
 					onClick={async () => {
 						"use server";

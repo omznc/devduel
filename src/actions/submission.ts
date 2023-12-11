@@ -139,7 +139,18 @@ export const getSubmissions = async ({
 		take,
 		skip,
 		include: {
-			user: includeUser,
+			...(includeUser
+				? {
+						user: {
+							select: {
+								id: true,
+								name: true,
+								username: true,
+								image: true,
+							},
+						},
+				  }
+				: {}),
 		},
 	});
 };

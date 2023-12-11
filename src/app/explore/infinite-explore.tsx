@@ -7,12 +7,21 @@ import { useEffect, useState } from "react";
 import { PiCircleDashedDuotone } from "react-icons/pi";
 import { useInView } from "react-intersection-observer";
 
+type Data = Submission & {
+		user?: {
+			name: string | null;
+			image: string | null;
+		};
+	};
+
+
+
 export default function InfiniteExplore({
 	taskId,
 	data,
-}: { taskId: string; data: Submission[] }) {
+}: { taskId: string; data: Data[] }) {
 	const { ref, inView } = useInView();
-	const [submissions, setSubmissions] = useState<Submission[]>(
+	const [submissions, setSubmissions] = useState<Data[]>(
 		data ? data : [],
 	);
 	const [loading, setLoading] = useState(false);

@@ -235,6 +235,9 @@ export default function Form({
 				<label htmlFor="description">{`Description (${
 					data.description?.length ?? 0
 				}/10000)`}</label>
+				<span className="text-md -mt-2 text-gray-500">
+					{"Markdown is supported, HTML is not. You can use external images as well."}
+				</span>
 
 				<MDEditor
 					height={200}

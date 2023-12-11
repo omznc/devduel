@@ -6,6 +6,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@app/api/auth/[...nextauth]/authOptions.ts';
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
 	loading: () => (
@@ -27,6 +29,13 @@ export default async function Page({
 		submission.task.status === TaskStatus.VOTING ||
 		submission.task.status === TaskStatus.CLOSED;
 
+	let adminView = false;
+
+	if (!visible) {
+		const isAdmin = (await getServerSession(authOptions))?.user?.admin;
+		adminView = isAdmin;
+	}
+
 	return (
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
@@ -40,8 +49,18 @@ export default async function Page({
 					<RoundLink href={submission.source}>Source Code</RoundLink>
 				)}
 				{visible && submission.winner && <RoundButton>🏆 Winner</RoundButton>}
+				{adminView && (
+					<RoundButton
+						style={{
+							backgroundColor: "rgba(255, 100, 100, 0.8)",
+							color: "white",
+						}}
+					>
+						Admin View
+					</RoundButton>
+				)}
 			</div>
-			{visible && (
+			{(visible || adminView) && (
 				<>
 					<Link
 						className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline"
@@ -55,7 +74,7 @@ export default async function Page({
 					<Markdown submission={submission} />
 				</>
 			)}
-			{!visible && (
+			{!visible && !adminView && (
 				<div className="flex w-full items-center justify-center flex-col gap-2">
 					<h2 className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline">
 						{"You can't see this, yet"}

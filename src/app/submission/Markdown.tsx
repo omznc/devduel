@@ -16,19 +16,20 @@ export default function Markdown({ submission }: MarkdownProps) {
 			components={{
 				img: ({ ...props }) => {
 					const { src } = props;
-					if (!src?.startsWith("https://i.imgur.com/"))
-						return (
-							<Link href={src ?? "#"} target={"_blank"}>
-								External Image
-							</Link>
-						);
+					// if (!src?.startsWith("https://i.imgur.com/"))
+					// 	return (
+					// 		<Link href={src ?? "#"} target={"_blank"}>
+					// 			External Image
+					// 		</Link>
+					// 	);
 					return (
 						<Image
-							src={src}
-							width={parseInt((props.width as string) ?? "500")}
-							height={parseInt((props.height as string) ?? "500")}
+							src={src!}
+							width={parseInt((props.width as string) ?? "1000")}
+							height={parseInt((props.height as string) ?? "1000")}
 							alt={(props.alt as string) ?? "Submission Image"}
-							className="w-full rounded-lg"
+							className="w-fit rounded-lg"
+							unoptimized={true}
 						/>
 					);
 				},

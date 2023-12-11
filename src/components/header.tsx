@@ -27,7 +27,9 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 	const { data: session } = useSession();
 
 	useEffect(() => {
-		if (!session?.user?.username && path !== "/user/me/username") {
+		if (!session?.user) return;
+		if (!session.user?.username && path !== "/user/me/username") {
+			console.log("Redirecting");
 			router.push("/user/me/username");
 		}
 	}, [path, router, session]);
@@ -114,9 +116,6 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 								})
 								.filter((item) => {
 									if (item?.show && !session?.user?.admin) {
-										console.log(
-											`${item.name} requires ${item.show} and we have ${taskStatus}`,
-										);
 										return item?.show === taskStatus;
 									}
 									return true;
