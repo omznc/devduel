@@ -36,8 +36,8 @@ export default function BackgroundHoverEffect() {
 				"reveal-color fixed pointer-events-none fixed z-20 h-[100px] w-[100px] rounded-full dark:bg-opacity-100 bg-opacity-30 mix-blend-color-dodge",
 				color,
 			);
-			div.style.top = `${e.y - 250}px`;
-			div.style.left = `${e.x - 250}px`;
+			div.style.top = `${e.y - 50}px`;
+			div.style.left = `${e.x - 50}px`;
 			div.style.transition = "background-color 0.5s ease-out";
 			div.style.filter = "blur(200px)";
 			div.style.animation = "";
