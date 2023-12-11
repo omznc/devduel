@@ -15,7 +15,7 @@ import {
 	PiUserDuotone,
 	PiUserGearDuotone,
 } from "react-icons/pi";
-import { Task, TaskStatus } from "@prisma/client";
+import { TaskStatus } from "@prisma/client";
 
 export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 	const path = usePathname();
@@ -154,9 +154,9 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 											{item.icon}
 											<span
 												className={cn(
-													"block w-fit overflow-hidden transition-all",
+													"block text-md opacity-1 -ml-1 overflow-hidden transition-all",
 													{
-														"w-0": isMobile && !active,
+														"text-[0px] opacity-0": isMobile && !active,
 													},
 												)}
 											>

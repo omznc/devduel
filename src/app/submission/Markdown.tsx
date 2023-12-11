@@ -1,7 +1,6 @@
 import { cn } from "@lib/utils.ts";
 import { Submission } from "@prisma/client";
 import Image from "next/image";
-import Link from "next/link";
 import { default as MD } from "react-markdown";
 import remarkGfm from "remark-gfm";
 

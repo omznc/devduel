@@ -15,7 +15,7 @@ export default async function Home() {
 			<div className="relative flex h-screen w-full flex-col items-center justify-center">
 				<div className="absolute flex h-screen w-full flex-col items-center justify-center">
 					<BackgroundDevDuel
-						className="animate-path hidden h-auto w-full p-2 opacity-50 filter transition-all dark:invert md:block md:p-24"
+						className="animate-path hidden h-auto w-full p-2 opacity-80 dark:opacity-50 filter transition-all dark:invert md:block md:p-24"
 						viewBox="0 0 1352 714"
 					/>
 				</div>

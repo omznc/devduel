@@ -1,6 +1,6 @@
 "use client";
 
-import { useIsMobile } from "@/src/lib/hooks.ts";
+import { useDebounce, useIsMobile } from '@/src/lib/hooks.ts';
 import { cn } from "@/src/lib/utils.ts";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -22,6 +22,7 @@ export default function BackgroundHoverEffect() {
 	const [color, setColor] = useState(colors[0]);
 	const path = usePathname();
 	const isMobile = useIsMobile();
+	const debouncedRandomCoordinates = useDebounce(randomCoordinates, 300);
 
 	const handleMouseMove = (e: MouseEvent) => {
 		setCoordinates({ x: e.x, y: e.y });
@@ -29,18 +30,34 @@ export default function BackgroundHoverEffect() {
 			x: Math.random() * e.x,
 			y: Math.random() * e.y,
 		});
+		if (e.buttons === 1) {
+			const div = document.createElement("div");
+			div.className = cn(
+				"reveal-color fixed pointer-events-none fixed z-20 h-[100px] w-[100px] rounded-full dark:bg-opacity-100 bg-opacity-30 mix-blend-color-dodge",
+				color,
+			);
+			div.style.top = `${e.y - 250}px`;
+			div.style.left = `${e.x - 250}px`;
+			div.style.transition = "background-color 0.5s ease-out";
+			div.style.filter = "blur(200px)";
+			div.style.animation = "";
+			document.body.appendChild(div);
+			setTimeout(() => {
+				document.body.removeChild(div);
+			}, 1000);
+		}
 	};
 	const handleMouseClick = () => {
 		setColor(colors[Math.floor(Math.random() * colors.length)]);
 	};
 
 	useEffect(() => {
-		document.addEventListener("mousemove", handleMouseMove);
-		document.addEventListener("click", handleMouseClick);
+		document.addEventListener('mousemove', handleMouseMove);
+		document.addEventListener('click', handleMouseClick);
 
 		return () => {
-			document.removeEventListener("mousemove", handleMouseMove);
-			document.removeEventListener("click", handleMouseClick);
+			document.removeEventListener('mousemove', handleMouseMove);
+			document.removeEventListener('click', handleMouseClick);
 		};
 	}, []);
 
@@ -69,8 +86,8 @@ export default function BackgroundHoverEffect() {
 							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-blue-500 mix-blend-color transition-all duration-200",
 						)}
 						style={{
-							top: (randomCoordinates.y - 250) * Math.random(),
-							right: (randomCoordinates.x - 250) * Math.random(),
+							top: (debouncedRandomCoordinates.y - 250) * Math.random(),
+							right: (debouncedRandomCoordinates.x - 250) * Math.random(),
 							filter: "blur(100px)",
 						}}
 						suppressHydrationWarning
@@ -80,8 +97,8 @@ export default function BackgroundHoverEffect() {
 							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-green-500 mix-blend-color transition-all duration-500",
 						)}
 						style={{
-							top: (randomCoordinates.y - 250) * Math.random(),
-							left: (randomCoordinates.x - 250) * Math.random(),
+							top: (debouncedRandomCoordinates.y - 250) * Math.random(),
+							left: (debouncedRandomCoordinates.x - 250) * Math.random(),
 							filter: "blur(100px)",
 						}}
 						suppressHydrationWarning
@@ -91,8 +108,8 @@ export default function BackgroundHoverEffect() {
 							"duration-800 pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-yellow-500 mix-blend-color transition-all",
 						)}
 						style={{
-							top: (randomCoordinates.y - 250) * Math.random(),
-							right: (randomCoordinates.x - 250) * Math.random(),
+							top: (debouncedRandomCoordinates.y - 250) * Math.random(),
+							right: (debouncedRandomCoordinates.x - 250) * Math.random(),
 							filter: "blur(100px)",
 						}}
 						suppressHydrationWarning
@@ -102,8 +119,8 @@ export default function BackgroundHoverEffect() {
 							"pointer-events-none fixed z-10 h-[500px] w-[500px] rounded-full bg-orange-500 mix-blend-color transition-all duration-1000",
 						)}
 						style={{
-							top: (randomCoordinates.y - 250) * Math.random(),
-							left: (randomCoordinates.x - 250) * Math.random(),
+							top: (debouncedRandomCoordinates.y - 250) * Math.random(),
+							left: (debouncedRandomCoordinates.x - 250) * Math.random(),
 							filter: "blur(100px)",
 						}}
 						suppressHydrationWarning

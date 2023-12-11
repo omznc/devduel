@@ -1,14 +1,12 @@
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { getCurrentTask } from "@lib/task.ts";
-import dynamic from "next/dynamic";
-import { PiCircleDashedDuotone } from "react-icons/pi";
 import InfiniteExplore from "@app/explore/infinite-explore.tsx";
-import prisma from "@lib/prisma.ts";
 import { TaskStatus } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import { getSubmissions } from "@/src/actions/submission.ts";
+import ActionBar from '@components/action-bar.tsx';
 
 export default async function Page() {
 	const task = await getCurrentTask();
@@ -23,7 +21,7 @@ export default async function Page() {
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			{task && (
-				<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
+				<ActionBar>
 					<RoundLink href={`/task/${task?.slug}`}>
 						Task: {task?.title}
 					</RoundLink>
@@ -37,7 +35,7 @@ export default async function Page() {
 							Admin View
 						</RoundButton>
 					)}
-				</div>
+				</ActionBar>
 			)}
 			{task && (
 				<InfiniteExplore

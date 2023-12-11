@@ -4,7 +4,7 @@ import {
 	createSubmission,
 	getSignedUploadURL,
 } from "@/src/actions/submission.ts";
-import { submitFormSchemaType } from "@app/submit/schema.ts";
+import { submitFormSchema, submitFormSchemaType } from '@app/submit/schema.ts';
 import { SubmitFormButton } from "@components/buttons.tsx";
 import { imageConfig, validSources } from "@config";
 import { cn } from "@lib/utils.ts";
@@ -24,6 +24,7 @@ import {
 } from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import Link from "next/link";
+import { ZodError } from 'zod';
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,
@@ -308,6 +309,19 @@ export default function Form({
 									submission?.image === data.image
 								) {
 									throw new Error("No changes");
+								}
+
+								try {
+									submitFormSchema.parse({
+										title: formData.get("title"),
+										description: formData.get("description"),
+										shortDescription: formData.get("shortDescription"),
+										image: formData.get("image"),
+										website: formData.get("website"),
+										source: formData.get("source"),
+									})
+								} catch (e: ZodError) {
+									throw new Error( e.errors.map((err) => err.message).join("\n"));
 								}
 
 								await createSubmission(formData);

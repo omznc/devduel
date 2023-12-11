@@ -3,10 +3,11 @@ import prisma from "@lib/prisma.ts";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { AuthOptions } from "next-auth";
 import GithubProvider from "next-auth/providers/github";
+import { PrismaClient } from "@prisma/client";
 
 export const authOptions: AuthOptions = {
-	// @ts-ignore
-	adapter: PrismaAdapter(prisma),
+	// Required since I extended the PrismaClient type
+	adapter: PrismaAdapter(prisma as unknown as PrismaClient),
 	providers: [
 		GithubProvider({
 			clientId: env.GITHUB_CLIENT_ID,
@@ -24,9 +25,6 @@ export const authOptions: AuthOptions = {
 				session.user = user;
 			}
 			return session;
-		},
-		async redirect({ url, baseUrl }) {
-			return url.startsWith(baseUrl) ? url : baseUrl;
 		},
 	},
 };

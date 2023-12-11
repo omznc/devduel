@@ -26,9 +26,11 @@ export function RoundButton(props: RoundButtonProps) {
 		}
 	}, [confirm]);
 
+	const { confirmClick, ...rest } = props;
+
 	return (
 		<button
-			{...props}
+			{...rest}
 			onClick={(e) => {
 				if (props.confirmClick && !confirm) {
 					e.preventDefault();
@@ -44,7 +46,7 @@ export function RoundButton(props: RoundButtonProps) {
 				if (props.onClick) props.onClick(e);
 			}}
 			className={cn(
-				"border-normal group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2 transition-all dark:bg-black dark:text-white",
+				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2 transition-all dark:bg-black dark:text-white",
 				props.className,
 			)}
 		>
@@ -66,7 +68,7 @@ export function RoundLink(props: RoundLinkProps) {
 			{...props}
 			href={props.href}
 			className={cn(
-				"border-normal group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2  transition-all dark:bg-black dark:text-white",
+				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2  transition-all dark:bg-black dark:text-white",
 				props.className,
 			)}
 		>

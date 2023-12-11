@@ -3,159 +3,173 @@
 @tailwind utilities;
 
 @keyframes rocketAnimation {
-  0% {
-    left: -100px; /* Move the rocket off-screen to the left */
-    display: block !important;
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    display: none !important; /* Move the rocket off-screen to the right */
-    transform: translateX(99vw);
-    position: absolute;
-    opacity: 0;
-  }
+    0% {
+        left: -100px; /* Move the rocket off-screen to the left */
+        display: block !important;
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        display: none !important; /* Move the rocket off-screen to the right */
+        transform: translateX(99vw);
+        position: absolute;
+        opacity: 0;
+    }
 }
 
 .animate-rocket {
-  animation: rocketAnimation 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+    animation: rocketAnimation 1s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
 
 /* Font that resizes to fully fit any parent width*/
 .fit-text {
-  font-size: clamp(1rem, 8vw, 4em);
+    font-size: clamp(1rem, 8vw, 4em);
 }
 
 .animate-path path {
-  stroke-opacity: 1;
-  fill: white;
-  fill-opacity: 0.1;
-  stroke-width: 0.7;
-  stroke-dasharray: 10;
-  mix-blend-mode: difference;
-  transition: all 0.3s ease-in-out;
-  animation: dash cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards infinite;
-  animation-duration: 10s;
+    stroke-opacity: 1;
+    fill: white;
+    fill-opacity: 0.1;
+    stroke-width: 0.7;
+    stroke-dasharray: 10;
+    mix-blend-mode: difference;
+    transition: all 0.3s ease-in-out;
+    animation: dash cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards infinite;
+    animation-duration: 10s;
 }
 
 .animate-path path:hover {
-  fill: black;
-  stroke-width: 0.7;
-  animation-duration: 2s;
+    fill: black;
+    stroke-width: 0.7;
+    animation-duration: 2s;
 }
 
 @keyframes dash {
-  from {
-    stroke-dashoffset: 250;
-  }
-  to {
-    stroke-dashoffset: -250;
-  }
+    from {
+        stroke-dashoffset: 250;
+    }
+    to {
+        stroke-dashoffset: -250;
+    }
 }
 
 .reveal-color {
-  animation: breathe 15s infinite alternate-reverse
-    cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    animation: breathe 15s infinite alternate-reverse cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 /* A text shadow that does mix-blend-color*/
 .bg-colored {
-  position: relative;
+    position: relative;
 }
 
 .bg-colored::after {
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  content: "";
-  position: absolute;
-  top: 10%;
-  left: 0;
-  filter: blur(100px);
-  mix-blend-mode: color-dodge;
-  animation: breathe 5s infinite alternate-reverse
-    cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 0;
+    filter: blur(100px);
+    mix-blend-mode: color-dodge;
+    animation: breathe 5s infinite alternate-reverse cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
 
 @keyframes breathe {
-  0% {
-    transform: scaleX(0.3) scaleY(0.2);
-    filter: blur(200px);
-  }
-  50% {
-    transform: scaleX(1.1) scaleY(1.3);
-    filter: blur(100px);
-  }
-  100% {
-    transform: scaleX(0.3) scaleY(0.2);
-    filter: blur(200px);
-  }
+    0% {
+        transform: scaleX(0.3) scaleY(0.2);
+        filter: blur(200px);
+    }
+    50% {
+        transform: scaleX(1.1) scaleY(1.3);
+        filter: blur(100px);
+    }
+    100% {
+        transform: scaleX(0.3) scaleY(0.2);
+        filter: blur(200px);
+    }
 }
 
 @keyframes breathe-bluronly {
-  0% {
-    filter: blur(50px);
-  }
-  50% {
-    filter: blur(100px);
-  }
-  100% {
-    filter: blur(50px);
-  }
+    0% {
+        filter: blur(50px);
+    }
+    50% {
+        filter: blur(100px);
+    }
+    100% {
+        filter: blur(50px);
+    }
 }
 
 .border-normal {
-  @apply border border-black border-opacity-25 dark:border-white dark:border-opacity-25;
+    @apply border border-black border-opacity-25 dark:border-white dark:border-opacity-25;
 }
 
 @keyframes fly-in {
-  0% {
-    transform: translateY(-100%);
-  }
-  100% {
-    transform: translateY(0%);
-  }
+    0% {
+        transform: translateY(-100%);
+    }
+    100% {
+        transform: translateY(0%);
+    }
 }
 
 .fly-in {
-  animation: fly-in 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+    animation: fly-in 0.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
 
 .editor[data-theme="dark"],
 .editor[data-theme="dark"] div {
-  --color-canvas-default: black !important;
+    --color-canvas-default: black !important;
 }
 
 .editor {
-  height: 100% !important;
-  min-height: 200px !important;
+    height: 100% !important;
+    min-height: 200px !important;
 }
 
 .w-md-editor-content,
 w-md-editor-area,
 w-md-editor-input,
 w-md-editor-text {
-  height: 100% !important;
-  min-height: 200px !important;
+    height: 100% !important;
+    min-height: 200px !important;
 }
 
 /*slim scrollbar*/
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+    width: 5px;
+    height: 5px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+    background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 5px;
+    background: #888;
+    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+    background: #555;
+}
+
+/* animate font size from 0 to whatever it was before anim */
+@keyframes fly-in-from-top {
+    0% {
+        transform: translateY(-150%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0%);
+        opacity: 1;
+    }
+}
+
+.fly-in-from-top {
+    animation: fly-in-from-top 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }

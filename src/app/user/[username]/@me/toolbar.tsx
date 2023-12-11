@@ -4,10 +4,11 @@ import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { signOut } from "next-auth/react";
 import { BiCog } from "react-icons/bi";
 import { PiAtDuotone, PiUserCircleMinusDuotone } from "react-icons/pi";
+import ActionBar from '@components/action-bar.tsx';
 
 export default function Toolbar() {
 	return (
-		<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
+		<ActionBar>
 			<RoundButton
 				onClick={async () => {
 					await signOut();
@@ -25,6 +26,6 @@ export default function Toolbar() {
 				<BiCog />
 				{"settings"}
 			</RoundLink>
-		</div>
+		</ActionBar>
 	);
 }

@@ -4,7 +4,6 @@ import { getSubmissions } from "@/src/actions/submission.ts";
 import { SubmissionEntry } from "@components/submission/submission-list.tsx";
 import { Submission } from "@prisma/client";
 import { useEffect, useState } from "react";
-import { PiCircleDashedDuotone } from "react-icons/pi";
 import { useInView } from "react-intersection-observer";
 
 type Data = Submission & {

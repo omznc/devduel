@@ -1,11 +1,12 @@
 import { getWinnerUsers } from "@/src/actions/user.ts";
 import InfinitePeople from "@app/winners/infinite-people.tsx";
-import { PiFolderDuotone, PiUserDuotone, PiUsersDuotone } from "react-icons/pi";
+import { PiFolderDuotone, PiUsersDuotone } from "react-icons/pi";
 import { cn } from "@lib/utils.ts";
 import Link from "next/link";
 import { getSubmissions } from "@/src/actions/submission.ts";
 import InfiniteSubmissions from "@app/winners/infinite-submissions.tsx";
-import { redirect } from "next/navigation";
+import ActionBar from '@components/action-bar.tsx';
+import { RoundLink } from '@components/buttons.tsx';
 
 export default async function Page({
 	searchParams,
@@ -34,36 +35,24 @@ export default async function Page({
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex h-full w-full flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]">
-				<div
-					className={`relative h-fit w-fit gap-2 border-normal group fixed left-0 top-0 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:p-2.5 z-30 flex h-24 w-fit items-center justify-center transition-all delay-300`}
-				>
-					<Link
-						className={cn(
-							"text-md inline-flex items-center justify-center gap-2 rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg",
-							{
-								"bg-black text-white hover:bg-opacity-100 dark:bg-white dark:text-black dark:hover:bg-opacity-100":
-									searchParams.type === "submissions",
-							},
-						)}
-						href={"?type=submissions"}
-					>
-						<PiFolderDuotone className="mr-1 inline" />
-						{"submissions"}
-					</Link>
-					<Link
-						className={cn(
-							"text-md inline-flex items-center justify-center gap-2 rounded-full px-1.5 py-1 transition-all hover:bg-black hover:bg-opacity-10 hover:dark:bg-white dark:hover:bg-opacity-10 md:px-4 md:py-2 md:text-lg",
-							{
-								"bg-black text-white hover:bg-opacity-100 dark:bg-white dark:text-black dark:hover:bg-opacity-100":
-									searchParams.type === "people",
-							},
-						)}
-						href={"?type=people"}
-					>
-						<PiUsersDuotone className="mr-1 inline" />
-						{"people"}
-					</Link>
-				</div>
+				<ActionBar>
+					<div className="flex bg-white dark:bg-black p-1.5 border-normal w-fit rounded-full max-w-4xl flex-row flex-wrap items-center justify-center gap-1">
+						<RoundLink href={`/winners?type=submissions`} className={cn({
+							"bg-black text-white dark:bg-white dark:text-black": searchParams.type === "submissions",
+							}
+						)}>
+							<PiFolderDuotone />
+							{"Submissions"}
+						</RoundLink>
+						<RoundLink href={`/winners?type=people`} className={cn({
+							"bg-black text-white dark:bg-white dark:text-black": searchParams.type === "people",
+							}
+						)}>
+							<PiUsersDuotone />
+							{"People"}
+						</RoundLink>
+					</div>
+				</ActionBar>
 				{searchParams.type === "people" && (
 					<>
 						{winners.length > 0 && (

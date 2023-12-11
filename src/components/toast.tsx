@@ -14,18 +14,21 @@ const Toast = () => {
 					"border-normal bg-colored after:bg-yellow-500 after:opacity-20 text-xl text-black dark:text-white bg-white dark:bg-black bg-opacity-10 dark:bg-opacity-10 backdrop-blur-lg",
 				style: {
 					borderRadius: "1rem",
+					maxWidth: "800px",
 				},
 			}}
 		>
 			{(t) => (
-				<ToastBar toast={t}>
+				<ToastBar toast={t} style={{
+					borderRadius: "1rem",
+				}}>
 					{({ icon, message }) => (
 						<>
 							{t.type === "success" && (
-								<PiCheckCircleDuotone className="text-green-500" />
+								<PiCheckCircleDuotone className="text-green-500 w-8 h-auto" />
 							)}
 							{t.type === "error" && (
-								<PiXCircleDuotone className="text-red-500" />
+								<PiXCircleDuotone className="text-red-500 w-8 h-auto" />
 							)}
 							{t.type !== "success" && t.type !== "error" && icon}
 							{message}
