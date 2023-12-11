@@ -89,7 +89,7 @@ export default async function Home() {
 					</p>
 				</div>
 			</div>
-			{task.status === TaskStatus.VOTING &&
+			{task?.status === TaskStatus.VOTING &&
 				task?.submissions &&
 				task?.submissions?.length > 0 && (
 					<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
