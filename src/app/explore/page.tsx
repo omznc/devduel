@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import { getSubmissions } from "@/src/actions/submission.ts";
-import ActionBar from '@components/action-bar.tsx';
+import ActionBar from "@components/action-bar.tsx";
 
 export default async function Page() {
 	const task = await getCurrentTask();

@@ -19,9 +19,12 @@ const Toast = () => {
 			}}
 		>
 			{(t) => (
-				<ToastBar toast={t} style={{
-					borderRadius: "1rem",
-				}}>
+				<ToastBar
+					toast={t}
+					style={{
+						borderRadius: "1rem",
+					}}
+				>
 					{({ icon, message }) => (
 						<>
 							{t.type === "success" && (

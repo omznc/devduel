@@ -4,7 +4,7 @@ import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { signOut } from "next-auth/react";
 import { BiCog } from "react-icons/bi";
 import { PiAtDuotone, PiUserCircleMinusDuotone } from "react-icons/pi";
-import ActionBar from '@components/action-bar.tsx';
+import ActionBar from "@components/action-bar.tsx";
 
 export default function Toolbar() {
 	return (

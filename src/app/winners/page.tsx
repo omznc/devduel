@@ -5,8 +5,8 @@ import { cn } from "@lib/utils.ts";
 import Link from "next/link";
 import { getSubmissions } from "@/src/actions/submission.ts";
 import InfiniteSubmissions from "@app/winners/infinite-submissions.tsx";
-import ActionBar from '@components/action-bar.tsx';
-import { RoundLink } from '@components/buttons.tsx';
+import ActionBar from "@components/action-bar.tsx";
+import { RoundLink } from "@components/buttons.tsx";
 
 export default async function Page({
 	searchParams,
@@ -37,17 +37,23 @@ export default async function Page({
 			<div className="flex h-full w-full flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]">
 				<ActionBar>
 					<div className="flex bg-white dark:bg-black p-1.5 border-normal w-fit rounded-full max-w-4xl flex-row flex-wrap items-center justify-center gap-1">
-						<RoundLink href={`/winners?type=submissions`} className={cn({
-							"bg-black text-white dark:bg-white dark:text-black": searchParams.type === "submissions",
-							}
-						)}>
+						<RoundLink
+							href={`/winners?type=submissions`}
+							className={cn({
+								"bg-black text-white dark:bg-white dark:text-black":
+									searchParams.type === "submissions",
+							})}
+						>
 							<PiFolderDuotone />
 							{"Submissions"}
 						</RoundLink>
-						<RoundLink href={`/winners?type=people`} className={cn({
-							"bg-black text-white dark:bg-white dark:text-black": searchParams.type === "people",
-							}
-						)}>
+						<RoundLink
+							href={`/winners?type=people`}
+							className={cn({
+								"bg-black text-white dark:bg-white dark:text-black":
+									searchParams.type === "people",
+							})}
+						>
 							<PiUsersDuotone />
 							{"People"}
 						</RoundLink>

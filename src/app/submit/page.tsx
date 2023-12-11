@@ -12,7 +12,7 @@ import {
 	PiFolderDuotone,
 	PiTrashDuotone,
 } from "react-icons/pi";
-import ActionBar from '@components/action-bar.tsx';
+import ActionBar from "@components/action-bar.tsx";
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,

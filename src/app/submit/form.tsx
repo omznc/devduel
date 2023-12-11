@@ -320,7 +320,7 @@ export default function Form({
 										website: formData.get("website"),
 										source: formData.get("source"),
 									})
-								} catch (e: ZodError) {
+								} catch (e) {
 									throw new Error( e.errors.map((err) => err.message).join("\n"));
 								}
 

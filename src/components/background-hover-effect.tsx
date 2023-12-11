@@ -1,6 +1,6 @@
 "use client";
 
-import { useDebounce, useIsMobile } from '@/src/lib/hooks.ts';
+import { useDebounce, useIsMobile } from "@/src/lib/hooks.ts";
 import { cn } from "@/src/lib/utils.ts";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -52,12 +52,12 @@ export default function BackgroundHoverEffect() {
 	};
 
 	useEffect(() => {
-		document.addEventListener('mousemove', handleMouseMove);
-		document.addEventListener('click', handleMouseClick);
+		document.addEventListener("mousemove", handleMouseMove);
+		document.addEventListener("click", handleMouseClick);
 
 		return () => {
-			document.removeEventListener('mousemove', handleMouseMove);
-			document.removeEventListener('click', handleMouseClick);
+			document.removeEventListener("mousemove", handleMouseMove);
+			document.removeEventListener("click", handleMouseClick);
 		};
 	}, []);
 
