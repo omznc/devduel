@@ -32,7 +32,7 @@ export default async function Page({
 	]);
 
 	return (
-		<div className="flex h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
+		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<div className="flex h-full w-full flex-col items-center justify-start gap-4 font-bold transition-all md:min-w-[800px]">
 				<div
 					className={`relative h-fit w-fit gap-2 border-normal group fixed left-0 top-0 rounded-full bg-white bg-opacity-25 p-1.5 opacity-100 backdrop-blur-md transition-all dark:bg-black dark:bg-opacity-25 md:p-2.5 z-30 flex h-24 w-fit items-center justify-center transition-all delay-300`}

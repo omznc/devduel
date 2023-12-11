@@ -1,7 +1,6 @@
 /** @type {import("tailwindcss").Config} */
 module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  //  add custom border preset border border-black border-opacity-25 dark:border-white dark:border-opacity-25
   theme: {
     extend: {},
     keyframes: {

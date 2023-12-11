@@ -33,16 +33,22 @@ export async function generateStaticParams() {
 	const currentTask = await getCurrentTask();
 	if (!currentTask) return [];
 
-	const posts = await prisma.submission.findMany({
+	const submissions = await prisma.submission.findMany({
 		where: {
 			taskId: currentTask.id,
 		},
 		select: {
-			id: true,
+			slug: true,
 		},
+		orderBy: {
+			votes: {
+				_count: "desc",
+			},
+		},
+		take: 200
 	});
 
-	return posts.map((post) => ({
-		submissionId: post.id,
+	return submissions.map((submission) => ({
+		slug: submission.slug,
 	}));
 }

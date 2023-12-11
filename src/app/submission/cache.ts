@@ -7,7 +7,13 @@ export const getSubmissionCached = cache(async (slug: string) => {
 			slug,
 		},
 		include: {
-			user: true,
+			user: {
+				select: {
+					username: true,
+					image: true,
+					name: true,
+				},
+			},
 			task: true,
 		},
 	});

@@ -55,7 +55,7 @@ export default async function Page({
 						console.log("delete submission");
 						await deleteSubmission(submission.id);
 					}}
-					confirm={true}
+					confirmClick={true}
 				>
 					<PiTrashDuotone />
 					Delete

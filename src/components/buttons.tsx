@@ -10,7 +10,7 @@ interface RoundButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;
 	icon?: ReactNode;
 	href?: string;
-	confirm?: boolean;
+	confirmClick?: boolean;
 }
 
 export function RoundButton(props: RoundButtonProps) {
@@ -30,7 +30,7 @@ export function RoundButton(props: RoundButtonProps) {
 		<button
 			{...props}
 			onClick={(e) => {
-				if (props.confirm && !confirm) {
+				if (props.confirmClick && !confirm) {
 					e.preventDefault();
 					setConfirm(true);
 					setTimeout(() => {
