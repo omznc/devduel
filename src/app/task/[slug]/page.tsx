@@ -64,7 +64,6 @@ export async function generateStaticParams() {
 		},
 		select: {
 			slug: true,
-
 		},
 	});
 
