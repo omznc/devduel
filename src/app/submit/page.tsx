@@ -26,7 +26,6 @@ export default async function Page() {
 	const session = await isAuthorized();
 	const user = session?.user;
 	if (!user) return redirect("/");
-	if (!user.username) return redirect("/user/me/username");
 
 	const task = await getCurrentTask();
 	const submission =
