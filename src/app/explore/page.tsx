@@ -8,7 +8,7 @@ import { TaskStatus } from "@prisma/client";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
-import { getSubmissions } from '@/src/actions/submission.ts';
+import { getSubmissions } from "@/src/actions/submission.ts";
 
 export default async function Page() {
 	const task = await getCurrentTask();

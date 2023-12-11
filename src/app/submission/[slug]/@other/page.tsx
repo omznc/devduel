@@ -6,8 +6,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
-import { getServerSession } from 'next-auth';
-import { authOptions } from '@app/api/auth/[...nextauth]/authOptions.ts';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
 	loading: () => (
@@ -33,7 +33,7 @@ export default async function Page({
 
 	if (!visible) {
 		const isAdmin = (await getServerSession(authOptions))?.user?.admin;
-		adminView = isAdmin;
+		adminView = isAdmin ?? false;
 	}
 
 	return (

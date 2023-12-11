@@ -15,7 +15,7 @@ export const submitFormSchema = z.object({
 			return validSources.some((source) => val.startsWith(source));
 		})
 		.optional()
-		.nullable()
+		.nullable(),
 });
 
 export type submitFormSchemaType = z.infer<typeof submitFormSchema>;
