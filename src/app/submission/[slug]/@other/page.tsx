@@ -31,7 +31,7 @@ export default async function Page({
 	let adminView = session && session?.user?.admin;
 	const submission = await getSubmissionCached(
 		params.slug,
-		session && session?.user?.id,
+		session && session?.user?.id ?? undefined,
 	);
 
 	if (!submission) return redirect("/");

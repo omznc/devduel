@@ -29,7 +29,7 @@ export default async function Page({
 	if (!session?.user?.username) return redirect("/user/me/username");
 
 	const [submission, task] = await Promise.all([
-		getSubmissionCached(params.slug, session.user.id),
+		getSubmissionCached(params.slug, session.user.id ?? undefined),
 		getCurrentTask(),
 	]);
 	if (!submission) return redirect("/");
