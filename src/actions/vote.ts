@@ -50,6 +50,8 @@ export const unvote = async (id: Submission["id"]) => {
 		},
 	});
 
+	if (!submission) throw new Error("Submission not found");
+
 	const user = authorized.user as User | null;
 	if (!user) throw new Error("Unauthorized");
 

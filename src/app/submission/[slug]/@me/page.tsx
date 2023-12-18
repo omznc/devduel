@@ -15,9 +15,9 @@ import {
 	PiPencilDuotone,
 	PiTrashDuotone,
 } from "react-icons/pi";
-import { vote } from '@/src/actions/vote.ts';
-import Vote from '@components/vote.tsx';
-import Image from 'next/image';
+import { vote } from "@/src/actions/vote.ts";
+import Vote from "@components/vote.tsx";
+import Image from "next/image";
 
 export default async function Page({
 	params,
@@ -76,9 +76,12 @@ export default async function Page({
 				<PiArrowUpRightDuotone className="ml-2 inline" />
 			</Link>
 			<div className="absolute w-full h-full top-0 left-0 -z-10 opacity-fade">
-				<Image src={submission.image} width={"1000"} height={"500"} className={
-					'w-full h-full object-cover'
-				} />
+				<Image
+					src={submission.image}
+					width={"1000"}
+					height={"500"}
+					className={"w-full h-full object-cover"}
+				/>
 			</div>
 			<Markdown submission={submission} />
 		</div>
