@@ -78,6 +78,7 @@ export default async function Page({
 			<div className="absolute w-full h-full top-0 left-0 -z-10 opacity-fade">
 				<Image
 					src={submission.image}
+					alt={submission.title}
 					width={"1000"}
 					height={"500"}
 					className={"w-full h-full object-cover"}
