@@ -27,11 +27,11 @@ export default async function Page({
 	params: { slug: string };
 }) {
 	const session = await getServerSession(authOptions);
-
+	const userId = (session && session?.user?.id) ?? undefined;
 	let adminView = session && session?.user?.admin;
 	const submission = await getSubmissionCached(
 		params.slug,
-		session && session?.user?.id ?? undefined,
+		userId,
 	);
 
 	if (!submission) return redirect("/");
