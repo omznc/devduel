@@ -173,3 +173,20 @@ w-md-editor-text {
 .fly-in-from-top {
     animation: fly-in-from-top 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
+
+/*fade opacity from top to middle
+top should be 1, middle should be 0
+ */
+/*.opacity-fade {*/
+/*    -webkit-mask: linear-gradient(0deg, black 0%, transparent 50%, transparent 100%);*/
+/*}*/
+
+/* opposite from above */
+.opacity-fade {
+    -webkit-mask: linear-gradient(0deg, transparent 0%, transparent 40%, black 100%);
+}
+
+/* fade blur from most to least*/
+.blur-fade {
+    filter: blur(15px);
+}

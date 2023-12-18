@@ -8,6 +8,9 @@ import { PiArrowUpRightDuotone, PiCircleDashedDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
+import { vote } from '@/src/actions/vote.ts';
+import Vote from '@components/vote.tsx';
+import Image from 'next/image';
 
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
@@ -23,18 +26,16 @@ export default async function Page({
 }: {
 	params: { slug: string };
 }) {
-	const submission = await getSubmissionCached(params.slug);
+	const session = await getServerSession(authOptions);
+
+	let adminView = session && session?.user?.admin
+	const submission = await getSubmissionCached(params.slug, session && session?.user?.id);
+
 	if (!submission) return redirect("/");
 
 	const visible =
 		submission.task.status === TaskStatus.VOTING ||
 		submission.task.status === TaskStatus.CLOSED;
-
-	let adminView = false;
-	if (!visible) {
-		const isAdmin = (await getServerSession(authOptions))?.user?.admin;
-		adminView = isAdmin ?? false;
-	}
 
 	return (
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
@@ -59,11 +60,12 @@ export default async function Page({
 						Admin View
 					</RoundButton>
 				)}
+				<Vote submission={{ ...submission, voted: submission.votes?.length > 0}} />
 			</div>
 			{(visible || adminView) && (
 				<>
 					<Link
-						className="fit-text bg-colored text-center after:bg-yellow-500 hover:underline"
+						className="fit-text text-center after:bg-yellow-500 hover:underline"
 						href={submission.website}
 						target="_blank"
 						rel="noopener noreferrer"
@@ -71,6 +73,11 @@ export default async function Page({
 						{submission.title}
 						<PiArrowUpRightDuotone className="ml-2 inline" />
 					</Link>
+					<div className="absolute w-full h-full top-0 left-0 -z-10 opacity-fade">
+						<Image src={submission.image} width={"1000"} height={"500"} className={
+							'w-full h-full object-cover'
+						}/>
+					</div>
 					<Markdown submission={submission} />
 				</>
 			)}
