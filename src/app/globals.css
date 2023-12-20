@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth
+}
+
 @keyframes rocketAnimation {
     0% {
         left: -100px; /* Move the rocket off-screen to the left */
@@ -174,19 +178,24 @@ w-md-editor-text {
     animation: fly-in-from-top 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
 
-/*fade opacity from top to middle
-top should be 1, middle should be 0
- */
-/*.opacity-fade {*/
-/*    -webkit-mask: linear-gradient(0deg, black 0%, transparent 50%, transparent 100%);*/
-/*}*/
 
-/* opposite from above */
 .opacity-fade {
-    -webkit-mask: linear-gradient(0deg, transparent 0%, transparent 40%, black 100%);
+    -webkit-mask: linear-gradient(0deg, transparent 0%, transparent 40%, black 110%);
+    animation: opacity-fade 5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
-/* fade blur from most to least*/
-.blur-fade {
-    filter: blur(15px);
+@keyframes opacity-fade {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* add a mask circle on the right, solid no gradient */
+.back-arrow {
+    -webkit-mask: radial-gradient(circle at 100% 80%, transparent 0%, transparent 10%, black 100%);
 }

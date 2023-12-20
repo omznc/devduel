@@ -81,7 +81,7 @@ export default async function Page({
 							alt={submission.title}
 							width={"1000"}
 							height={"500"}
-							className={"w-full h-full object-cover"}
+							className={"w-full h-full object-cover z-[21]"}
 						/>
 					</div>
 					<Markdown submission={submission} />

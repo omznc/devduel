@@ -40,7 +40,9 @@ export default async function Task({ params }: TaskProps) {
 			<div className="fit-text text-center">{task?.title}</div>
 			<p className="rounded-lg text-xl">{task?.description}</p>
 			<span className="mt-8 w-full text-center text-4xl transition-all">
-				Latest submissions
+				{
+					submissions.length > 0 ? "Latest submissions" : "No submissions yet"
+				}
 			</span>
 			<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row">
 				{submissions.map((submission) => (

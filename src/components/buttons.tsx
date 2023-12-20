@@ -46,7 +46,7 @@ export function RoundButton(props: RoundButtonProps) {
 				if (props.onClick) props.onClick(e);
 			}}
 			className={cn(
-				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2 transition-all dark:bg-black dark:text-white",
+				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2 transition-all dark:bg-black dark:text-white backdrop-filter backdrop-blur-lg bg-opacity-25 dark:bg-opacity-25",
 				props.className,
 			)}
 		>
@@ -68,7 +68,7 @@ export function RoundLink(props: RoundLinkProps) {
 			{...props}
 			href={props.href}
 			className={cn(
-				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2  transition-all dark:bg-black dark:text-white",
+				"border-normal h-12 group inline-flex items-center gap-1 rounded-full bg-white px-2 py-2  transition-all dark:bg-black dark:text-white backdrop-filter backdrop-blur-lg bg-opacity-25 dark:bg-opacity-25",
 				props.className,
 			)}
 		>

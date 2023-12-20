@@ -76,11 +76,12 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 									"translate-y-0 opacity-100": isScrollingUp || hovering,
 									"translate-x-10 opacity-0": path === "/",
 								},
+								"back-arrow"
 							)}
 						>
 							<button
 								className={cn(
-									"text-md w-full inline-flex items-center justify-start gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-50 hover:dark:bg-white dark:hover:bg-opacity-50 md:p-3 md:px-4 md:text-lg",
+									"text-md w-full inline-flex items-center justify-start gap-2 rounded-full p-2 px-2 transition-all hover:bg-black hover:bg-opacity-20 hover:dark:bg-white dark:hover:bg-opacity-50 md:p-3 md:px-4 md:text-lg",
 								)}
 								onClick={() => {
 									router.back();

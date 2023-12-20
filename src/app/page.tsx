@@ -4,7 +4,7 @@ import { getCurrentTask } from "@lib/task.ts";
 import BackgroundDevDuel from "@public/background-devduel.svg";
 import BackgroundLatest from "@public/background-latest.svg";
 import Link from "next/link";
-import { PiEyeDuotone } from "react-icons/pi";
+import { PiArrowDownDuotone, PiEyeDuotone } from 'react-icons/pi';
 import { TaskStatus } from "@prisma/client";
 
 export default async function Home() {
@@ -29,7 +29,7 @@ export default async function Home() {
 						{task?.title ?? "Coming soon"}
 					</span>
 					<span
-						className="pointer-events-auto mt-4 w-fit gap-2 text-center text-lg transition-all md:text-4xl"
+						className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
 						suppressHydrationWarning
 					>
 						{task?.status === "OPEN" && (
@@ -54,10 +54,13 @@ export default async function Home() {
 								<PiEyeDuotone /> {"Let's explore!"}
 							</Link>
 						)}
+						<Link href={"#about"} className={"-mb-12 mt-12 "}>
+							<PiArrowDownDuotone className='w-12 h-12' />
+						</Link>
 					</span>
 				</div>
 			</div>
-			<div className="relative flex h-screen w-full flex-col items-center justify-center">
+			<div className="relative flex h-screen w-full flex-col items-center justify-center" id={"about"}>
 				<h2
 					className={
 						"fit-text bg-colored text-center after:bg-blue-500 after:opacity-60"

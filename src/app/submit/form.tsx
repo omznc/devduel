@@ -35,6 +35,7 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	),
 });
 
+
 export default function Form({
 	submission,
 }: {
@@ -67,6 +68,7 @@ export default function Form({
 						imageConfig.maxSize / 1000000
 					}MB max)`}</label>
 					<Dropzone
+						accept="image/*"
 						onDrop={(files) => {
 							if (files.length > 1) {
 								toast.error("Only one image allowed.");
@@ -80,6 +82,11 @@ export default function Form({
 								);
 								return;
 							}
+							if (files[0].type.split("/")[0] !== "image") {
+								toast.error("Only images allowed.");
+								return;
+							}
+
 							setImage(files[0]);
 						}}
 					>
