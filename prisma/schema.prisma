@@ -96,4 +96,5 @@ model Vote {
   submissionId String
 
   @@unique([userId, submissionId])
+  @@index([userId, submissionId])
 }

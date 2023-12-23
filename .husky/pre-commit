@@ -2,3 +2,14 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 bun format
+# run next build and check if it fails
+npm run build
+
+# if build fails, stop commit
+if [ $? -ne 0 ]; then
+  echo "Build failed, commit stopped"
+  exit 1
+fi
+
+
+

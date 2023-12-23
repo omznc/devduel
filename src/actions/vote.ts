@@ -12,6 +12,13 @@ export const vote = async (id: Submission["id"]) => {
 		where: {
 			id,
 		},
+		include: {
+			task: {
+				select: {
+					status: true,
+				},
+			},
+		},
 	});
 
 	if (!submission) throw new Error("Submission not found");
@@ -21,6 +28,13 @@ export const vote = async (id: Submission["id"]) => {
 
 	if (submission.userId === user.id)
 		throw new Error("You cannot vote for your own submission");
+
+	switch (submission.task.status) {
+		case "OPEN":
+			throw new Error("Voting is not open for this task");
+		case "CLOSED":
+			throw new Error("Voting is closed for this task");
+	}
 
 	try {
 		await prisma.vote.create({
@@ -50,6 +64,13 @@ export const unvote = async (id: Submission["id"]) => {
 		where: {
 			id,
 		},
+		include: {
+			task: {
+				select: {
+					status: true,
+				},
+			},
+		},
 	});
 
 	if (!submission) throw new Error("Submission not found");
@@ -57,10 +78,30 @@ export const unvote = async (id: Submission["id"]) => {
 	const user = authorized.user as User | null;
 	if (!user) throw new Error("Unauthorized");
 
-	await prisma.vote.deleteMany({
+	if (submission.userId === user.id)
+		throw new Error("You cannot un-vote your own submission");
+
+	switch (submission.task.status) {
+		case "OPEN":
+			throw new Error("Voting is not open for this task");
+		case "CLOSED":
+			throw new Error("Voting is closed for this task");
+	}
+
+	// await prisma.vote.deleteMany({
+	// 	where: {
+	// 		submissionId: submission.id,
+	// 		userId: user.id,
+	// 	},
+	// });
+
+	// TODO: Test this index access
+	await prisma.vote.delete({
 		where: {
-			submissionId: submission.id,
-			userId: user.id,
+			userId_submissionId: {
+				submissionId: submission.id,
+				userId: user.id,
+			},
 		},
 	});
 };

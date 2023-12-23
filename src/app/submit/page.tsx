@@ -87,14 +87,12 @@ export default async function Page() {
 							}
 						</p>
 
-						{submission && (
-							<>
-								<span className="w-full text-center text-4xl transition-all">
-									Your submission
-								</span>
-								<SubmissionEntry submission={submission} />
-							</>
-						)}
+						<span className="w-full text-center text-4xl transition-all">
+							{submission
+								? "Your Submission"
+								: "You didn't submit anything this week"}
+						</span>
+						{submission && <SubmissionEntry submission={submission} />}
 					</>
 				)}
 			</div>

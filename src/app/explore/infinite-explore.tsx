@@ -43,6 +43,8 @@ export default function InfiniteExplore({
 		if (inView) fetchMore().then(() => setLoading(false));
 	}, [inView]);
 
+	console.log(submissions);
+
 	return (
 		<>
 			<div className="z-20 flex h-full w-fit flex-col flex-wrap items-start justify-center gap-4 sm:flex-row">
@@ -56,9 +58,9 @@ export default function InfiniteExplore({
 				ref={ref}
 				className="flex h-fit w-full flex-col items-center justify-center gap-4"
 			>
-				{!submissions && !loading && (
+				{(!submissions || submissions.length === 0) && !loading && (
 					<span className="fit-text w-full text-center transition-all">
-						{"No submissions yet"}
+						{"Nobody submitted anything"}
 					</span>
 				)}
 				{submissions && !loading && (

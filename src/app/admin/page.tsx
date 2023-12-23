@@ -1,5 +1,5 @@
-import AddTaskForm from "@app/admin/AddTaskForm.tsx";
-import TaskList from "@app/admin/TaskList";
+import AdminTaskForm from "@app/admin/admin-task-form.tsx";
+import TaskList from "@app/admin/task-list.tsx";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
 import { redirect } from "next/navigation";
@@ -8,6 +8,7 @@ export default async function Page({
 	searchParams,
 }: {
 	searchParams: {
+		edit?: string;
 		skip?: string;
 		take?: string;
 	};
@@ -37,9 +38,9 @@ export default async function Page({
 				<div className="flex w-full flex-wrap justify-center gap-4">
 					<div className="flex w-full max-w-[500px] flex-col gap-2">
 						<span className="w-full text-center text-xl transition-all">
-							{"Create Task"}
+							{searchParams.edit ? "Edit Task" : "Create Task"}
 						</span>
-						<AddTaskForm />
+						<AdminTaskForm />
 					</div>
 				</div>
 			</div>

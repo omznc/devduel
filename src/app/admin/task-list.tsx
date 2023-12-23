@@ -1,6 +1,7 @@
 "use client";
 import { Task } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { deleteTask } from "@/src/actions/admin.ts";
 
 export default function TaskList({
 	tasks,
@@ -22,6 +23,7 @@ export default function TaskList({
 						<th className="w-1/3">{"Title"}</th>
 						<th className="w-1/3">{"Description"}</th>
 						<th className={"w-1/3"}>{"Created At"}</th>
+						<th className={"w-1/3"}>{"Actions"}</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,6 +33,24 @@ export default function TaskList({
 							<td className="border-normal p-2">{task.description}</td>
 							<td className="border-normal p-2">
 								{new Date(task.createdAt).toLocaleString()}
+							</td>
+							<td className="border-normal p-2">
+								<button
+									className="border-normal rounded-sm bg-white p-2 transition-all disabled:opacity-50 dark:bg-black dark:text-white"
+									onClick={() => {
+										router.push(`?edit=${task.slug}`);
+									}}
+								>
+									{"Edit"}
+								</button>
+								<button
+									className="border-normal rounded-sm bg-white p-2 transition-all disabled:opacity-50 dark:bg-black dark:text-white"
+									onClick={async () => {
+										await deleteTask(task.slug);
+									}}
+								>
+									{"Delete"}
+								</button>
 							</td>
 						</tr>
 					))}
