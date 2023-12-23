@@ -68,7 +68,7 @@ const env = createEnv({
 					description: "Valid image formats",
 				}),
 			)
-			.default(["image/png", "image/jpeg", "image/webp"]),
+			.default(["image/png", "image/jpeg", "image/jpg", "image/webp"]),
 		NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE: z
 			.number({
 				description: "Maximum image size in bytes",

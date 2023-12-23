@@ -15,8 +15,6 @@ import {
 	PiPencilDuotone,
 	PiTrashDuotone,
 } from "react-icons/pi";
-import { vote } from "@/src/actions/vote.ts";
-import Vote from "@components/vote.tsx";
 import Image from "next/image";
 
 export default async function Page({
@@ -74,8 +72,7 @@ export default async function Page({
 					rel="noopener noreferrer"
 				>
 					{submission.title}
-					<PiArrowUpRightDuotone
-						className="-ml-14 group-hover:ml-2 inline opacity-0 group-hover:opacity-100 transition-all duration-100" />
+					<PiArrowUpRightDuotone className="-ml-14 group-hover:ml-2 inline opacity-0 group-hover:opacity-100 transition-all duration-100" />
 				</Link>
 				<Markdown submission={submission} />
 			</div>

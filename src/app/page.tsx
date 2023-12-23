@@ -4,7 +4,7 @@ import { getCurrentTask } from "@lib/task.ts";
 import BackgroundDevDuel from "@public/background-devduel.svg";
 import BackgroundLatest from "@public/background-latest.svg";
 import Link from "next/link";
-import { PiArrowDownDuotone, PiEyeDuotone } from 'react-icons/pi';
+import { PiArrowDownDuotone, PiEyeDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
 
 export default async function Home() {
@@ -55,12 +55,15 @@ export default async function Home() {
 							</Link>
 						)}
 						<Link href={"#about"} className={"-mb-12 mt-12 "}>
-							<PiArrowDownDuotone className='w-12 h-12' />
+							<PiArrowDownDuotone className="w-12 h-12" />
 						</Link>
 					</span>
 				</div>
 			</div>
-			<div className="relative flex h-screen w-full flex-col items-center justify-center" id={"about"}>
+			<div
+				className="relative flex h-screen w-full flex-col items-center justify-center"
+				id={"about"}
+			>
 				<h2
 					className={
 						"fit-text bg-colored text-center after:bg-blue-500 after:opacity-60"

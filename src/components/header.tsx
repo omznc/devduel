@@ -76,7 +76,7 @@ export default function Header({ taskStatus }: { taskStatus: TaskStatus }) {
 									"translate-y-0 opacity-100": isScrollingUp || hovering,
 									"translate-x-10 opacity-0": path === "/",
 								},
-								"back-arrow"
+								"back-arrow",
 							)}
 						>
 							<button

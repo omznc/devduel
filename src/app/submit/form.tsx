@@ -24,7 +24,6 @@ import {
 } from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import Link from "next/link";
-import { ZodError } from "zod";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,
@@ -34,7 +33,6 @@ const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 		</div>
 	),
 });
-
 
 export default function Form({
 	submission,
@@ -68,7 +66,6 @@ export default function Form({
 						imageConfig.maxSize / 1000000
 					}MB max)`}</label>
 					<Dropzone
-						accept="image/*"
 						onDrop={(files) => {
 							if (files.length > 1) {
 								toast.error("Only one image allowed.");
@@ -364,11 +361,10 @@ const Dropzone = ({ onDrop, children }: DropzoneProps) => {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		accept: {
-			"image/png": [".png"],
-			"image/jpeg": [".jpeg", ".jpg"],
-			"image/gif": [".gif"],
-			"image/webp": [".webp"],
-		},
+			'image/png': ['.png'],
+			'image/jpeg': ['.jpeg', '.jpg'],
+			'image/webp': ['.webp']
+		}
 	});
 
 	return (
