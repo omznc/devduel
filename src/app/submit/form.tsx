@@ -361,10 +361,10 @@ const Dropzone = ({ onDrop, children }: DropzoneProps) => {
 	const { getRootProps, getInputProps, isDragActive } = useDropzone({
 		onDrop,
 		accept: {
-			'image/png': ['.png'],
-			'image/jpeg': ['.jpeg', '.jpg'],
-			'image/webp': ['.webp']
-		}
+			"image/png": [".png"],
+			"image/jpeg": [".jpeg", ".jpg"],
+			"image/webp": [".webp"],
+		},
 	});
 
 	return (

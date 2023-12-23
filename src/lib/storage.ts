@@ -78,7 +78,11 @@ export const compressImage = async (file: File, quality?: number) => {
 export const getSignedURL = async (type: string, size: number) => {
 	if (!type.startsWith("image/")) throw new Error("Invalid file type");
 	if (!imageConfig.formats.includes(type))
-		throw new Error(`Invalid file format. Must be one of: ${imageConfig.formats.map((format) => format.split("/")[1]).join(", ")})}`);
+		throw new Error(
+			`Invalid file format. Must be one of: ${imageConfig.formats
+				.map((format) => format.split("/")[1])
+				.join(", ")})}`,
+		);
 	if (size > imageConfig.maxSize)
 		throw new Error(
 			`File is too big (${

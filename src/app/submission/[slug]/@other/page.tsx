@@ -60,12 +60,11 @@ export default async function Page({
 						Admin View
 					</RoundButton>
 				)}
-				{
-					submission.task.status === TaskStatus.VOTING &&
+				{submission.task.status === TaskStatus.VOTING && (
 					<Vote
 						submission={{ ...submission, voted: submission.votes?.length > 0 }}
 					/>
-				}
+				)}
 			</div>
 			{(visible || adminView) && (
 				<>

@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { toSlug } from "@lib/utils.ts";
 import env from "@env";
-import { imageConfig } from '@config';
+import { imageConfig } from "@config";
 
 const RAW_HOSTNAME = `https://${
 	env.BACKBLAZE_BUCKET_NAME
