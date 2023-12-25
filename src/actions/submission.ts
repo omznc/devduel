@@ -3,7 +3,7 @@
 import { submitFormSchema } from "@app/submit/schema.ts";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
-import { deleteFile, getSignedURL } from '@lib/storage.ts';
+import { deleteFile, getSignedURL } from "@lib/storage.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -82,7 +82,7 @@ export async function deleteSubmission(id: string) {
 				task: {
 					select: {
 						slug: true,
-						id: true
+						id: true,
 					},
 				},
 			},

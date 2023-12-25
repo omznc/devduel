@@ -13,7 +13,7 @@ import {
 	PiTrashDuotone,
 } from "react-icons/pi";
 import ActionBar from "@components/action-bar.tsx";
-import DeleteSubmissionButton from '@components/delete-submission-button.tsx';
+import DeleteSubmissionButton from "@components/delete-submission-button.tsx";
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,

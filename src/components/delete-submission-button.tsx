@@ -3,8 +3,8 @@
 import { RoundButton } from "@components/buttons.tsx";
 import { deleteSubmission } from "@/src/actions/submission.ts";
 import { PiTrashDuotone } from "react-icons/pi";
-import { toast } from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
+import { toast } from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function DeleteSubmissionButton({
 	id,
@@ -18,11 +18,11 @@ export default function DeleteSubmissionButton({
 				// await deleteSubmission(id)
 				toast.promise(deleteSubmission(id), {
 					loading: "Deleting...",
-					success: ()=>{
+					success: () => {
 						router.refresh();
-						return "Deleted!"
+						return "Deleted!";
 					},
-					error: e => e?.message ?? "Error"
+					error: (e) => e?.message ?? "Error",
 				});
 			}}
 			confirmClick={true}

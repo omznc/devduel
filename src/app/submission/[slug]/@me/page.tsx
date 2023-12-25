@@ -17,7 +17,7 @@ import {
 } from "react-icons/pi";
 import Image from "next/image";
 import ActionBar from "@components/action-bar.tsx";
-import DeleteSubmissionButton from '@components/delete-submission-button.tsx';
+import DeleteSubmissionButton from "@components/delete-submission-button.tsx";
 
 export default async function Page({
 	params,
