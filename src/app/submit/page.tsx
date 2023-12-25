@@ -13,6 +13,7 @@ import {
 	PiTrashDuotone,
 } from "react-icons/pi";
 import ActionBar from "@components/action-bar.tsx";
+import DeleteSubmissionButton from '@components/delete-submission-button.tsx';
 
 const Form = dynamic(() => import("@app/submit/form.tsx"), {
 	ssr: false,
@@ -61,15 +62,7 @@ export default async function Page() {
 								<PiFolderDuotone />
 								{"View"}
 							</RoundLink>
-							<RoundButton
-								onClick={async () => {
-									"use server";
-									await deleteSubmission(submission.id);
-								}}
-							>
-								<PiTrashDuotone />
-								Delete
-							</RoundButton>
+							<DeleteSubmissionButton id={submission.id} />
 						</>
 					)}
 				</ActionBar>

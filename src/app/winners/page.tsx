@@ -40,7 +40,7 @@ export default async function Page({
 						<RoundLink
 							href={`/winners?type=submissions`}
 							className={cn({
-								"bg-black text-white dark:bg-white dark:text-black":
+								"bg-black text-white dark:bg-white dark:text-black bg-opacity-100 dark:bg-opacity-100":
 									searchParams.type === "submissions",
 							})}
 						>
@@ -50,7 +50,7 @@ export default async function Page({
 						<RoundLink
 							href={`/winners?type=people`}
 							className={cn({
-								"bg-black text-white dark:bg-white dark:text-black":
+								"bg-black text-white dark:bg-white dark:text-black bg-opacity-100 dark:bg-opacity-100":
 									searchParams.type === "people",
 							})}
 						>

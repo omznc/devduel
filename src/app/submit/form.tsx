@@ -60,7 +60,7 @@ export default function Form({
 
 	return (
 		<>
-			<form className="flex w-full flex-col gap-4 md:flex-row">
+			<form className="flex w-full flex-col gap-4 md:flex-row" key={submission?.id ?? 'submit-form'}>
 				<div className="flex h-full flex-col gap-2">
 					<label htmlFor="cover">{`Cover Image (${
 						imageConfig.maxSize / 1000000
@@ -86,6 +86,7 @@ export default function Form({
 
 							setImage(files[0]);
 						}}
+						key={`dropzone-${submission?.id}` ?? 'dropzone'}
 					>
 						{image && (
 							<span
@@ -236,6 +237,7 @@ export default function Form({
 			<div
 				className="z-20 flex w-full max-w-4xl flex-col gap-4"
 				data-color-mode={theme}
+				key={`md-editor-${submission?.id}` ?? 'md-editor'}
 			>
 				<label htmlFor="description">{`Description (${
 					data.description?.length ?? 0

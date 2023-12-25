@@ -3,7 +3,7 @@
 import { submitFormSchema } from "@app/submit/schema.ts";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
-import { getSignedURL } from "@lib/storage.ts";
+import { deleteFile, getSignedURL } from '@lib/storage.ts';
 import { getCurrentTask } from "@lib/task.ts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -82,6 +82,7 @@ export async function deleteSubmission(id: string) {
 				task: {
 					select: {
 						slug: true,
+						id: true
 					},
 				},
 			},
@@ -92,14 +93,19 @@ export async function deleteSubmission(id: string) {
 	if (!submission) throw new Error("No submission found");
 	if (submission.userId !== session.user?.id) throw new Error("Unauthorized");
 
-	await prisma.submission.delete({
-		where: {
-			id,
-		},
-	});
+	await Promise.all([
+		prisma.submission.delete({
+			where: {
+				id,
+			},
+		}),
+		deleteFile(`submissions/${submission.task.id}/${session.user.id}`),
+	]);
 
 	revalidatePath(`/task/${submission.task.slug}`);
-	return redirect(`/task/${submission.task.slug}`);
+	revalidatePath(`/submission/${submission.slug}`);
+	revalidatePath(`/submit`);
+	return redirect(`/submit`);
 }
 
 interface getSubmissionsOptions {

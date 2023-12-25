@@ -16,6 +16,8 @@ import {
 	PiTrashDuotone,
 } from "react-icons/pi";
 import Image from "next/image";
+import ActionBar from "@components/action-bar.tsx";
+import DeleteSubmissionButton from '@components/delete-submission-button.tsx';
 
 export default async function Page({
 	params,
@@ -34,7 +36,7 @@ export default async function Page({
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
-			<div className="flex w-full z-30 max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
+			<ActionBar>
 				<RoundLink href={`/task/${submission.task.slug}`}>
 					Task: {submission.task.title}
 				</RoundLink>
@@ -50,20 +52,9 @@ export default async function Page({
 						Edit
 					</RoundLink>
 				)}
-
-				<RoundButton
-					onClick={async () => {
-						"use server";
-						console.log("delete submission");
-						await deleteSubmission(submission.id);
-					}}
-					confirmClick={true}
-				>
-					<PiTrashDuotone />
-					Delete
-				</RoundButton>
+				<DeleteSubmissionButton id={submission.id} />
 				{submission.winner && <RoundButton>🏆 Winner</RoundButton>}
-			</div>
+			</ActionBar>
 			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-0">
 				<Link
 					className="text-6xl group text-center -mb-2 pt-4 after:bg-yellow-500 hover:underline w-full py-4 px-8 rounded-md border-normal bg-white dark:bg-black"

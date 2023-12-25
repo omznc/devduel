@@ -63,6 +63,8 @@ export default function BackgroundHoverEffect() {
 
 	if (isMobile === null) return null;
 
+	if (path !== "/") return null;
+
 	return (
 		<>
 			<div

@@ -11,6 +11,7 @@ import { authOptions } from "@app/api/auth/[...nextauth]/authOptions.ts";
 import { vote } from "@/src/actions/vote.ts";
 import Vote from "@components/vote.tsx";
 import Image from "next/image";
+import ActionBar from "@components/action-bar.tsx";
 
 const Markdown = dynamic(() => import("@app/submission/Markdown.tsx"), {
 	ssr: false,
@@ -39,7 +40,7 @@ export default async function Page({
 
 	return (
 		<div className="flex  h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
-			<div className="flex w-full max-w-4xl flex-row flex-wrap items-center justify-center gap-4">
+			<ActionBar>
 				<RoundLink href={`/task/${submission.task.slug}`}>
 					Task: {submission?.task?.title}
 				</RoundLink>
@@ -65,7 +66,7 @@ export default async function Page({
 						submission={{ ...submission, voted: submission.votes?.length > 0 }}
 					/>
 				)}
-			</div>
+			</ActionBar>
 			{(visible || adminView) && (
 				<>
 					<Link
