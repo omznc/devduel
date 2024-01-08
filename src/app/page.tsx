@@ -8,7 +8,6 @@ import { PiArrowDownDuotone, PiEyeDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
 import env from "@env";
 import dynamic from "next/dynamic";
-// import SubscribeToNewsletter from "@components/subscibe-to-newsletter.tsx";
 
 const SubscribeToNewsletter = dynamic(
 	() => import("@components/subscibe-to-newsletter.tsx"),
