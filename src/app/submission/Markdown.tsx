@@ -15,12 +15,6 @@ export default function Markdown({ submission }: MarkdownProps) {
 			components={{
 				img: ({ ...props }) => {
 					const { src } = props;
-					// if (!src?.startsWith("https://i.imgur.com/"))
-					// 	return (
-					// 		<Link href={src ?? "#"} target={"_blank"}>
-					// 			External Image
-					// 		</Link>
-					// 	);
 					return (
 						<Image
 							src={src!}
@@ -34,7 +28,7 @@ export default function Markdown({ submission }: MarkdownProps) {
 				},
 			}}
 			className={cn(
-				"markdown-body border-normal z-20 h-full w-full max-w-4xl rounded-lg p-4",
+				"markdown-body border-normal z-20 h-full w-full max-w-4xl rounded-lg rounded-t-none p-4",
 			)}
 		>
 			{submission?.description}

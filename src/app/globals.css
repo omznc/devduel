@@ -178,7 +178,6 @@ w-md-editor-text {
     animation: fly-in-from-top 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;
 }
 
-
 .opacity-fade {
     -webkit-mask: linear-gradient(0deg, transparent 0%, transparent 40%, black 110%);
     animation: opacity-fade 5s cubic-bezier(0.455, 0.03, 0.515, 0.955) forwards;

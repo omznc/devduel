@@ -45,7 +45,7 @@ export default async function Profile({
 				<h2 className="text-center text-3xl">
 					{user.submissions.length > 0 ? "Submissions" : "No submissions yet"}
 				</h2>
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-wrap items-center justify-center gap-2">
 					{user.submissions.map((submission) => (
 						<SubmissionEntry submission={submission} key={submission.id} />
 					))}

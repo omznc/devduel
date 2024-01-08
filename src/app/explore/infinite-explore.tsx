@@ -43,8 +43,6 @@ export default function InfiniteExplore({
 		if (inView) fetchMore().then(() => setLoading(false));
 	}, [inView]);
 
-	console.log(submissions);
-
 	return (
 		<>
 			<div className="z-20 flex h-full w-fit flex-col flex-wrap items-start justify-center gap-4 sm:flex-row">

@@ -6,7 +6,7 @@ import {
 } from "@/src/actions/submission.ts";
 import { submitFormSchema, submitFormSchemaType } from "@app/submit/schema.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
-import { imageConfig, validSources } from "@config";
+import { imageConfig } from "@config";
 import { cn } from "@lib/utils.ts";
 import { Submission } from "@prisma/client";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -24,6 +24,7 @@ import {
 } from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import Link from "next/link";
+import env from '@env';
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,
@@ -218,7 +219,7 @@ export default function Form({
 					<div className="flex w-full flex-col gap-2">
 						<label htmlFor="source">{"Source Code (optional)"}</label>
 						<span className="text-sm text-gray-500">
-							{`Available: ${validSources
+							{`Available: ${env.NEXT_PUBLIC_CONFIG_VALID_SOURCES
 								.map((source) => source.substring(8))
 								.join(", ")}`}
 						</span>

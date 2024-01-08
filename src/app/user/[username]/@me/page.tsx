@@ -41,8 +41,10 @@ export default async function Profile() {
 				{`Hey ${user.name?.split(" ")[0]}!`}
 			</div>
 			<div className="flex w-full flex-col gap-4 md:w-fit">
-				<h2 className="text-center text-3xl">{"Your Submissions"}</h2>
-				<div className="flex flex-col gap-2">
+				<h2 className="text-center text-3xl">
+					Your submissions ({user.submissions.length})
+				</h2>
+				<div className="flex flex-wrap items-center justify-center gap-2">
 					{user.submissions.map((submission) => (
 						<SubmissionEntry submission={submission} key={submission.id} />
 					))}
