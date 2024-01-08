@@ -3,7 +3,7 @@
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { unvote, vote } from "@/src/actions/vote.ts";
 import { Submission } from "@prisma/client";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { PiArrowUpDuotone, PiXCircleDuotone } from "react-icons/pi";
 import { useState } from "react";
 import { cn } from "@lib/utils.ts";

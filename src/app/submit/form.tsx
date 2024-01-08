@@ -16,7 +16,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import {
 	PiArrowUpRightDuotone,
 	PiCircleDashedDuotone,

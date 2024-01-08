@@ -90,6 +90,18 @@ const env = createEnv({
 				description: "Image compression format",
 			})
 			.default("avif") as z.ZodType<keyof FormatEnum | AvailableFormatInfo>,
+		NEXT_PUBLIC_VERCEL_SPONSORED: z
+			.string({
+				description: "Whether Vercel sponsorship is enabled",
+			})
+			.transform((val) => ["true", "True", "1", "yes"].includes(val))
+			.default("false"),
+		NEXT_PUBLIC_PROJECT_IS_LIVE: z
+			.string({
+				description: "Whether the project is live",
+			})
+			.transform((val) => ["true", "True", "1", "yes"].includes(val))
+			.default("false"),
 	},
 	runtimeEnv: {
 		DATABASE_URL: process.env.DATABASE_URL,
@@ -118,6 +130,8 @@ const env = createEnv({
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
 		NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT:
 			process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
+		NEXT_PUBLIC_VERCEL_SPONSORED: process.env.NEXT_PUBLIC_VERCEL_SPONSORED,
+		NEXT_PUBLIC_PROJECT_IS_LIVE: process.env.NEXT_PUBLIC_PROJECT_IS_LIVE,
 	},
 });
 

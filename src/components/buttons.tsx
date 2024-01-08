@@ -4,7 +4,7 @@ import { cn } from "@/src/lib/utils.ts";
 import Link from "next/link";
 import { HTMLAttributes, ReactNode, useEffect, useState } from "react";
 import { useFormStatus } from "react-dom";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 interface RoundButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	children: ReactNode;

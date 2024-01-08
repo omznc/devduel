@@ -10,6 +10,7 @@ import { ReactNode } from "react";
 import "./globals.css";
 import { getCurrentTask } from "@lib/task.ts";
 import { TaskStatus } from "@prisma/client";
+import env from "@env";
 
 const mono = localFont({
 	src: "../../public/fonts/MonaspaceNeon.ttf",
@@ -26,6 +27,8 @@ export default async function RootLayout({
 	children: ReactNode;
 }) {
 	const task = await getCurrentTask();
+	const projectLive = env.NEXT_PUBLIC_PROJECT_IS_LIVE;
+
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body
@@ -39,10 +42,15 @@ export default async function RootLayout({
 				<BackgroundHoverEffect />
 				<Toast />
 				<Providers>
-					<Header taskStatus={task?.status ?? TaskStatus.CLOSED} />
+					{projectLive ? (
+						<Header taskStatus={task?.status ?? TaskStatus.CLOSED} />
+					) : (
+						<div className="h-24 w-full"></div>
+					)}
 					<div
 						className={cn(
 							"pattern-dots absolute top-0 -z-10 h-[100%] w-screen pattern-bg-transparent pattern-neutral-500 pattern-opacity-20 pattern-size-6 dark:pattern-opacity-10",
+							{},
 						)}
 					/>
 					<div className="h-full min-h-screen w-full max-w-[1920px] px-4 transition-all">

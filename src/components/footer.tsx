@@ -14,6 +14,7 @@ import {
 	PiGithubLogoDuotone,
 	PiTwitterLogoDuotone,
 } from "react-icons/pi";
+import env from "@env";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,15 +46,17 @@ export default function Footer() {
 					}}
 				>
 					DevDuel
-					<Link
-						href={"https://vercel.com?utm_source=devduel&utm_campaign=oss"}
-						target={"_blank"}
-						className="group ml-1 inline-flex items-center gap-1 text-sm font-normal opacity-80 hover:underline"
-					>
-						powered by <IoLogoVercel />{" "}
-						<span className="font-bold">Vercel</span>
-						<PiArrowUpRightDuotone className="opacity-0 transition-all group-hover:opacity-100" />
-					</Link>
+					{env.NEXT_PUBLIC_VERCEL_SPONSORED && (
+						<Link
+							href={"https://vercel.com?utm_source=devduel&utm_campaign=oss"}
+							target={"_blank"}
+							className="group ml-1 inline-flex items-center gap-1 text-sm font-normal opacity-80 hover:underline"
+						>
+							powered by <IoLogoVercel />{" "}
+							<span className="font-bold">Vercel</span>
+							<PiArrowUpRightDuotone className="opacity-0 transition-all group-hover:opacity-100" />
+						</Link>
+					)}
 				</h1>
 				{!isMobile && (
 					<>

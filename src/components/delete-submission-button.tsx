@@ -3,7 +3,7 @@
 import { RoundButton } from "@components/buttons.tsx";
 import { deleteSubmission } from "@/src/actions/submission.ts";
 import { PiTrashDuotone } from "react-icons/pi";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function DeleteSubmissionButton({

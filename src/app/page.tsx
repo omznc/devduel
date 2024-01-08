@@ -6,9 +6,25 @@ import BackgroundLatest from "@public/background-latest.svg";
 import Link from "next/link";
 import { PiArrowDownDuotone, PiEyeDuotone } from "react-icons/pi";
 import { TaskStatus } from "@prisma/client";
+import env from "@env";
+import dynamic from "next/dynamic";
+// import SubscribeToNewsletter from "@components/subscibe-to-newsletter.tsx";
+
+const SubscribeToNewsletter = dynamic(
+	() => import("@components/subscibe-to-newsletter.tsx"),
+	{
+		ssr: false,
+		loading: () => (
+			<p className="text-sm text-gray-500 dark:text-gray-400 mt-12">
+				{"juuuuuuuuust a moment..."}
+			</p>
+		),
+	},
+);
 
 export default async function Home() {
 	const task = await getCurrentTask(20);
+	const projectLive = env.NEXT_PUBLIC_PROJECT_IS_LIVE;
 
 	return (
 		<div className="-mt-24 flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-center">
@@ -20,44 +36,67 @@ export default async function Home() {
 					/>
 				</div>
 				<div className="pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all">
-					<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
-						{task?.status === "OPEN"
-							? "This week's task"
-							: "Voting is open for"}
-					</span>
-					<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
-						{task?.title ?? "Coming soon"}
-					</span>
-					<span
-						className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
-						suppressHydrationWarning
-					>
-						{task?.status === "OPEN" && (
-							<Countdown
-								expires={
-									new Date(
-										new Date().getFullYear(),
-										new Date().getMonth(),
-										new Date().getDate() + (5 - new Date().getDay()),
-										23,
-										59,
-										59,
-									)
-								}
-							/>
-						)}
-						{task?.status === "VOTING" && (
-							<Link
-								href={"/explore"}
-								className="inline-flex items-center gap-2 hover:underline"
+					{projectLive && (
+						<>
+							<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
+								{task?.status === "OPEN"
+									? "This week's task"
+									: "Voting is open for"}
+							</span>
+							<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
+								{task?.title ?? "Coming soon"}
+							</span>
+							<span
+								className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
+								suppressHydrationWarning
 							>
-								<PiEyeDuotone /> {"Let's explore!"}
-							</Link>
-						)}
-						<Link href={"#about"} className={"-mb-12 mt-12 "}>
-							<PiArrowDownDuotone className="w-12 h-12" />
-						</Link>
-					</span>
+								{task?.status === "OPEN" && (
+									<Countdown
+										expires={
+											new Date(
+												new Date().getFullYear(),
+												new Date().getMonth(),
+												new Date().getDate() + (5 - new Date().getDay()),
+												23,
+												59,
+												59,
+											)
+										}
+									/>
+								)}
+								{task?.status === "VOTING" && (
+									<Link
+										href={"/explore"}
+										className="inline-flex items-center gap-2 hover:underline"
+									>
+										<PiEyeDuotone /> {"Let's explore!"}
+									</Link>
+								)}
+								<Link href={"#about"} className={"-mb-12 mt-12 "}>
+									<PiArrowDownDuotone className="w-12 h-12" />
+								</Link>
+							</span>
+						</>
+					)}
+					{!projectLive && (
+						<>
+							<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
+								{"Coming soon to a browser near you"}
+							</span>
+							<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
+								{"Time to fight, the nerd way"}
+							</span>
+							<SubscribeToNewsletter />
+							<span
+								className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
+								suppressHydrationWarning
+							>
+								<Link href={"#about"} className={"-mb-12 mt-12 "}>
+									<PiArrowDownDuotone className="w-12 h-12" />
+								</Link>
+							</span>
+						</>
+					)}
 				</div>
 			</div>
 			<div

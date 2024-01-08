@@ -2,7 +2,7 @@
 
 import { createTask, getTask, updateTask } from "@/src/actions/admin.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Task } from "@prisma/client";

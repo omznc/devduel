@@ -10,7 +10,7 @@ import { useDebounce } from "@lib/hooks.ts";
 import { useSession } from "next-auth/react";
 import { redirect, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { toast } from "react-hot-toast";
+import { toast } from "sonner";
 
 export default function Page() {
 	const [usernameStatus, setUsernameStatus] = useState<boolean | undefined>(

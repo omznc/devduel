@@ -98,3 +98,10 @@ model Vote {
     @@unique([userId, submissionId])
     @@index([userId, submissionId])
 }
+
+model Newsletter {
+    id         String   @id @default(cuid())
+    createdAt  DateTime @default(now())
+    email      String   @unique
+    subscribed Boolean  @default(true)
+}
