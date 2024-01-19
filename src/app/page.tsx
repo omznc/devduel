@@ -1,29 +1,14 @@
 import Countdown from "@components/countdown.tsx";
 import { SubmissionEntry } from "@components/submission-list.tsx";
-import env from "@env";
 import { getCurrentTask } from "@lib/task.ts";
 import { TaskStatus } from "@prisma/client";
 import BackgroundDevDuel from "@public/images/background-devduel.svg";
 import BackgroundLatest from "@public/images/background-latest.svg";
-import dynamic from "next/dynamic";
 import Link from "next/link";
 import { PiArrowDownDuotone, PiEyeDuotone } from "react-icons/pi";
 
-const SubscribeToNewsletter = dynamic(
-	() => import("@components/subscibe-to-newsletter.tsx"),
-	{
-		ssr: false,
-		loading: () => (
-			<p className="text-sm text-gray-500 dark:text-gray-400 mt-12">
-				{"juuuuuuuuust a moment..."}
-			</p>
-		),
-	},
-);
-
 export default async function Page() {
 	const task = await getCurrentTask(20);
-	const projectLive = env.NEXT_PUBLIC_PROJECT_IS_LIVE;
 
 	return (
 		<div className="-mt-24 flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-center">
@@ -35,76 +20,58 @@ export default async function Page() {
 					/>
 				</div>
 				<div className="pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all">
-					{projectLive && (
-						<>
-							<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
-								{task?.status === "OPEN"
-									? "This week's task"
-									: "Voting is open for"}
-							</span>
-							<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
-								{task?.title ?? "Coming soon"}
-							</span>
-							<span
-								className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
-								suppressHydrationWarning
-							>
-								{task?.status === "OPEN" && (
-									<Countdown
-										expires={
-											new Date(
-												new Date().getFullYear(),
-												new Date().getMonth(),
-												new Date().getDate() + (5 - new Date().getDay()),
-												23,
-												59,
-												59,
-											)
-										}
-										status={task?.status}
-									/>
-								)}
-								{task?.status === "VOTING" && (
-									<Link
-										href={"/explore"}
-										className="inline-flex items-center gap-2 hover:underline"
-									>
-										<PiEyeDuotone /> {"Let's explore!"}
-									</Link>
-								)}
-								<Link
-									href={"#about"}
-									className={"-mb-12 mt-12 "}
-									aria-label="About"
-								>
-									<PiArrowDownDuotone className="w-12 h-12" />
-								</Link>
-							</span>
-						</>
+					<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
+						{task?.status === "OPEN"
+							? "This week's task"
+							: "Voting is open for"}
+					</span>
+					{task?.status === "OPEN" ? (
+						<Link
+							href={`/task/${task.slug}`}
+							className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all hover:underline after:bg-blue-500 after:opacity-50 md:after:bg-purple-500"
+						>
+							{task.title}
+						</Link>
+					) : (
+						<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
+							{"Coming soon"}
+						</span>
 					)}
-					{!projectLive && (
-						<>
-							<span className="pointer-events-auto select-none mb-4 w-fit text-center text-lg transition-all md:text-4xl">
-								{"Coming soon to a browser near you"}
-							</span>
-							<span className="fit-text select-none bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
-								{"Time to fight, the nerd way"}
-							</span>
-							<SubscribeToNewsletter />
-							<span
-								className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
-								suppressHydrationWarning
+					<span
+						className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
+						suppressHydrationWarning
+					>
+						{task?.status === "OPEN" && (
+							<Countdown
+								expires={
+									new Date(
+										new Date().getFullYear(),
+										new Date().getMonth(),
+										new Date().getDate() + (5 - new Date().getDay()),
+										23,
+										59,
+										59,
+									)
+								}
+								status={task?.status}
+							/>
+						)}
+						{task?.status === "VOTING" && (
+							<Link
+								href={"/explore"}
+								className="inline-flex items-center gap-2 hover:underline"
 							>
-								<Link
-									href={"#about"}
-									className={"-mb-12 mt-12 "}
-									aria-label="About"
-								>
-									<PiArrowDownDuotone className="w-12 h-12" />
-								</Link>
-							</span>
-						</>
-					)}
+								<PiEyeDuotone /> {"Let's explore!"}
+							</Link>
+						)}
+						<Link
+							href={"#about"}
+							className={"-mb-12 mt-12 "}
+							aria-label="About"
+						>
+							<PiArrowDownDuotone className="w-12 h-12" />
+						</Link>
+					</span>
 				</div>
 			</div>
 			<div
