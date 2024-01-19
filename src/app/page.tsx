@@ -45,12 +45,14 @@ export default async function Page() {
 							<Countdown
 								expires={
 									new Date(
-										new Date().getFullYear(),
-										new Date().getMonth(),
-										new Date().getDate() + (5 - new Date().getDay()),
-										23,
-										59,
-										59,
+										Date.UTC(
+											new Date().getUTCFullYear(),
+											new Date().getUTCMonth(),
+											new Date().getUTCDate() + (5 - new Date().getUTCDay()),
+											23,
+											59,
+											59,
+										),
 									)
 								}
 								status={task?.status}
