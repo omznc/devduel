@@ -1,23 +1,24 @@
 "use client";
 
 import { createSubmission } from "@/src/actions/submission.ts";
-import { submitFormSchema, submitFormSchemaType } from "@app/submit/schema.ts";
+import { submitFormSchema, type submitFormSchemaType } from "@app/submit/schema.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
 import env from "@env";
 import { cn } from "@lib/utils.ts";
-import { Submission } from "@prisma/client";
+import type { Submission } from "@prisma/client";
 import "@uiw/react-markdown-preview/markdown.css";
 import "@uiw/react-md-editor/markdown-editor.css";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { PiArrowUpRightDuotone, PiCircleDashedDuotone, PiTrashDuotone } from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import { toast } from "sonner";
-import { getSignedUploadURL } from "@lib/storage.ts";
+
+import { getSignedUploadURL } from "@/src/actions/storage.ts";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,

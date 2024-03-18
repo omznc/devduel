@@ -16,9 +16,6 @@ import {
 	PiUserCircleDuotone,
 	PiUserCircleGearDuotone,
 	PiUserCirclePlusDuotone,
-	PiUserDuotone,
-	PiUserGearDuotone,
-	PiUserPlusDuotone,
 } from "react-icons/pi";
 
 type HeaderProps = {

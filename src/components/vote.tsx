@@ -1,9 +1,9 @@
 "use client";
 
 import { unvote, vote } from "@/src/actions/vote.ts";
-import { RoundButton, RoundLink } from "@components/buttons.tsx";
+import { RoundButton } from "@components/buttons.tsx";
 import { cn } from "@lib/utils.ts";
-import { Submission } from "@prisma/client";
+import type { Submission } from "@prisma/client";
 import { useState } from "react";
 import { PiArrowUpDuotone, PiXCircleDuotone } from "react-icons/pi";
 import { toast } from "sonner";

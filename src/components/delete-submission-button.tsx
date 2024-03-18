@@ -2,7 +2,7 @@
 
 import { deleteSubmission } from "@/src/actions/submission.ts";
 import { RoundButton } from "@components/buttons.tsx";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { PiTrashDuotone } from "react-icons/pi";
 import { toast } from "sonner";
 
