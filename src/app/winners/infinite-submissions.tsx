@@ -27,10 +27,7 @@ export default function InfiniteSubmissions({
 		});
 
 		// setSubmissions([...(submissions ?? []), ...newSubmissions]);
-		setSubmissions([
-			...(submissions ?? []),
-			...new Array(20).fill(newSubmissions).flat(),
-		]);
+		setSubmissions([...(submissions ?? []), ...new Array(20).fill(newSubmissions).flat()]);
 	};
 
 	useEffect(() => {
@@ -40,21 +37,10 @@ export default function InfiniteSubmissions({
 	return (
 		<div className="h-full w-full snap-y overflow-y-scroll grid grid-cols-1 md:grid-cols-4 gap-4">
 			{submissions?.map((submission) => {
-				return (
-					<SubmissionEntry
-						key={submission.id}
-						submission={submission}
-						fullWidth
-					/>
-				);
+				return <SubmissionEntry key={submission.id} submission={submission} fullWidth />;
 			})}
-			<div
-				ref={ref}
-				className="flex h-fit w-full flex-col items-center justify-center gap-4 md:col-span-2"
-			>
-				{loading && (
-					<PiCircleDashedDuotone className="h-24 w-24 animate-spin" />
-				)}
+			<div ref={ref} className="flex h-fit w-full flex-col items-center justify-center gap-4 md:col-span-2">
+				{loading && <PiCircleDashedDuotone className="h-24 w-24 animate-spin" />}
 				{!loading && (
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">
 						<p className="text-2xl font-bold opacity-0">

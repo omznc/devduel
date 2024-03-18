@@ -4,15 +4,13 @@ import { submitFormSchema } from "@app/submit/schema.ts";
 import env from "@env";
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
-import { deleteFile, getSignedURL } from "@lib/storage.ts";
+import { deleteFile } from "@lib/storage.ts";
 import { getCurrentTask } from "@lib/task.ts";
 import { toSlug } from "@lib/utils.ts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const RAW_HOSTNAME = `https://${
-	env.BACKBLAZE_BUCKET_NAME
-}.${env.BACKBLAZE_BUCKET_ENDPOINT.replace("https://", "")}`;
+const RAW_HOSTNAME = `https://${env.BACKBLAZE_BUCKET_NAME}.${env.BACKBLAZE_BUCKET_ENDPOINT.replace("https://", "")}`;
 
 const CDN_HOSTNAME = `https://${env.BACKBLAZE_CDN_URL}/file/${env.BACKBLAZE_BUCKET_NAME}`;
 
@@ -32,8 +30,7 @@ export async function createSubmission(formData: FormData) {
 	if (!task) throw new Error("No task found");
 	if (task.status !== "OPEN") throw new Error("Submissions are closed");
 	if (!data.image) throw new Error("No image found");
-	if (![RAW_HOSTNAME, CDN_HOSTNAME].some((host) => data.image.startsWith(host)))
-		throw new Error("Invalid image host");
+	if (![RAW_HOSTNAME, CDN_HOSTNAME].some((host) => data.image.startsWith(host))) throw new Error("Invalid image host");
 
 	data.image = data.image.replace(RAW_HOSTNAME, CDN_HOSTNAME);
 
@@ -66,10 +63,6 @@ export async function createSubmission(formData: FormData) {
 	revalidatePath(`/submission/${submission.slug}`);
 	return redirect(`/submission/${submission.slug}`);
 }
-
-export const getSignedUploadURL = async (type: string, size: number) => {
-	return getSignedURL(type, size);
-};
 
 export async function deleteSubmission(id: string) {
 	const [session, submission] = await Promise.all([

@@ -28,9 +28,7 @@ export default function TaskList({ tasks, take, skip, total }: TaskListProps) {
 						<tr key={task.id} className="border-normal">
 							<td className="border-normal p-2">{task.title}</td>
 							<td className="border-normal p-2">{task.description}</td>
-							<td className="border-normal p-2">
-								{new Date(task.createdAt).toLocaleString()}
-							</td>
+							<td className="border-normal p-2">{new Date(task.createdAt).toLocaleString()}</td>
 							<td className="border-normal p-2">
 								<button
 									type="button"

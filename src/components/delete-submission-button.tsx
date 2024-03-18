@@ -9,9 +9,7 @@ import { toast } from "sonner";
 type DeleteSubmissionButtonProps = {
 	id: string;
 };
-export default function DeleteSubmissionButton({
-	id,
-}: DeleteSubmissionButtonProps) {
+export default function DeleteSubmissionButton({ id }: DeleteSubmissionButtonProps) {
 	const path = usePathname();
 	return (
 		<RoundButton
@@ -27,7 +25,7 @@ export default function DeleteSubmissionButton({
 						toast.dismiss("submit");
 						return "Deleted!";
 					},
-					error: (e) => e?.message ?? "Error",
+					error: () => "Error",
 				});
 			}}
 			confirmClick={true}

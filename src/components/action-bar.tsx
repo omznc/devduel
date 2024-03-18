@@ -14,10 +14,10 @@ export default function ActionBar({ children, className }: ActionBarProps) {
 	return (
 		<div
 			className={cn(
-				"flex fly-in-from-top w-full max-w-4xltransition-all duration-500 flex-row flex-wrap items-center justify-center gap-4",
+				"flex fly-in-from-top w-full max-w-4xl transition-all duration-500 flex-row flex-wrap items-center justify-center gap-4",
 				className,
 				{
-					" opacity-60 hover:opacity-100": !path.startsWith("/submission"),
+					"opacity-80 hover:opacity-100 !transition-all": !path.startsWith("/submission"),
 				},
 			)}
 		>

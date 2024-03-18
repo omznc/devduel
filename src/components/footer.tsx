@@ -9,12 +9,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { BsRocketTakeoffFill } from "react-icons/bs";
 import { IoLogoVercel } from "react-icons/io5";
-import {
-	PiArrowUpRightDuotone,
-	PiDiscordLogoDuotone,
-	PiGithubLogoDuotone,
-	PiTwitterLogoDuotone,
-} from "react-icons/pi";
+import { PiArrowUpRightDuotone, PiDiscordLogoDuotone, PiGithubLogoDuotone, PiTwitterLogoDuotone } from "react-icons/pi";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,8 +48,7 @@ export default function Footer() {
 							target={"_blank"}
 							className="group ml-1 inline-flex items-center gap-1 text-sm font-normal opacity-80 hover:underline"
 						>
-							powered by <IoLogoVercel />{" "}
-							<span className="font-bold">Vercel</span>
+							powered by <IoLogoVercel /> <span className="font-bold">Vercel</span>
 							<PiArrowUpRightDuotone className="opacity-0 transition-all group-hover:opacity-100" />
 						</Link>
 					)}

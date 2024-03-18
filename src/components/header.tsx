@@ -132,9 +132,7 @@ export default function Header({ taskStatus }: HeaderProps) {
 									return true;
 								})
 								.map((item) => {
-									const active =
-										(path.includes(item.href ?? "") && item.href !== "/") ||
-										path === item.href;
+									const active = (path.includes(item.href ?? "") && item.href !== "/") || path === item.href;
 									return (
 										<Link
 											href={item.href}
@@ -162,24 +160,13 @@ export default function Header({ taskStatus }: HeaderProps) {
 												}
 											}}
 										>
-											{item.name !== "profile"
-												? item.icon
-												: session?.user
-												  ? item.icon
-												  : item.altIcon}
+											{item.name !== "profile" ? item.icon : session?.user ? item.icon : item.altIcon}
 											<span
-												className={cn(
-													"block text-md opacity-1 -ml-1 overflow-hidden transition-all",
-													{
-														"text-[0px] opacity-0": isMobile && !active,
-													},
-												)}
+												className={cn("block text-md opacity-1 -ml-1 overflow-hidden transition-all", {
+													"text-[0px] opacity-0": isMobile && !active,
+												})}
 											>
-												{item.name !== "profile"
-													? item.name
-													: session?.user
-													  ? item.name
-													  : "login"}
+												{item.name !== "profile" ? item.name : session?.user ? item.name : "login"}
 											</span>
 										</Link>
 									);
@@ -224,6 +211,7 @@ const items: SidebarItem[] = [
 		href: "/submit",
 		icon: <PiFolderSimplePlusDuotone className="h-6 w-auto" />,
 		protected: true,
+		show: TaskStatus.OPEN,
 	},
 	{
 		name: "profile",

@@ -32,7 +32,7 @@ export default function Countdown({ expires, status }: CurrentTaskProps) {
 						toast.dismiss("next-task");
 						return "Loaded!";
 					},
-					error: (e) => e?.message ?? "Error",
+					error: () => "Failed to get next task.",
 				},
 			);
 		}

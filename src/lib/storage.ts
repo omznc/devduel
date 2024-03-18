@@ -1,9 +1,6 @@
 import "server-only";
-import {
-	DeleteObjectCommand,
-	PutObjectCommand,
-	S3Client,
-} from "@aws-sdk/client-s3";
+
+import { DeleteObjectCommand, PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import env from "@env";
 import { isAuthorized } from "@lib/server-utils.ts";
@@ -33,20 +30,18 @@ export const getSignedURL = async (type: string, size: number) => {
 	if (!env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS.includes(type)) {
 		throw new Error(
 			`Invalid file format. Must be one of: ${env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS.map(
-				(format) => format.split("/")[1],
+				(format: string) => format.split("/")[1],
 			).join(", ")})}`,
 		);
 	}
 
 	if (size > env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE) {
-		throw new Error(
-			`File is too big (${
-				Math.round((size / 1024 / 1024) * 100) / 100
-			} MB max)`,
-		);
+		throw new Error(`File is too big (${Math.round((size / 1024 / 1024) * 100) / 100} MB max)`);
 	}
 
 	const [session, task] = await Promise.all([isAuthorized(), getCurrentTask()]);
+
+	if (!session?.user) throw new Error("Unauthorized");
 
 	const command = new PutObjectCommand({
 		Bucket: env.BACKBLAZE_BUCKET_NAME,
@@ -58,4 +53,9 @@ export const getSignedURL = async (type: string, size: number) => {
 	return getSignedUrl(s3, command, {
 		expiresIn: 60 * 5, // 5 minutes
 	});
+};
+
+export const getSignedUploadURL = async (type: string, size: number) => {
+	"use server";
+	return getSignedURL(type, size);
 };

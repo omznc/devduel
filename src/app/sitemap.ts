@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import prisma from "@lib/prisma";
 import env from "@env";
+import { TaskStatus } from "@prisma/client";
+
 const staticPaths = ["/", "/explore", "/submit", "/winners"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -11,7 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 			},
 			where: {
 				task: {
-					status: "CLOSED" || "VOTING",
+					status: {
+						in: [TaskStatus.VOTING, TaskStatus.CLOSED],
+					},
 				},
 			},
 		}),
@@ -25,7 +29,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 				slug: true,
 			},
 			where: {
-				status: "CLOSED" || "VOTING",
+				status: {
+					in: [TaskStatus.VOTING, TaskStatus.CLOSED],
+				},
 			},
 		}),
 	]);

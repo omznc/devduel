@@ -14,10 +14,7 @@ type SubmissionEntryProps = {
 	fullWidth?: boolean;
 };
 
-export function SubmissionEntry({
-	submission,
-	fullWidth,
-}: SubmissionEntryProps) {
+export function SubmissionEntry({ submission, fullWidth }: SubmissionEntryProps) {
 	return (
 		<Link
 			href={`/submission/${submission.slug}`}
@@ -45,32 +42,24 @@ export function SubmissionEntry({
 				className={cn(
 					"mb-4 ml-4 flex w-full flex-col items-start justify-center gap-16 transition-all overflow-hidden",
 					{
-						"translate-y-[100px] group-hover:translate-y-0 group-hover:gap-2":
-							submission?.user,
+						"translate-y-[100px] group-hover:translate-y-0 group-hover:gap-2": submission?.user,
 						"translate-y-0": !submission?.user,
 					},
 				)}
 			>
 				<div className="w-full pr-8 break-words whitespace-normal text-left font-sans text-xl font-bold text-white drop-shadow-xl overflow-ellipsis">
-					{submission.title.length > 50
-						? `${submission.title.slice(0, 50)}...`
-						: submission.title}
+					{submission.title.length > 50 ? `${submission.title.slice(0, 50)}...` : submission.title}
 				</div>
 				{submission.user && (
 					<div className="flex w-full items-center justify-start gap-4 ">
 						<Image
 							alt="user image"
-							src={
-								submission.user.image ??
-								`https://ui-avatars.com/api/?name=${submission.user.name}`
-							}
+							src={submission.user.image ?? `https://ui-avatars.com/api/?name=${submission.user.name}`}
 							width={50}
 							height={50}
 							className="relative inline-block h-[50px] w-[50px] rounded-full object-cover object-center transition-all"
 						/>
-						<span className="block font-sans text-lg font-semibold text-white antialiased">
-							{submission.user.name}
-						</span>
+						<span className="block font-sans text-lg font-semibold text-white antialiased">{submission.user.name}</span>
 					</div>
 				)}
 			</div>

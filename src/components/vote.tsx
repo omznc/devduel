@@ -8,14 +8,15 @@ import { useState } from "react";
 import { PiArrowUpDuotone, PiXCircleDuotone } from "react-icons/pi";
 import { toast } from "sonner";
 
-export default function Vote({
+export function Vote({
 	submission,
+	hasVoted,
 }: {
-	submission: Submission & {
-		voted: boolean;
-	};
+	submission: Submission;
+	hasVoted: boolean;
 }) {
-	const [voted, setVoted] = useState(submission.voted);
+	const [voted, setVoted] = useState(hasVoted);
+
 	return (
 		<RoundButton
 			onClick={async () => {

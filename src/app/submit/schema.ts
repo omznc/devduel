@@ -12,18 +12,12 @@ export const submitFormSchema = z.object({
 		.max(100, {
 			message: "Title must be less than 100 characters long",
 		}),
-	description: z
-		.string()
-		.min(3, { message: "Description must be at least 3 characters long" })
-		.max(5000, {
-			message: "Description must be less than 5000 characters long",
-		}),
-	shortDescription: z
-		.string()
-		.min(3, { message: "Short description must be at least 3 characters long" })
-		.max(100, {
-			message: "Short description must be less than 100 characters long",
-		}),
+	description: z.string().min(3, { message: "Description must be at least 3 characters long" }).max(5000, {
+		message: "Description must be less than 5000 characters long",
+	}),
+	shortDescription: z.string().min(3, { message: "Short description must be at least 3 characters long" }).max(100, {
+		message: "Short description must be less than 100 characters long",
+	}),
 	image: z.string().url({ message: "Image field must be a valid URL" }),
 	website: z.string().url({ message: "Website field must be a valid URL" }),
 	source: z
@@ -32,9 +26,7 @@ export const submitFormSchema = z.object({
 		.refine(
 			(val: string) => {
 				if (!val) return true;
-				return env.NEXT_PUBLIC_CONFIG_VALID_SOURCES.some((source) =>
-					val.startsWith(source),
-				);
+				return env.NEXT_PUBLIC_CONFIG_VALID_SOURCES.some((source) => val.startsWith(source));
 			},
 			{ message: "Provided source URL is not in valid sources" },
 		)

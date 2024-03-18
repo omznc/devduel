@@ -3,12 +3,7 @@
 import ActionBar from "@components/action-bar.tsx";
 import { RoundButton, RoundLink } from "@components/buttons.tsx";
 import { signOut } from "next-auth/react";
-import {
-	PiAtDuotone,
-	PiCopyDuotone,
-	PiShareDuotone,
-	PiUserCircleMinusDuotone,
-} from "react-icons/pi";
+import { PiAtDuotone, PiCopyDuotone, PiShareDuotone, PiUserCircleMinusDuotone } from "react-icons/pi";
 import { toast } from "sonner";
 
 type ToolbarProps = {

@@ -19,74 +19,73 @@ export default async function Page() {
 						viewBox="0 0 1352 714"
 					/>
 				</div>
-				<div className="pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all">
-					<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
-						{task?.status === "OPEN"
-							? "This week's task"
-							: "Voting is open for"}
-					</span>
-					{task?.status === "OPEN" ? (
-						<Link
-							href={`/task/${task.slug}`}
-							className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all hover:underline after:bg-blue-500 after:opacity-50 md:after:bg-purple-500"
-						>
-							{task.title}
-						</Link>
-					) : (
-						<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
-							{"Coming soon"}
+				{task && (
+					<div className="pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all">
+						<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
+							{task?.status === "OPEN" ? "This week's task" : "Voting is open for"}
 						</span>
-					)}
-					<span
-						className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
-						suppressHydrationWarning
-					>
-						{task?.status === "OPEN" && (
-							<Countdown
-								expires={
-									new Date(
-										Date.UTC(
-											new Date().getUTCFullYear(),
-											new Date().getUTCMonth(),
-											new Date().getUTCDate() + (5 - new Date().getUTCDay()),
-											23,
-											59,
-											59,
-										),
-									)
-								}
-								status={task?.status}
-							/>
-						)}
-						{task?.status === "VOTING" && (
+						{task?.status === "OPEN" ? (
 							<Link
-								href={"/explore"}
-								className="inline-flex items-center gap-2 hover:underline"
+								href={`/task/${task.slug}`}
+								className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all hover:underline after:bg-blue-500 after:opacity-50 md:after:bg-purple-500"
 							>
-								<PiEyeDuotone /> {"Let's explore!"}
+								{task.title}
 							</Link>
+						) : (
+							<span className="fit-text bg-colored pointer-events-auto w-fit text-center text-6xl transition-all after:bg-blue-500 after:opacity-50 md:after:bg-purple-500">
+								{"Coming soon"}
+							</span>
 						)}
-						<Link
-							href={"#about"}
-							className={"-mb-12 mt-12 "}
-							aria-label="About"
+						<span
+							className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
+							suppressHydrationWarning
 						>
-							<PiArrowDownDuotone className="w-12 h-12" />
-						</Link>
-					</span>
-				</div>
+							{task?.status === "OPEN" && (
+								<Countdown
+									expires={
+										new Date(
+											Date.UTC(
+												new Date().getUTCFullYear(),
+												new Date().getUTCMonth(),
+												new Date().getUTCDate() + (5 - new Date().getUTCDay()),
+												23,
+												59,
+												59,
+											),
+										)
+									}
+									status={task?.status}
+								/>
+							)}
+							{task?.status === "VOTING" && (
+								<Link href={"/explore"} className="inline-flex items-center gap-2 hover:underline">
+									<PiEyeDuotone /> {"Let's explore!"}
+								</Link>
+							)}
+							<Link href={"#about"} className={"-mb-12 mt-12 "} aria-label="About">
+								<PiArrowDownDuotone className="w-12 h-12" />
+							</Link>
+						</span>
+					</div>
+				)}
+				{!task && (
+					<div className="pointer-events-none absolute flex h-full w-fit flex-col items-center justify-center font-bold transition-all">
+						<span className="pointer-events-auto mb-4 w-fit text-center text-lg transition-all md:text-4xl">
+							{"No task yet, come back later"}
+						</span>
+						<span
+							className="pointer-events-auto mt-4 w-fit gap-2 text-center flex flex-col items-center justify-center text-lg transition-all md:text-4xl"
+							suppressHydrationWarning
+						>
+							<Link href={"#about"} className={"-mb-12 mt-12 "} aria-label="About">
+								<PiArrowDownDuotone className="w-12 h-12" />
+							</Link>
+						</span>
+					</div>
+				)}
 			</div>
-			<div
-				className="relative flex h-screen w-full flex-col items-center justify-center"
-				id={"about"}
-			>
-				<h2
-					className={
-						"fit-text bg-colored text-center after:bg-blue-500 after:opacity-60"
-					}
-				>
-					{"What is DevDuel?"}
-				</h2>
+			<div className="relative flex h-screen w-full flex-col items-center justify-center" id={"about"}>
+				<h2 className={"fit-text bg-colored text-center after:bg-blue-500 after:opacity-60"}>{"What is DevDuel?"}</h2>
 				<div className="flex w-full max-w-4xl flex-col gap-4">
 					<p className="text-center md:text-left">
 						{"DevDuel is a weekly coding challenge where you compete with other" +
@@ -111,29 +110,20 @@ export default async function Page() {
 					</p>
 				</div>
 			</div>
-			{task?.status === TaskStatus.VOTING &&
-				task?.submissions &&
-				task?.submissions?.length > 0 && (
-					<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
-						<h1 className="block text-5xl font-bold text-white md:hidden">
-							Latest
-						</h1>
-						<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20">
-							{task.submissions.map((submission) => {
-								return (
-									<SubmissionEntry
-										submission={submission}
-										key={submission.id}
-									/>
-								);
-							})}
-						</div>
-						<BackgroundLatest
-							viewBox="0 0 1351 1112"
-							className="animate-path absolute top-8 hidden h-auto w-full opacity-70 filter dark:invert md:block"
-						/>
+			{task?.status === TaskStatus.VOTING && task?.submissions && task?.submissions?.length > 0 && (
+				<div className="relative flex h-fit min-h-[500px] w-full flex-col items-center justify-center gap-4 overflow-hidden">
+					<h1 className="block text-5xl font-bold text-white md:hidden">Latest</h1>
+					<div className="z-20 flex w-fit flex-col items-start justify-center gap-4 sm:flex-row md:mt-20">
+						{task.submissions.map((submission) => {
+							return <SubmissionEntry submission={submission} key={submission.id} />;
+						})}
 					</div>
-				)}
+					<BackgroundLatest
+						viewBox="0 0 1351 1112"
+						className="animate-path absolute top-8 hidden h-auto w-full opacity-70 filter dark:invert md:block"
+					/>
+				</div>
+			)}
 		</div>
 	);
 }

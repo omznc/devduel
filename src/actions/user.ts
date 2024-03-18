@@ -64,9 +64,7 @@ export async function getUsernameSuggestion() {
 	if (exists.length === 0) {
 		return suggestions[0];
 	}
-	const valid = suggestions.find(
-		(suggestion) => !exists.find((user) => user.username === suggestion),
-	);
+	const valid = suggestions.find((suggestion) => !exists.find((user) => user.username === suggestion));
 	if (valid) {
 		return valid;
 	}
@@ -75,10 +73,9 @@ export async function getUsernameSuggestion() {
 	let found = false;
 	while (!found && attempts < 10) {
 		attempts++;
-		const suggestion = `${authorized.user.name
-			?.split(" ")
-			.join("-")
-			.toLowerCase()}-${Math.floor(Math.random() * 1000)}`;
+		const suggestion = `${authorized.user.name?.split(" ").join("-").toLowerCase()}-${Math.floor(
+			Math.random() * 1000,
+		)}`;
 		if (!exists.find((user) => user.username === suggestion)) {
 			found = true;
 			return suggestion;
@@ -100,10 +97,7 @@ export interface GetWinnerUsersResponse {
 	image: string | null;
 }
 
-export const getWinnerUsers = async ({
-	take = 10,
-	skip = 0,
-}: getWinnersOptions): Promise<GetWinnerUsersResponse[]> => {
+export const getWinnerUsers = async ({ take = 10, skip = 0 }: getWinnersOptions): Promise<GetWinnerUsersResponse[]> => {
 	const users = await prisma.user.findMany({
 		orderBy: {
 			submissions: {

@@ -18,13 +18,11 @@ const serverEnvironment = {
 		description: "Google OAuth Client Secret",
 	}),
 	NEXTAUTH_SECRET: z.string({
-		description:
-			"Secret used to sign next-auth tokens (https://generate-secret.vercel.app/32)",
+		description: "Secret used to sign next-auth tokens (https://generate-secret.vercel.app/32)",
 	}),
 	NEXTAUTH_URL: z
 		.string({
-			description:
-				"The final, public-facing app URL. (http://localhost:3000 for local development, default)",
+			description: "The final, public-facing app URL. (http://localhost:3000 for local development, default)",
 		})
 		.default("http://localhost:3000"),
 	BACKBLAZE_BUCKET_NAME: z.string({
@@ -73,11 +71,7 @@ const clientEnvironment = {
 				description: "Valid sources for image uploads",
 			}),
 		)
-		.default([
-			"https://github.com",
-			"https://gitlab.com",
-			"https://bitbucket.org",
-		]),
+		.default(["https://github.com", "https://gitlab.com", "https://bitbucket.org"]),
 	NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: z
 		.array(
 			z.string({
@@ -112,31 +106,16 @@ const clientEnvironment = {
 		})
 		.transform((val) => ["true", "True", "1", "yes"].includes(val))
 		.default("false"),
-	NEXT_PUBLIC_PROJECT_IS_LIVE: z
-		.string({
-			description: "Whether the project is live",
-		})
-		.transform((val) => ["true", "True", "1", "yes"].includes(val))
-		.default("false"),
 };
 
 const runtimeClientEnvironment = {
-	NEXT_PUBLIC_CONFIG_VALID_SOURCES: JSON.stringify(
-		process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES,
-	),
-	NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: JSON.stringify(
-		process.env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS,
-	),
-	NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE:
-		process.env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE,
-	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED:
-		process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED,
-	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY:
-		process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
-	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT:
-		process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
+	NEXT_PUBLIC_CONFIG_VALID_SOURCES: JSON.stringify(process.env.NEXT_PUBLIC_CONFIG_VALID_SOURCES),
+	NEXT_PUBLIC_CONFIG_IMAGE_FORMATS: JSON.stringify(process.env.NEXT_PUBLIC_CONFIG_IMAGE_FORMATS),
+	NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE: process.env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE,
+	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED: process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_ENABLED,
+	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY: process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_QUALITY,
+	NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT: process.env.NEXT_PUBLIC_CONFIG_IMAGE_COMPRESSION_FORMAT,
 	NEXT_PUBLIC_VERCEL_SPONSORED: process.env.NEXT_PUBLIC_VERCEL_SPONSORED,
-	NEXT_PUBLIC_PROJECT_IS_LIVE: process.env.NEXT_PUBLIC_PROJECT_IS_LIVE,
 };
 
 const env = createEnv({

@@ -3,9 +3,9 @@ import { getWinnerUsers } from "@/src/actions/user.ts";
 import InfinitePeople from "@app/winners/infinite-people.tsx";
 import InfiniteSubmissions from "@app/winners/infinite-submissions.tsx";
 import ActionBar from "@components/action-bar.tsx";
+
 import { RoundLink } from "@components/buttons.tsx";
 import { cn } from "@lib/utils.ts";
-import Link from "next/link";
 import { PiFolderDuotone, PiUsersDuotone } from "react-icons/pi";
 
 type PageProps = {
@@ -64,16 +64,12 @@ export default async function Page({ searchParams }: PageProps) {
 						{winners.length > 0 && (
 							<div className="flex w-full flex-wrap gap-4 overflow-hidden transition-all">
 								<div className="flex h-full w-full flex-col items-center justify-start gap-4">
-									<InfinitePeople
-										initial={[...new Array(20).fill(winners).flat()]}
-									/>
+									<InfinitePeople initial={[...new Array(20).fill(winners).flat()]} />
 								</div>
 							</div>
 						)}
 						{winners.length === 0 && (
-							<span className="fit-text w-full text-center transition-all">
-								{"No winners yet"}
-							</span>
+							<span className="fit-text w-full text-center transition-all">{"No winners yet"}</span>
 						)}
 					</>
 				)}
@@ -82,16 +78,12 @@ export default async function Page({ searchParams }: PageProps) {
 						{submissions.length > 0 && (
 							<div className="flex w-full flex-wrap gap-4 overflow-hidden transition-all">
 								<div className="flex h-full w-full flex-col items-center justify-start gap-4">
-									<InfiniteSubmissions
-										initial={[...new Array(20).fill(submissions).flat()]}
-									/>
+									<InfiniteSubmissions initial={[...new Array(20).fill(submissions).flat()]} />
 								</div>
 							</div>
 						)}
 						{submissions.length === 0 && (
-							<span className="fit-text w-full text-center transition-all">
-								{"No winners yet"}
-							</span>
+							<span className="fit-text w-full text-center transition-all">{"No winners yet"}</span>
 						)}
 					</>
 				)}

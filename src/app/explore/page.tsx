@@ -18,13 +18,22 @@ export default async function Page() {
 		adminView = true;
 	}
 
+	if (!task) {
+		return (
+			<div className="flex h-full w-full items-center justify-center">
+				<div className="flex flex-col items-center justify-center gap-4">
+					<span className="fit-text w-full text-center">{"No task found"}</span>
+					<RoundLink href={"/"}>{"Go home"}</RoundLink>
+				</div>
+			</div>
+		);
+	}
+
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			{task && (
 				<ActionBar>
-					<RoundLink href={`/task/${task?.slug}`}>
-						Task: {task?.title}
-					</RoundLink>
+					<RoundLink href={`/task/${task?.slug}`}>Task: {task?.title}</RoundLink>
 					{adminView && (
 						<RoundButton
 							style={{
@@ -50,11 +59,7 @@ export default async function Page() {
 					}
 				/>
 			)}
-			{!task && (
-				<span className="fit-text w-full text-center transition-all">
-					{"No task yet"}
-				</span>
-			)}
+			{!task && <span className="fit-text w-full text-center transition-all">{"No task yet"}</span>}
 		</div>
 	);
 }

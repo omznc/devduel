@@ -18,10 +18,7 @@ type InfiniteExploreProps = {
 	data?: Data[];
 };
 
-export default function InfiniteExplore({
-	taskId,
-	data,
-}: InfiniteExploreProps) {
+export default function InfiniteExplore({ taskId, data }: InfiniteExploreProps) {
 	const { ref, inView } = useInView();
 	const [submissions, setSubmissions] = useState<Data[]>(data ? data : []);
 	const [loading, setLoading] = useState(false);
@@ -38,9 +35,7 @@ export default function InfiniteExplore({
 
 		setSubmissions((prev) => [
 			...prev,
-			...newSubmissions.filter(
-				(sub) => !prev.find((prevSub) => prevSub.id === sub.id),
-			),
+			...newSubmissions.filter((sub) => !prev.find((prevSub) => prevSub.id === sub.id)),
 		]);
 	};
 
@@ -52,19 +47,12 @@ export default function InfiniteExplore({
 		<>
 			<div className="z-20 flex h-full w-fit flex-col flex-wrap items-start justify-center gap-4 sm:flex-row">
 				{submissions?.map((submission) => {
-					return (
-						<SubmissionEntry submission={submission} key={submission.id} />
-					);
+					return <SubmissionEntry submission={submission} key={submission.id} />;
 				})}
 			</div>
-			<div
-				ref={ref}
-				className="flex h-fit w-full flex-col items-center justify-center gap-4"
-			>
+			<div ref={ref} className="flex h-fit w-full flex-col items-center justify-center gap-4">
 				{(!submissions || submissions.length === 0) && !loading && (
-					<span className="fit-text w-full text-center transition-all">
-						{"Nobody submitted anything"}
-					</span>
+					<span className="fit-text w-full text-center transition-all">{"Nobody submitted anything"}</span>
 				)}
 				{submissions && !loading && (
 					<div className="flex h-full w-full flex-col items-center justify-center gap-4">

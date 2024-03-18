@@ -1,9 +1,6 @@
 "use client";
 
-import {
-	createSubmission,
-	getSignedUploadURL,
-} from "@/src/actions/submission.ts";
+import { createSubmission } from "@/src/actions/submission.ts";
 import { submitFormSchema, submitFormSchemaType } from "@app/submit/schema.ts";
 import { SubmitFormButton } from "@components/buttons.tsx";
 import env from "@env";
@@ -17,13 +14,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { ReactNode, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import {
-	PiArrowUpRightDuotone,
-	PiCircleDashedDuotone,
-	PiTrashDuotone,
-} from "react-icons/pi";
+import { PiArrowUpRightDuotone, PiCircleDashedDuotone, PiTrashDuotone } from "react-icons/pi";
 import rehypeSanitize from "rehype-sanitize";
 import { toast } from "sonner";
+import { getSignedUploadURL } from "@lib/storage.ts";
 
 const MDEditor = dynamic(() => import("@uiw/react-md-editor"), {
 	ssr: false,
@@ -60,14 +54,9 @@ export default function Form({
 
 	return (
 		<>
-			<form
-				className="flex w-full flex-col gap-4 md:flex-row"
-				key={submission?.id ?? "submit-form"}
-			>
+			<form className="flex w-full flex-col gap-4 md:flex-row" key={submission?.id ?? "submit-form"}>
 				<div className="flex h-full flex-col gap-2">
-					<label htmlFor="cover">{`Cover Image (${
-						env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE / 1000000
-					}MB max)`}</label>
+					<label htmlFor="cover">{`Cover Image (${env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE / 1000000}MB max)`}</label>
 					<Dropzone
 						onDrop={(files) => {
 							if (files.length > 1) {
@@ -75,11 +64,7 @@ export default function Form({
 								return;
 							}
 							if (files[0].size > env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE) {
-								toast.error(
-									`Image too large. Max size is ${
-										env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE / 1000000
-									}MB.`,
-								);
+								toast.error(`Image too large. Max size is ${env.NEXT_PUBLIC_CONFIG_IMAGE_MAX_SIZE / 1000000}MB.`);
 								return;
 							}
 							if (files[0].type.split("/")[0] !== "image") {
@@ -157,11 +142,7 @@ export default function Form({
 						{submission && (
 							<span className="text-sm text-gray-500">
 								The URL of{" "}
-								<Link
-									className={"underline"}
-									href={`/submission/${submission.slug}`}
-									target="_blank"
-								>
+								<Link className={"underline"} href={`/submission/${submission.slug}`} target="_blank">
 									your submission
 									<PiArrowUpRightDuotone className="ml-1 inline" />
 								</Link>{" "}
@@ -198,9 +179,7 @@ export default function Form({
 						/>
 					</div>
 					<div className="flex w-full flex-col gap-2">
-						<label htmlFor="short-description">
-							{`Short Description (${data.shortDescription.length}/100)`}
-						</label>
+						<label htmlFor="short-description">{`Short Description (${data.shortDescription.length}/100)`}</label>
 						<input
 							type="short-description"
 							id="short-description"
@@ -218,9 +197,7 @@ export default function Form({
 					<div className="flex w-full flex-col gap-2">
 						<label htmlFor="source">{"Source Code (optional)"}</label>
 						<span className="text-sm text-gray-500">
-							{`Available: ${env.NEXT_PUBLIC_CONFIG_VALID_SOURCES.map(
-								(source) => source.substring(8),
-							).join(", ")}`}
+							{`Available: ${env.NEXT_PUBLIC_CONFIG_VALID_SOURCES.map((source) => source.substring(8)).join(", ")}`}
 						</span>
 						<input
 							type="text"
@@ -242,13 +219,9 @@ export default function Form({
 				data-color-mode={theme}
 				key={`md-editor-${submission?.id}` ?? "md-editor"}
 			>
-				<label htmlFor="description">{`Description (${
-					data.description?.length ?? 0
-				}/10000)`}</label>
+				<label htmlFor="description">{`Description (${data.description?.length ?? 0}/10000)`}</label>
 				<span className="text-md -mt-2 text-gray-500">
-					{
-						"Markdown is supported, HTML is not. You can use external images as well."
-					}
+					{"Markdown is supported, HTML is not. You can use external images as well."}
 				</span>
 
 				<MDEditor
@@ -279,10 +252,7 @@ export default function Form({
 								if (data.source) formData.append("source", data.source);
 
 								if (image) {
-									const signedUrl = await getSignedUploadURL(
-										image.type,
-										image.size,
-									);
+									const signedUrl = await getSignedUploadURL(image.type, image.size);
 									const resp = await fetch(signedUrl, {
 										method: "PUT",
 										body: image,
@@ -310,9 +280,7 @@ export default function Form({
 								}
 
 								if (data.shortDescription.length < 3) {
-									throw new Error(
-										"Short description too short (min 3 characters)",
-									);
+									throw new Error("Short description too short (min 3 characters)");
 								}
 
 								// If nothing changed, don't submit
@@ -357,7 +325,7 @@ export default function Form({
 									});
 									return submission?.id ? "Updated!" : "Submitted!";
 								},
-								error: (e) => e?.message || "Failed",
+								error: () => "Failed to submit.",
 								id: "submit",
 							},
 						);

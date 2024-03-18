@@ -25,13 +25,13 @@ export default function AdminTaskForm() {
 					toast.promise(createTask(formData), {
 						loading: "Creating task...",
 						success: "Created task!",
-						error: (e) => e?.message ?? "Failed to create task.",
+						error: () => "Failed to create task.",
 					});
 				} else {
 					toast.promise(updateTask(formData, edit), {
 						loading: "Updating task...",
 						success: "Updated task!",
-						error: (e) => e?.message ?? "Failed to update task.",
+						error: () => "Failed to update task.",
 					});
 				}
 			}}

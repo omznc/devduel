@@ -2,7 +2,7 @@
 
 import prisma from "@lib/prisma.ts";
 import { isAuthorized } from "@lib/server-utils.ts";
-import { Submission, User } from "@prisma/client";
+import { Submission, TaskStatus, User } from "@prisma/client";
 
 export const vote = async (id: Submission["id"]) => {
 	const authorized = await isAuthorized();
@@ -26,14 +26,13 @@ export const vote = async (id: Submission["id"]) => {
 	const user = authorized.user as User | null;
 	if (!user) throw new Error("Unauthorized");
 
-	if (submission.userId === user.id)
-		throw new Error("You cannot vote for your own submission");
+	if (submission.userId === user.id) throw new Error("You cannot vote for your own submission");
 
 	switch (submission.task.status) {
-		case "OPEN":
+		case TaskStatus.OPEN:
 			throw new Error("Voting is not open for this task");
-		case "CLOSED":
-			throw new Error("Voting is closed for this task");
+		case TaskStatus.CLOSED:
+			throw new Error("Voting has ended for this task");
 	}
 
 	try {
@@ -78,8 +77,7 @@ export const unvote = async (id: Submission["id"]) => {
 	const user = authorized.user as User | null;
 	if (!user) throw new Error("Unauthorized");
 
-	if (submission.userId === user.id)
-		throw new Error("You cannot un-vote your own submission");
+	if (submission.userId === user.id) throw new Error("You cannot un-vote your own submission");
 
 	switch (submission.task.status) {
 		case "OPEN":

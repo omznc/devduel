@@ -1,7 +1,8 @@
 import prisma from "@lib/prisma.ts";
 import { TaskStatus } from "@prisma/client";
+import { cache } from "react";
 
-export const getCurrentTask = async (includeSubmissions?: number) => {
+export const getCurrentTask = cache(async (includeSubmissions?: number) => {
 	return prisma.task.findFirst({
 		where: {
 			status: {
@@ -26,4 +27,4 @@ export const getCurrentTask = async (includeSubmissions?: number) => {
 			},
 		},
 	});
-};
+});

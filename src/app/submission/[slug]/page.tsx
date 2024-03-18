@@ -9,14 +9,11 @@ import { redirect } from "next/navigation";
 import ActionBar from "@components/action-bar.tsx";
 import DeleteSubmissionButton from "@components/delete-submission-button.tsx";
 import Image from "next/image";
-import {
-	PiArrowUpRightDuotone,
-	PiGitBranchDuotone,
-	PiPencilDuotone,
-	PiUserDuotone,
-} from "react-icons/pi";
+import { PiArrowUpRightDuotone, PiGitBranchDuotone, PiPencilDuotone, PiUserDuotone } from "react-icons/pi";
 import prisma from "@/src/lib/prisma";
 import Markdown from "../markdown";
+import { TaskStatus } from "@prisma/client";
+import { Vote } from "@components/vote.tsx";
 
 enum ViewType {
 	Private = 0,
@@ -40,19 +37,14 @@ export default async function Page({ params }: PageProps) {
 	]);
 	if (!submission) return redirect("/");
 
-	const type =
-		submission?.user?.username === session?.user?.username
-			? ViewType.Private
-			: ViewType.Public;
+	const type = submission?.user?.username === session?.user?.username ? ViewType.Private : ViewType.Public;
 
 	const editable = task?.id === submission.taskId && task.status === "OPEN";
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
 			<ActionBar>
-				<RoundLink href={`/task/${submission.task.slug}`}>
-					Task: {submission.task.title}
-				</RoundLink>
+				<RoundLink href={`/task/${submission.task.slug}`}>Task: {submission.task.title}</RoundLink>
 
 				{submission.source && (
 					<RoundLink href={submission.source}>
@@ -79,6 +71,9 @@ export default async function Page({ params }: PageProps) {
 						{submission.user.name ?? submission.user.username}
 					</RoundLink>
 				}
+				{submission.task.status === TaskStatus.VOTING && submission.userId !== session?.user?.id && (
+					<Vote submission={submission} hasVoted={submission.votes.some((vote) => vote.userId === session?.user?.id)} />
+				)}
 
 				{submission.winner && <RoundButton>🏆 Winner</RoundButton>}
 			</ActionBar>

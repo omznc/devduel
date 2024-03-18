@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	checkUsername,
-	getUsernameSuggestion,
-	setUsername as setRemoteUsername,
-} from "@/src/actions/user.ts";
+import { checkUsername, getUsernameSuggestion, setUsername as setRemoteUsername } from "@/src/actions/user.ts";
 import LoadingDots from "@components/loading-dots.tsx";
 import { useDebounce } from "@lib/hooks.ts";
 import { useSession } from "next-auth/react";
@@ -13,9 +9,7 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 export default function Page() {
-	const [usernameStatus, setUsernameStatus] = useState<boolean | undefined>(
-		false,
-	);
+	const [usernameStatus, setUsernameStatus] = useState<boolean | undefined>(false);
 	const { data: session, update } = useSession();
 	const user = session?.user;
 
@@ -57,14 +51,8 @@ export default function Page() {
 
 	return (
 		<div className="flex h-full min-h-[calc(100dvh-6rem)] w-full flex-col items-center justify-start gap-4">
-			<div
-				className={
-					"flex w-fit max-w-full flex-col items-center gap-8 text-center"
-				}
-			>
-				<h2 className="fit-text bg-colored after:bg-blue-500 after:opacity-60">
-					{"let's set your username"}
-				</h2>
+			<div className={"flex w-fit max-w-full flex-col items-center gap-8 text-center"}>
+				<h2 className="fit-text bg-colored after:bg-blue-500 after:opacity-60">{"let's set your username"}</h2>
 
 				<div className="inline-flex w-fit max-w-full items-center justify-center gap-1 rounded-md bg-black px-4 text-2xl text-white opacity-80 transition-all duration-300 hover:opacity-100 dark:bg-white dark:text-black dark:opacity-80 dark:hover:opacity-100 md:text-4xl">
 					<span>{">"}</span>
@@ -81,19 +69,13 @@ export default function Page() {
 					/>
 				</div>
 			</div>
-			<h3
-				className={
-					"inline-flex w-fit flex-col gap-2 text-center text-2xl md:flex-row"
-				}
-			>
+			<h3 className={"inline-flex w-fit flex-col gap-2 text-center text-2xl md:flex-row"}>
 				{isPending && (
 					<span className={"cursor-pointer transition-all"}>
 						[<LoadingDots />]
 					</span>
 				)}
-				{!isPending && usernameStatus !== undefined && (
-					<span>{usernameStatus ? "Available!" : "Unavailable."}</span>
-				)}
+				{!isPending && usernameStatus !== undefined && <span>{usernameStatus ? "Available!" : "Unavailable."}</span>}
 				{usernameStatus && !isPending && (
 					<span
 						className={"cursor-pointer transition-all"}

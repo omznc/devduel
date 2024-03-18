@@ -40,10 +40,7 @@ export default async function Profile() {
 			<Toolbar username={user.username} />
 			<div className="flex items-center justify-center gap-8 bg-colored text-center after:bg-yellow-500">
 				<Image
-					src={
-						user.image ??
-						`https://api.dicebear.com/7.x/fun-emoji/svg?seed=${user.id}`
-					}
+					src={user.image ?? `https://api.dicebear.com/7.x/fun-emoji/svg?seed=${user.id}`}
 					width={60}
 					height={80}
 					className="z-20 h-[80px] w-auto rounded-md"
@@ -55,9 +52,7 @@ export default async function Profile() {
 				</div>
 			</div>
 			<div className="flex w-full flex-col gap-4 md:w-fit">
-				<h2 className="text-center text-3xl">
-					Your submissions ({user.submissions.length})
-				</h2>
+				<h2 className="text-center text-3xl">Your submissions ({user.submissions.length})</h2>
 				<div className="flex flex-wrap items-center justify-center gap-2">
 					{user.submissions.map((submission) => (
 						<SubmissionEntry submission={submission} key={submission.id} />

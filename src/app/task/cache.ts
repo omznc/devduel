@@ -9,17 +9,15 @@ export const getTaskCached = cache(async (slug: string) => {
 	});
 });
 
-export const getSubmissionCached = cache(
-	async (taskId: string, submissionId: string) => {
-		return await prisma.submission.findUnique({
-			where: {
-				id: submissionId,
-				taskId: taskId,
-			},
-			include: {
-				user: true,
-				task: true,
-			},
-		});
-	},
-);
+export const getSubmissionCached = cache(async (taskId: string, submissionId: string) => {
+	return await prisma.submission.findUnique({
+		where: {
+			id: submissionId,
+			taskId: taskId,
+		},
+		include: {
+			user: true,
+			task: true,
+		},
+	});
+});

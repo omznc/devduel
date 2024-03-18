@@ -39,9 +39,7 @@ export default async function Task({ params }: TaskProps) {
 						Explore
 					</RoundLink>
 				)}
-				{task?.status === TaskStatus.OPEN && (
-					<RoundLink href={"/submit"}>Add your entry</RoundLink>
-				)}
+				{task?.status === TaskStatus.OPEN && <RoundLink href={"/submit"}>Add your entry</RoundLink>}
 			</div>
 			<div className="fit-text text-center">{task?.title}</div>
 			<p className="rounded-lg text-xl">{task?.description}</p>

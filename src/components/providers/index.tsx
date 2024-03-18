@@ -12,12 +12,7 @@ export default async function Providers({ children }: ProvidersProps) {
 	const session = await getServerSession(authOptions);
 
 	return (
-		<ThemeProvider
-			attribute="class"
-			defaultTheme="system"
-			enableSystem
-			disableTransitionOnChange
-		>
+		<ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
 			<AuthProvider session={session}>{children}</AuthProvider>
 		</ThemeProvider>
 	);
